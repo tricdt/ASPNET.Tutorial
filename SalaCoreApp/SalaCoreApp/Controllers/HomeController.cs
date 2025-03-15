@@ -1,8 +1,8 @@
 using System.Diagnostics;
 using Microsoft.AspNetCore.Mvc;
-using TodoApp.Models;
+using SalaCoreApp.Models;
 
-namespace TodoApp.Controllers;
+namespace SalaCoreApp.Controllers;
 
 public class HomeController : Controller
 {

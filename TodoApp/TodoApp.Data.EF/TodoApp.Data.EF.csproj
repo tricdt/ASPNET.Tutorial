@@ -15,5 +15,4 @@
   <ItemGroup>
     <ProjectReference Include="..\TodoApp.Data\TodoApp.Data.csproj" />
   </ItemGroup>
-
 </Project>
