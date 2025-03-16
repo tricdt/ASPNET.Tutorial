@@ -10,7 +10,7 @@ public class Todo : DomainEntity<Guid>
     public string Name { get; set; }
     public Guid AssigneeId { get; set; }
     [ForeignKey("AssigneeId")]
-    public Guid Assignee { get; set; }
+    public virtual User Assignee { get; set; }
     public DateTime CreatedDate { get; set; }
     public Priority Priority { get; set; }
     public Status Status { get; set; }
