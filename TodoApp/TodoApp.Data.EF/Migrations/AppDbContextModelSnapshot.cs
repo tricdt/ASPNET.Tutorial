@@ -164,7 +164,7 @@ namespace TodoApp.Data.EF.Migrations
                         .ValueGeneratedOnAdd()
                         .HasColumnType("uniqueidentifier");
 
-                    b.Property<Guid>("AssigneeId")
+                    b.Property<Guid?>("AssigneeId")
                         .HasColumnType("uniqueidentifier");
 
                     b.Property<DateTime>("CreatedDate")
@@ -319,9 +319,7 @@ namespace TodoApp.Data.EF.Migrations
                 {
                     b.HasOne("TodoApp.Data.Entities.User", "Assignee")
                         .WithMany()
-                        .HasForeignKey("AssigneeId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
+                        .HasForeignKey("AssigneeId");
 
                     b.Navigation("Assignee");
                 });

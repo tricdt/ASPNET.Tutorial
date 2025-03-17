@@ -12,7 +12,7 @@ using TodoApp.Data.EF;
 namespace TodoApp.Data.EF.Migrations
 {
     [DbContext(typeof(AppDbContext))]
-    [Migration("20250316115714_InitDB")]
+    [Migration("20250317113619_InitDB")]
     partial class InitDB
     {
         /// <inheritdoc />
@@ -167,7 +167,7 @@ namespace TodoApp.Data.EF.Migrations
                         .ValueGeneratedOnAdd()
                         .HasColumnType("uniqueidentifier");
 
-                    b.Property<Guid>("AssigneeId")
+                    b.Property<Guid?>("AssigneeId")
                         .HasColumnType("uniqueidentifier");
 
                     b.Property<DateTime>("CreatedDate")
@@ -322,9 +322,7 @@ namespace TodoApp.Data.EF.Migrations
                 {
                     b.HasOne("TodoApp.Data.Entities.User", "Assignee")
                         .WithMany()
-                        .HasForeignKey("AssigneeId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
+                        .HasForeignKey("AssigneeId");
 
                     b.Navigation("Assignee");
                 });
