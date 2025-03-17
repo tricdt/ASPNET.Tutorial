@@ -80,7 +80,7 @@ namespace TodoApp.Data.EF.Migrations
                 {
                     Id = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
                     Name = table.Column<string>(type: "nvarchar(250)", maxLength: 250, nullable: false),
-                    AssigneeId = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
+                    AssigneeId = table.Column<Guid>(type: "uniqueidentifier", nullable: true),
                     CreatedDate = table.Column<DateTime>(type: "datetime2", nullable: false),
                     Priority = table.Column<int>(type: "int", nullable: false),
                     Status = table.Column<int>(type: "int", nullable: false)
@@ -92,8 +92,7 @@ namespace TodoApp.Data.EF.Migrations
                         name: "FK_Todos_Users_AssigneeId",
                         column: x => x.AssigneeId,
                         principalTable: "Users",
-                        principalColumn: "Id",
-                        onDelete: ReferentialAction.Cascade);
+                        principalColumn: "Id");
                 });
 
             migrationBuilder.CreateTable(
