@@ -13,6 +13,8 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "XTLab.MvcApp.Infrastructure
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "XTLab.MvcApp.Utilities", "XTLab.MvcApp.Utilities\XTLab.MvcApp.Utilities.csproj", "{0062FE7B-E94D-4F0D-8D93-4B3A08CC929F}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "XTLab.MvcApp.Application", "XTLab.MvcApp.Application\XTLab.MvcApp.Application.csproj", "{D85A955A-7B72-47F9-A072-536C200AB02C}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -83,6 +85,18 @@ Global
 		{0062FE7B-E94D-4F0D-8D93-4B3A08CC929F}.Release|x64.Build.0 = Release|Any CPU
 		{0062FE7B-E94D-4F0D-8D93-4B3A08CC929F}.Release|x86.ActiveCfg = Release|Any CPU
 		{0062FE7B-E94D-4F0D-8D93-4B3A08CC929F}.Release|x86.Build.0 = Release|Any CPU
+		{D85A955A-7B72-47F9-A072-536C200AB02C}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{D85A955A-7B72-47F9-A072-536C200AB02C}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{D85A955A-7B72-47F9-A072-536C200AB02C}.Debug|x64.ActiveCfg = Debug|Any CPU
+		{D85A955A-7B72-47F9-A072-536C200AB02C}.Debug|x64.Build.0 = Debug|Any CPU
+		{D85A955A-7B72-47F9-A072-536C200AB02C}.Debug|x86.ActiveCfg = Debug|Any CPU
+		{D85A955A-7B72-47F9-A072-536C200AB02C}.Debug|x86.Build.0 = Debug|Any CPU
+		{D85A955A-7B72-47F9-A072-536C200AB02C}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{D85A955A-7B72-47F9-A072-536C200AB02C}.Release|Any CPU.Build.0 = Release|Any CPU
+		{D85A955A-7B72-47F9-A072-536C200AB02C}.Release|x64.ActiveCfg = Release|Any CPU
+		{D85A955A-7B72-47F9-A072-536C200AB02C}.Release|x64.Build.0 = Release|Any CPU
+		{D85A955A-7B72-47F9-A072-536C200AB02C}.Release|x86.ActiveCfg = Release|Any CPU
+		{D85A955A-7B72-47F9-A072-536C200AB02C}.Release|x86.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

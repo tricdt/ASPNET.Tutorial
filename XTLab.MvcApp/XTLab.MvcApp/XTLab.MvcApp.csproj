@@ -6,4 +6,12 @@
     <ImplicitUsings>enable</ImplicitUsings>
   </PropertyGroup>
 
+  <ItemGroup>
+    <Folder Include="FIles\" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\XTLab.MvcApp.Application\XTLab.MvcApp.Application.csproj" />
+  </ItemGroup>
+
 </Project>

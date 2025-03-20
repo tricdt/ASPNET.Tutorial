@@ -1,0 +1,16 @@
+﻿@using XTLab.MvcApp.Data.Entities;
+@model Product
+
+@{
+    var produdct = ViewData["product"] as Product;
+
+}
+<p>@ViewData["Title"]</p>
+<div class="card bg-primary text-white">
+    <h1 class="card-header">@produdct.Name</h1>
+    <div class="card-body">
+      <p class="card-text">
+          Giá: @produdct.Price
+      </p>
+    </div>
+</div>    using XTLab.MvcApp.Data.Entities;
