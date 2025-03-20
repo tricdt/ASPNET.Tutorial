@@ -1,12 +1,15 @@
 using System;
+using XTLab.MvcApp.Application.Services;
 
 namespace XTLab.MvcApp;
 
 public class Startup
 {
-    public Startup(IConfiguration configuration)
+    public static string ContentRootPath { get; set; }
+    public Startup(IConfiguration configuration, IWebHostEnvironment env)
     {
         Configuration = configuration;
+        ContentRootPath = env.ContentRootPath;
     }
     public IConfiguration Configuration { get; }
     // This method gets called by the runtime. Use this method to add services to the container.
@@ -14,6 +17,7 @@ public class Startup
     {
         services.AddControllersWithViews();
         services.AddRazorPages();
+        services.AddSingleton(typeof(ProductService), typeof(ProductService));
     }
 
     // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
