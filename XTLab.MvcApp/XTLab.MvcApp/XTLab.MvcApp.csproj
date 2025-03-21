@@ -14,4 +14,8 @@
     <ProjectReference Include="..\XTLab.MvcApp.Application\XTLab.MvcApp.Application.csproj" />
   </ItemGroup>
 
+  <ItemGroup>
+    <PackageReference Include="Microsoft.VisualStudio.Web.CodeGeneration.Design" Version="9.0.0" />
+  </ItemGroup>
+
 </Project>
