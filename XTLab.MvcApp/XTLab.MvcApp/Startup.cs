@@ -1,5 +1,6 @@
 using System;
 using XTLab.MvcApp.Application.Services;
+using XTLab.MvcApp.Extensions;
 
 namespace XTLab.MvcApp;
 
@@ -17,6 +18,7 @@ public class Startup
     {
         services.AddControllersWithViews();
         services.AddRazorPages();
+        services.AddSingleton(typeof(PlanetService), typeof(PlanetService));
         services.AddSingleton(typeof(ProductService), typeof(ProductService));
     }
 
@@ -37,12 +39,15 @@ public class Startup
         app.UseHttpsRedirection();
         app.UseStaticFiles();
 
+        app.AddStatusCodePage();
+
         app.UseRouting();
         app.UseAuthentication();
         app.UseAuthorization();
 
         app.UseEndpoints(endpoints =>
             {
+                endpoints.MapControllers();
                 endpoints.MapControllerRoute(
                     name: "default",
                     pattern: "{controller=Home}/{action=Index}/{id?}");
