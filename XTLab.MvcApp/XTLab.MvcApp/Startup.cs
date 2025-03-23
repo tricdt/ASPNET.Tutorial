@@ -53,6 +53,7 @@ public class Startup
                 //     pattern: "/{controller}/{action=Index}/{id?}",
                 //     areaName: "ProductManage"
                 // ); 
+
                 endpoints.MapControllerRoute(
                     name: "default",
                     pattern: "{controller=Home}/{action=Index}/{id?}");
