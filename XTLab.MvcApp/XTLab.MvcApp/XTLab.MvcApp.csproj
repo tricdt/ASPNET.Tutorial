@@ -12,6 +12,7 @@
 
   <ItemGroup>
     <ProjectReference Include="..\XTLab.MvcApp.Application\XTLab.MvcApp.Application.csproj" />
+    <ProjectReference Include="..\XTLab.MvcApp.Data.EF\XTLab.MvcApp.Data.EF.csproj" />
   </ItemGroup>
 
   <ItemGroup>
