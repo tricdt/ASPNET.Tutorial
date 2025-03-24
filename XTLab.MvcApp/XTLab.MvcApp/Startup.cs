@@ -1,5 +1,7 @@
 using System;
+using Microsoft.EntityFrameworkCore;
 using XTLab.MvcApp.Application.Services;
+using XTLab.MvcApp.Data.EF;
 using XTLab.MvcApp.Extensions;
 
 namespace XTLab.MvcApp;
@@ -16,6 +18,11 @@ public class Startup
     // This method gets called by the runtime. Use this method to add services to the container.
     public void ConfigureServices(IServiceCollection services)
     {
+        services.AddDbContext<AppDbContext>(options =>
+        {
+            string connectString = Configuration.GetConnectionString("AppMvcConnectionString");
+            options.UseSqlServer(connectString);
+        });
         services.AddControllersWithViews();
         services.AddRazorPages();
         services.AddSingleton(typeof(PlanetService), typeof(PlanetService));
