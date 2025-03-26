@@ -2,10 +2,13 @@ using System;
 
 namespace XTLab.MvcApp.Infrastructure.Interfaces;
 
+/// <summary>
+/// Represents a unit of work
+/// </summary>
 public interface IUnitOfWork : IDisposable
 {
     /// <summary>
-    /// Call save change from db context
+    /// Commits the changes to the underlying data store. 
     /// </summary>
     void Commit();
 }
