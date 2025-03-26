@@ -6,4 +6,8 @@
     <Nullable>enable</Nullable>
   </PropertyGroup>
 
+  <ItemGroup>
+    <ProjectReference Include="..\XTLab.MvcApp.Infrastructure\XTLab.MvcApp.Infrastructure.csproj" />
+  </ItemGroup>
+
 </Project>
