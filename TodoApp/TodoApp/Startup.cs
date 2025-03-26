@@ -1,6 +1,9 @@
 using System;
 using Microsoft.EntityFrameworkCore;
+using TodoApp.Application.Implementation;
+using TodoApp.Application.Interface;
 using TodoApp.Data.EF;
+using TodoApp.Infrastructure.Interfaces;
 
 namespace TodoApp;
 
@@ -18,6 +21,10 @@ public class Startup
         services.AddControllersWithViews();
         services.AddDbContext<AppDbContext>(options =>
             options.UseSqlServer(Configuration.GetConnectionString("DefaultConnection")));
+        services.AddTransient<IUnitOfWork, EFUnitOfWork>();
+        services.AddTransient(typeof(IRepository<,>), typeof(EFRepository<,>));
+
+        services.AddTransient(typeof(TodoService), typeof(TodoService));
     }
 
     // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.

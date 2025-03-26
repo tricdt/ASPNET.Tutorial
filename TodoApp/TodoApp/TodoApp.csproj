@@ -12,6 +12,7 @@
     <PackageReference Include="Polly" Version="8.5.2" />
   </ItemGroup>
   <ItemGroup>
+    <ProjectReference Include="..\TodoApp.Application\TodoApp.Application.csproj" />
     <ProjectReference Include="..\TodoApp.Data.EF\TodoApp.Data.EF.csproj" />
   </ItemGroup>
 </Project>

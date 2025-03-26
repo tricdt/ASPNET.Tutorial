@@ -12,7 +12,7 @@ using TodoApp.Data.EF;
 namespace TodoApp.Data.EF.Migrations
 {
     [DbContext(typeof(AppDbContext))]
-    [Migration("20250317113619_InitDB")]
+    [Migration("20250325101318_InitDB")]
     partial class InitDB
     {
         /// <inheritdoc />
