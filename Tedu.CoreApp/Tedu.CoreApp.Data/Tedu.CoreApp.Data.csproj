@@ -6,4 +6,8 @@
     <Nullable>enable</Nullable>
   </PropertyGroup>
 
+  <ItemGroup>
+    <ProjectReference Include="..\Tedu.CoreApp.Infrastructure\Tedu.CoreApp.Infrastructure.csproj" />
+  </ItemGroup>
+
 </Project>
