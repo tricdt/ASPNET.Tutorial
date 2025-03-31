@@ -4,7 +4,7 @@ using Tedu.CoreApp.Infrastructure.SharedKernel;
 
 namespace Tedu.CoreApp.Data.Entities;
 
-public class Tag : DomainEntity<string>
+public class Tag : DomainEntity<Guid>
 {
     [MaxLength(50)]
     [Required]

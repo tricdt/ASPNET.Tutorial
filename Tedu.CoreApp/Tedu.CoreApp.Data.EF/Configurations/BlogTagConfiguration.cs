@@ -1,4 +1,3 @@
-using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Metadata.Builders;
 using Tedu.CoreApp.Data.EF.Extensions;
@@ -6,12 +5,11 @@ using Tedu.CoreApp.Data.Entities;
 
 namespace Tedu.CoreApp.Data.EF.Configurations;
 
-public class TagConfiguration : DbEntityConfiguration<Tag>
+public class BlogTagConfiguration : DbEntityConfiguration<PostTag>
 {
-    public override void Configure(EntityTypeBuilder<Tag> entity)
+    public override void Configure(EntityTypeBuilder<PostTag> entity)
     {
-        entity.HasKey(c => c.Id);
-        entity.Property(c => c.Id).HasMaxLength(255).IsRequired()
+        entity.Property(c => c.TagId).HasMaxLength(255).IsRequired()
         .HasColumnType("varchar(255)");
         // etc.
     }

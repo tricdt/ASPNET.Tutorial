@@ -1,5 +1,5 @@
 using System;
-using Tedu.CoreApp.Data.Enums;
+using Tedu.CoreApp.Infrastructure.Enums;
 
 namespace Tedu.CoreApp.Data.Interfaces;
 

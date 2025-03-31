@@ -5,13 +5,13 @@ using Tedu.CoreApp.Infrastructure.SharedKernel;
 
 namespace Tedu.CoreApp.Data.Entities;
 
-public class ProductTag : DomainEntity<int>
+public class ProductTag : DomainEntity<Guid>
 {
-    public int ProductId { get; set; }
+    public Guid ProductId { get; set; }
 
     [StringLength(50)]
     [Column(TypeName = "varchar")]
-    public string TagId { set; get; }
+    public Guid TagId { set; get; }
 
     [ForeignKey("ProductId")]
     public virtual Product Product { set; get; }

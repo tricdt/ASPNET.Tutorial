@@ -6,4 +6,12 @@
     <ImplicitUsings>enable</ImplicitUsings>
   </PropertyGroup>
 
+  <ItemGroup>
+    <ProjectReference Include="..\Tedu.CoreApp.Application\Tedu.CoreApp.Application.csproj" />
+    <ProjectReference Include="..\Tedu.CoreApp.Data.EF\Tedu.CoreApp.Data.EF.csproj" />
+    <ProjectReference Include="..\Tedu.CoreApp.Data\Tedu.CoreApp.Data.csproj" />
+    <ProjectReference Include="..\Tedu.CoreApp.Infrastructure\Tedu.CoreApp.Infrastructure.csproj" />
+    <ProjectReference Include="..\Tedu.CoreApp.Utilities\Tedu.CoreApp.Utilities.csproj" />
+  </ItemGroup>
+
 </Project>

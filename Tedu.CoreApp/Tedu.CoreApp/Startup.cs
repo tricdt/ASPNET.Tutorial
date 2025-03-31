@@ -1,4 +1,11 @@
 using System;
+using Microsoft.AspNetCore.Identity;
+using Microsoft.EntityFrameworkCore;
+using Tedu.Core.Data.EF;
+using Tedu.CoreApp.Data.EF;
+using Tedu.CoreApp.Data.Entities;
+using Tedu.CoreApp.Infrastructure.Interfaces;
+using TeduCore.Data.EF;
 
 namespace Tedu.CoreApp;
 
@@ -13,11 +20,27 @@ public class Startup
     // This method gets called by the runtime. Use this method to add services to the container.
     public void ConfigureServices(IServiceCollection services)
     {
+        services.AddDbContext<AppDbContext>(options =>
+              options.UseSqlServer(Configuration.GetConnectionString("DefaultConnection"),
+              b => b.MigrationsAssembly("Tedu.CoreApp.Data.EF")));
+        services.AddIdentity<AppUser, AppRole>()
+                .AddEntityFrameworkStores<AppDbContext>()
+                .AddDefaultTokenProviders();
+
+     
+        services.AddScoped<UserManager<AppUser>, UserManager<AppUser>>();
+        services.AddScoped<RoleManager<AppRole>, RoleManager<AppRole>>();
+        
+           // Add application services.
+        services.AddTransient(typeof(IUnitOfWork), typeof(EFUnitOfWork));
+        services.AddScoped(typeof(IRepository<,>), typeof(EFRepository<,>));
+        
+        services.AddTransient<DbInitializer>();
         services.AddControllersWithViews();
     }
 
     // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
-    public void Configure(IApplicationBuilder app, IWebHostEnvironment env)
+    public void Configure(IApplicationBuilder app, IWebHostEnvironment env, DbInitializer dbInitializer)
     {
         // Configure the HTTP request pipeline.
         if (!env.IsDevelopment())
@@ -39,5 +62,7 @@ public class Startup
             name: "default",
             pattern: "{controller=Home}/{action=Index}/{id?}");
         });
+
+        dbInitializer.Seed().Wait();
     }
 }

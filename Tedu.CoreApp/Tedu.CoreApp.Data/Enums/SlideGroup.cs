@@ -2,8 +2,8 @@ using System;
 
 namespace Tedu.CoreApp.Data.Enums;
 
-public enum Status
+public enum SlideGroup
 {
-    InActive,
-    Active
+    Top = 1,
+    Branch = 2
 }
