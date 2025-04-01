@@ -6,4 +6,16 @@
     <Nullable>enable</Nullable>
   </PropertyGroup>
 
+  <ItemGroup>
+    <ProjectReference Include="..\Tedu.CoreApp.Data.EF\Tedu.CoreApp.Data.EF.csproj" />
+    <ProjectReference Include="..\Tedu.CoreApp.Data\Tedu.CoreApp.Data.csproj" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Folder Include="Content\" />
+    <Folder Include="Dtos\" />
+    <Folder Include="Ecommerce\Bills\" />
+    <Folder Include="Systems\" />
+  </ItemGroup>
+
 </Project>
