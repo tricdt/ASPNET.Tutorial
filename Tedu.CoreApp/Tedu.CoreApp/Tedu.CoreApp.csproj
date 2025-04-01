@@ -14,4 +14,8 @@
     <ProjectReference Include="..\Tedu.CoreApp.Utilities\Tedu.CoreApp.Utilities.csproj" />
   </ItemGroup>
 
+  <ItemGroup>
+    <Folder Include="Areas\Admin\Components\" />
+  </ItemGroup>
+
 </Project>
