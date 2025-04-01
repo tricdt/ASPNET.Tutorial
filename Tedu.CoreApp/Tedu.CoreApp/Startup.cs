@@ -2,6 +2,7 @@ using System;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
 using Tedu.Core.Data.EF;
+using Tedu.CoreApp.Application.AutoMapper;
 using Tedu.CoreApp.Data.EF;
 using Tedu.CoreApp.Data.Entities;
 using Tedu.CoreApp.Infrastructure.Interfaces;
@@ -27,14 +28,14 @@ public class Startup
                 .AddEntityFrameworkStores<AppDbContext>()
                 .AddDefaultTokenProviders();
 
-     
         services.AddScoped<UserManager<AppUser>, UserManager<AppUser>>();
         services.AddScoped<RoleManager<AppRole>, RoleManager<AppRole>>();
-        
-           // Add application services.
+
+        services.AddAutoMapper(cfg => cfg.AddProfile(new MappingProfile()));
+        // Add application services.
         services.AddTransient(typeof(IUnitOfWork), typeof(EFUnitOfWork));
         services.AddScoped(typeof(IRepository<,>), typeof(EFRepository<,>));
-        
+
         services.AddTransient<DbInitializer>();
         services.AddControllersWithViews();
     }
@@ -59,8 +60,15 @@ public class Startup
         app.UseEndpoints(endpoints =>
         {
             endpoints.MapControllerRoute(
-            name: "default",
-            pattern: "{controller=Home}/{action=Index}/{id?}");
+                name: "default",
+                pattern: "{controller=Home}/{action=Index}/{id?}");
+            endpoints.MapControllerRoute(
+               name: "areaRoute",
+               pattern: "{area:exists}/{controller=Home}/{action=Index}/{id?}");
+            // endpoints.MapAreaControllerRoute(
+            //     name: "Admin",
+            //     areaName: "Admin",
+            //     pattern: "{controller=Home}/{action=Index}/{id?}"); 
         });
 
         dbInitializer.Seed().Wait();
