@@ -34,6 +34,8 @@
         <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/3.5.2/animate.min.css"
             integrity="sha512-TyUaMbYrKFZfQfp+9nQGOEt+vGu4nKzLk0KaV3nFifL3K8n7lzb8DayTzLOK0pNyzxGJzGRSw78e8xqJhURJ3Q=="
             crossorigin="anonymous" referrerpolicy="no-referrer" />
+
+
     </environment>
 
     <!-- Custom Theme Style -->
@@ -45,7 +47,7 @@
         <div class="login_wrapper">
             <div class="animate form login_form">
                 <section class="login_content">
-                    <form>
+                    <form id="frmLogin">
                         @Html.AntiForgeryToken()
                         <h1>Đăng nhập</h1>
                         <div>
@@ -90,6 +92,19 @@
         crossorigin="anonymous" referrerpolicy="no-referrer"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/notify/0.4.2/styles/metro/notify-metro.min.js"
         integrity="sha512-cG69LpvCJkui4+Uuj8gn/zRki74/E7FicYEXBnplyb/f+bbZCNZRHxHa5qwci1dhAFdK2r5T4dUynsztHnOS5g=="
+        crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery-validate/1.14.0/jquery.validate.min.js"
+        integrity="sha512-2ZFPcPxv4xOvt+Sz1JMGyoliB3tccdckAJXlEz13o1byNrevFuyDoLs9tZfi+hTHz/h5o/XealriXyhyzGYrGg=="
+        crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery-validate/1.14.0/additional-methods.min.js"
+        integrity="sha512-2h6/rhjXlDmrPBfrUc/d9+pCXTECJr9kepVWup8PFMVftzzDdKOWGj/Ycmeh1PoFflFlfxwlW9Pyb54TGRaOXg=="
+        crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+    <script
+        src="https://cdnjs.cloudflare.com/ajax/libs/jquery-validation-unobtrusive/3.2.6/jquery.validate.unobtrusive.min.js"
+        integrity="sha512-C3O5GfChYBm1pPz0jbVf5oxCW9v/zbTFJ+C/Y7kGYId4quTfQvqrVWFYIDUVcdQDGkFi5NSZlo93CB/kRmRLmQ=="
+        crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery-validate/1.14.0/localization/messages_vi.min.js"
+        integrity="sha512-D1OAIlZsCkej6YOilbynrXxU2gxs0jYrh4sbZcI+EjL+8HclLBPvJFRwYRgIX/zALcmvG0mnl3fx37KkGN26Ug=="
         crossorigin="anonymous" referrerpolicy="no-referrer"></script>
     <script src="~/app/shared/tedu.js"></script>
     <script src="~/app/controllers/login/index.js"></script>

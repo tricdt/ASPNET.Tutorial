@@ -91,7 +91,7 @@ public class Startup
                 pattern: "{controller=Home}/{action=Index}/{id?}");
             endpoints.MapControllerRoute(
                name: "areaRoute",
-               pattern: "{area:exists}/{controller=Home}/{action=Index}/{id?}");
+               pattern: "{area:exists}/{controller=Login}/{action=Index}/{id?}");
             // endpoints.MapAreaControllerRoute(
             //     name: "Admin",
             //     areaName: "Admin",
