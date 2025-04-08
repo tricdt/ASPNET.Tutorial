@@ -31,35 +31,40 @@ public class DbInitializer
         var rootAdminRoleId = Guid.NewGuid();
         if (!_context.Roles.Any())
         {
-            await _context.Roles.AddAsync(new AppRole()
+            await _roleManager.CreateAsync(new AppRole()
             {
-                Id = Guid.NewGuid(),
                 Name = "Admin",
                 NormalizedName = "Admin",
                 Description = "Quản trị viên"
             });
-            await _context.SaveChangesAsync();
+            await _roleManager.CreateAsync(new AppRole()
+            {
+                Name = "Staff",
+                NormalizedName = "Staff",
+                Description = "Nhân viên"
+            });
+            await _roleManager.CreateAsync(new AppRole()
+            {
+                Name = "Customer",
+                NormalizedName = "Customer",
+                Description = "Khách hàng"
+            });
         }
         if (!_userManager.Users.Any())
         {
-            var userId = Guid.NewGuid();
-            var user = new AppUser()
+            await _userManager.CreateAsync(new AppUser()
             {
-                Id = userId,
                 UserName = "admin",
                 FullName = "Administrator",
                 Email = "admin@gmail.com",
                 Balance = 0,
                 Avatar = "/client-side/images/user.png",
                 Status = Status.Actived,
-            };
-            user.PasswordHash = passwordHasher.HashPassword(user, "123654$");
-            await _context.Users.AddAsync(user);
-            await _context.UserRoles.AddAsync(new IdentityUserRole<Guid>()
-            {
-                RoleId = rootAdminRoleId,
-                UserId = userId,
-            });
+                DateCreated = DateTime.Now,
+                DateModified = DateTime.Now,
+            }, "123456");
+            var user = await _userManager.FindByNameAsync("admin");
+            await _userManager.AddToRoleAsync(user, "Admin");
             await _context.SaveChangesAsync();
         }
 
