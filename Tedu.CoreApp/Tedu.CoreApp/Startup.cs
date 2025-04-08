@@ -1,13 +1,14 @@
 using System;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
+using Newtonsoft.Json.Serialization;
 using Tedu.Core.Data.EF;
 using Tedu.CoreApp.Application.AutoMapper;
 using Tedu.CoreApp.Data.EF;
 using Tedu.CoreApp.Data.Entities;
 using Tedu.CoreApp.Infrastructure.Interfaces;
 using TeduCore.Data.EF;
-
+using Microsoft.Extensions.Logging;
 namespace Tedu.CoreApp;
 
 public class Startup
@@ -28,22 +29,47 @@ public class Startup
                 .AddEntityFrameworkStores<AppDbContext>()
                 .AddDefaultTokenProviders();
 
+
+        // Configure Identity
+        services.Configure<IdentityOptions>(options =>
+        {
+            // Password settings
+            options.Password.RequireDigit = true;
+            options.Password.RequiredLength = 6;
+            options.Password.RequireNonAlphanumeric = false;
+            options.Password.RequireUppercase = false;
+            options.Password.RequireLowercase = false;
+
+            // Lockout settings
+            options.Lockout.DefaultLockoutTimeSpan = TimeSpan.FromMinutes(30);
+            options.Lockout.MaxFailedAccessAttempts = 10;
+
+            // User settings
+            options.User.RequireUniqueEmail = true;
+        });
+
+        //Register for DI
+        services.AddScoped<SignInManager<AppUser>, SignInManager<AppUser>>();
         services.AddScoped<UserManager<AppUser>, UserManager<AppUser>>();
         services.AddScoped<RoleManager<AppRole>, RoleManager<AppRole>>();
 
+        
         services.AddAutoMapper(cfg => cfg.AddProfile(new MappingProfile()));
         // Add application services.
         services.AddTransient(typeof(IUnitOfWork), typeof(EFUnitOfWork));
         services.AddScoped(typeof(IRepository<,>), typeof(EFRepository<,>));
 
         services.AddTransient<DbInitializer>();
-        services.AddControllersWithViews();
+        services.AddControllersWithViews().AddNewtonsoftJson(options =>{
+            options.SerializerSettings.ContractResolver = new DefaultContractResolver();
+        });
     }
 
     // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
-    public void Configure(IApplicationBuilder app, IWebHostEnvironment env, DbInitializer dbInitializer)
+    public void Configure(IApplicationBuilder app, IWebHostEnvironment env, DbInitializer dbInitializer, ILoggerFactory loggerFactory)
     {
         // Configure the HTTP request pipeline.
+         loggerFactory.AddFile("Logs/tedu-{Date}.txt");
         if (!env.IsDevelopment())
         {
             app.UseExceptionHandler("/Home/Error");
@@ -57,6 +83,7 @@ public class Startup
         app.UseRouting();
 
         app.UseAuthorization();
+        app.UseAuthentication();
         app.UseEndpoints(endpoints =>
         {
             endpoints.MapControllerRoute(
@@ -71,6 +98,6 @@ public class Startup
             //     pattern: "{controller=Home}/{action=Index}/{id?}"); 
         });
 
-        dbInitializer.Seed().Wait();
+        //dbInitializer.Seed().Wait();
     }
 }

@@ -12,8 +12,8 @@ using Tedu.CoreApp.Data.EF;
 namespace Tedu.CoreApp.Data.EF.Migrations
 {
     [DbContext(typeof(AppDbContext))]
-    [Migration("20250331081810_InitDb")]
-    partial class InitDb
+    [Migration("20250408002224_InitDB")]
+    partial class InitDB
     {
         /// <inheritdoc />
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
