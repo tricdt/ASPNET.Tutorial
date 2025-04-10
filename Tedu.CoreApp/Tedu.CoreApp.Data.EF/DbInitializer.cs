@@ -27,8 +27,6 @@ public class DbInitializer
 
     public async Task Seed()
     {
-        var passwordHasher = new PasswordHasher<AppUser>();
-        var rootAdminRoleId = Guid.NewGuid();
         if (!_context.Roles.Any())
         {
             await _roleManager.CreateAsync(new AppRole()
@@ -65,7 +63,6 @@ public class DbInitializer
             }, "123456");
             var user = await _userManager.FindByNameAsync("admin");
             await _userManager.AddToRoleAsync(user, "Admin");
-            await _context.SaveChangesAsync();
         }
 
         if (!_context.Functions.Any())
