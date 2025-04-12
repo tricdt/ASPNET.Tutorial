@@ -10,6 +10,8 @@ using Tedu.CoreApp.Infrastructure.Interfaces;
 using TeduCore.Data.EF;
 using Microsoft.Extensions.Logging;
 using Tedu.CoreApp.Helpers;
+using Tedu.CoreApp.Application.Systems.Functions.Dtos;
+using Tedu.CoreApp.Application.Systems.Functions;
 namespace Tedu.CoreApp;
 
 public class Startup
@@ -55,17 +57,21 @@ public class Startup
         services.AddScoped<RoleManager<AppRole>, RoleManager<AppRole>>();
 
 
-        services.AddAutoMapper(cfg => cfg.AddProfile(new MappingProfile()));
+        // services.AddAutoMapper(cfg => cfg.AddProfile(new MappingProfile()));
         // Add application services.
         services.AddTransient(typeof(IUnitOfWork), typeof(EFUnitOfWork));
         services.AddScoped(typeof(IRepository<,>), typeof(EFRepository<,>));
 
         services.AddTransient<DbInitializer>();
+
+        services.AddAutoMapper(typeof(FunctionViewModel));
         services.AddScoped<IUserClaimsPrincipalFactory<AppUser>, CustomClaimsPrincipalFactory>();
         services.AddControllersWithViews().AddNewtonsoftJson(options =>
         {
             options.SerializerSettings.ContractResolver = new DefaultContractResolver();
         });
+
+        services.AddTransient<IFunctionService, FunctionService>();
     }
 
     // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.

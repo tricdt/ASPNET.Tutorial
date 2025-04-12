@@ -4,18 +4,17 @@
     <TargetFramework>net9.0</TargetFramework>
     <Nullable>enable</Nullable>
     <ImplicitUsings>enable</ImplicitUsings>
+    <ExcludeFilesFromDeployment>wwwroot\**\*.*</ExcludeFilesFromDeployment>
   </PropertyGroup>
-
+  <ItemGroup>
+      <Content Remove="wwwroot\**\*.*" />
+  </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\Tedu.CoreApp.Application\Tedu.CoreApp.Application.csproj" />
     <ProjectReference Include="..\Tedu.CoreApp.Data.EF\Tedu.CoreApp.Data.EF.csproj" />
     <ProjectReference Include="..\Tedu.CoreApp.Data\Tedu.CoreApp.Data.csproj" />
     <ProjectReference Include="..\Tedu.CoreApp.Infrastructure\Tedu.CoreApp.Infrastructure.csproj" />
     <ProjectReference Include="..\Tedu.CoreApp.Utilities\Tedu.CoreApp.Utilities.csproj" />
-  </ItemGroup>
-
-  <ItemGroup>
-    <Folder Include="Areas\Admin\Components\" />
   </ItemGroup>
 
   <ItemGroup>

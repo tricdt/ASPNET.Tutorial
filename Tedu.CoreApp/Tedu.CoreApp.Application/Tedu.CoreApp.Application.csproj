@@ -15,7 +15,6 @@
     <Folder Include="Content\" />
     <Folder Include="Dtos\" />
     <Folder Include="Ecommerce\Bills\" />
-    <Folder Include="Systems\" />
   </ItemGroup>
 
 </Project>
