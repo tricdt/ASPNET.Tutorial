@@ -40,20 +40,20 @@ public class ProductCategory : DomainEntity<Guid>, IHasSeoMetaData,
     public string Name { set; get; }
 
     [MaxLength(50)]
-    public string Code { get; set; }
+    public string? Code { get; set; }
 
     [DefaultValue(0)]
     public int CurrentIdentity { get; set; }
 
     [MaxLength(500)]
-    public string Description { set; get; }
+    public string? Description { set; get; }
 
     public Guid? ParentId { set; get; }
 
     public int? HomeOrder { set; get; }
 
     [MaxLength(256)]
-    public string Image { set; get; }
+    public string? Image { set; get; }
 
     public bool? HomeFlag { set; get; }
 
@@ -62,16 +62,16 @@ public class ProductCategory : DomainEntity<Guid>, IHasSeoMetaData,
     public Status Status { set; get; }
 
     [MaxLength(256)]
-    public string SeoPageTitle { set; get; }
+    public string? SeoPageTitle { set; get; }
 
     [MaxLength(256)]
-    public string SeoAlias { set; get; }
+    public string? SeoAlias { set; get; }
 
     [MaxLength(256)]
-    public string SeoKeywords { set; get; }
+    public string? SeoKeywords { set; get; }
 
     [MaxLength(256)]
-    public string SeoDescription { set; get; }
+    public string? SeoDescription { set; get; }
     public DateTime? DateDeleted { set; get; }
     public DateTime? DateModified { set; get; }
     public virtual IEnumerable<Product> Products { set; get; }

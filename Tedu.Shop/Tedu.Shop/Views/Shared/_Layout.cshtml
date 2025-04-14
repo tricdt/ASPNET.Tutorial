@@ -1,50 +1,95 @@
 ﻿<!DOCTYPE html>
 <html lang="en">
 <head>
-    <meta charset="utf-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>@ViewData["Title"] - Tedu.Shop</title>
-    <script type="importmap"></script>
-    <link rel="stylesheet" href="~/lib/bootstrap/dist/css/bootstrap.min.css" />
-    <link rel="stylesheet" href="~/css/site.css" asp-append-version="true" />
-    <link rel="stylesheet" href="~/Tedu.Shop.styles.css" asp-append-version="true" />
+    <!-- Basic page needs -->
+    <meta charset="utf-8">
+    <!--[if IE]>
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <![endif]-->
+    <meta http-equiv="x-ua-compatible" content="ie=edge">
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+
+    <title>@ViewData["PageTitle"]</title>
+    <meta name="description" content="@ViewData["SeoDescription"]">
+    <meta name="keywords" content="@ViewData["SeoKeywords"]" />
+
+    <!-- Mobile specific metas  -->
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link href="~/lib/notifyjs/dist/styles/metro/notify-metro.css" rel="stylesheet" />
+    <!-- Favicons Icon -->
+    <link rel="shortcut icon" type="image/x-icon" href="favicon.ico">
+
+    <!-- CSS Style -->
+    <link rel="stylesheet" href="~/client-side/style.css">
 </head>
-<body>
-    <header>
-        <nav class="navbar navbar-expand-sm navbar-toggleable-sm navbar-light bg-white border-bottom box-shadow mb-3">
-            <div class="container-fluid">
-                <a class="navbar-brand" asp-area="" asp-controller="Home" asp-action="Index">Tedu.Shop</a>
-                <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target=".navbar-collapse" aria-controls="navbarSupportedContent"
-                        aria-expanded="false" aria-label="Toggle navigation">
-                    <span class="navbar-toggler-icon"></span>
-                </button>
-                <div class="navbar-collapse collapse d-sm-inline-flex justify-content-between">
-                    <ul class="navbar-nav flex-grow-1">
-                        <li class="nav-item">
-                            <a class="nav-link text-dark" asp-area="" asp-controller="Home" asp-action="Index">Home</a>
-                        </li>
-                        <li class="nav-item">
-                            <a class="nav-link text-dark" asp-area="" asp-controller="Home" asp-action="Privacy">Privacy</a>
-                        </li>
-                    </ul>
+
+<body class="@ViewData["BodyClass"]">
+
+    <!--[if lt IE 8]>
+    <p class="browserupgrade">You are using an <strong>outdated</strong> browser. Please <a href="http://browsehappy.com/">upgrade your browser</a> to improve your experience.</p>
+    <![endif]-->
+    <!-- mobile menu -->
+    @await Component.InvokeAsync("MobileMenu")
+    <!-- end mobile menu -->
+    <div id="page">
+
+        <!-- Header -->
+        @Html.Partial("_Header.cshtml")
+        <!-- end header -->
+        <nav>
+            <div class="container">
+                <div class="row">
+                    <div class="mm-toggle-wrap">
+                        <div class="mm-toggle"><i class="fa fa-align-justify"></i> </div>
+                        <span class="mm-label">Danh mục sản phẩm</span>
+                    </div>
+                    <div class="col-md-3 col-sm-3 mega-container hidden-xs">
+                        @* @await Component.InvokeAsync("CategoryMenu") *@
+                    </div>
+                    <div class="col-md-9 col-sm-9 jtv-megamenu">
+                        @* @await Component.InvokeAsync("MainMenu") *@
+                    </div>
                 </div>
             </div>
         </nav>
-    </header>
-    <div class="container">
-        <main role="main" class="pb-3">
-            @RenderBody()
-        </main>
-    </div>
 
-    <footer class="border-top footer text-muted">
-        <div class="container">
-            &copy; 2025 - Tedu.Shop - <a asp-area="" asp-controller="Home" asp-action="Privacy">Privacy</a>
-        </div>
-    </footer>
-    <script src="~/lib/jquery/dist/jquery.min.js"></script>
-    <script src="~/lib/bootstrap/dist/js/bootstrap.bundle.min.js"></script>
-    <script src="~/js/site.js" asp-append-version="true"></script>
-    @await RenderSectionAsync("Scripts", required: false)
+        @RenderBody()
+        <!-- Footer -->
+        @Html.Partial("_Footer.cshtml")
+
+        <!-- End Footer -->
+    </div>
+    <!-- JS -->
+    <!-- jquery js -->
+    <script type="text/javascript" src="~/lib/jquery/dist/jquery.min.js"></script>
+
+    <!-- bootstrap js -->
+    <script type="text/javascript" src="~/lib/bootstrap/dist/js/bootstrap.min.js"></script>
+
+    <!-- owl.carousel.min js -->
+    <script type="text/javascript" src="~/client-side/js/owl.carousel.min.js"></script>
+
+    <!-- jquery.mobile-menu js -->
+    <script type="text/javascript" src="~/client-side/js/mobile-menu.js"></script>
+
+    <!-- countdown js -->
+    <script type="text/javascript" src="~/client-side/js/countdown.js"></script>
+
+    <!--jquery-ui.min js -->
+    <script type="text/javascript" src="~/client-side/js/jquery-ui.js"></script>
+
+    <script src="~/lib/notifyjs/dist/notify.js"></script>
+    <script src="~/lib/notifyjs/dist/styles/metro/notify-metro.js"></script>
+    <script src="~/lib/bootbox/bootbox.js"></script>
+    <!-- main js -->
+    <script type="text/javascript" src="~/client-side/js/main.js"></script>
+    <script src="~/client-app/shared/tedu.js"></script>
+    <script src="~/client-app/controllers/base/index.js" asp-append-version="true"></script>
+
+    <script>
+        var baseObj = new BaseController();
+        baseObj.initialize();
+    </script>
+    @RenderSection("Scripts", false)
 </body>
 </html>

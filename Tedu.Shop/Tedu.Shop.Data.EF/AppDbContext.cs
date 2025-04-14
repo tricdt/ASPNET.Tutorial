@@ -77,7 +77,7 @@ public class AppDbContext : IdentityDbContext<AppUser, AppRole, Guid>
     public DbSet<AppUserGroup> AppUserGroups { get; set; }
     public DbSet<Permission> Permissions { get; set; }
     public DbSet<AuditLog> AuditLogs { get; set; }
-    public DbSet<Function> Functionss { get; set; }
+    public DbSet<Function> Functions { get; set; }
     public DbSet<Language> Languages { get; set; }
     public DbSet<Setting> Settings { get; set; }
     public DbSet<Advertistment> Advertistments { get; set; }

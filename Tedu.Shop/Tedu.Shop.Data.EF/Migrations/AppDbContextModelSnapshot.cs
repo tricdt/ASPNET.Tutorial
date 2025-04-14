@@ -234,7 +234,6 @@ namespace Tedu.Shop.Data.EF.Migrations
                         .HasColumnType("nvarchar(250)");
 
                     b.Property<string>("Other")
-                        .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("Phone")
@@ -458,18 +457,16 @@ namespace Tedu.Shop.Data.EF.Migrations
                         .HasColumnType("uniqueidentifier");
 
                     b.Property<string>("Content")
-                        .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("Description")
-                        .IsRequired()
                         .HasMaxLength(250)
                         .HasColumnType("nvarchar(250)");
 
                     b.Property<int?>("DisplayOrder")
                         .HasColumnType("int");
 
-                    b.Property<int>("GroupAlias")
+                    b.Property<int?>("GroupAlias")
                         .HasColumnType("int");
 
                     b.Property<string>("Image")
@@ -597,12 +594,10 @@ namespace Tedu.Shop.Data.EF.Migrations
                         .HasColumnType("uniqueidentifier");
 
                     b.Property<string>("Code")
-                        .IsRequired()
                         .HasMaxLength(50)
                         .HasColumnType("nvarchar(50)");
 
                     b.Property<string>("Content")
-                        .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<DateTime>("DateCreated")
@@ -615,7 +610,6 @@ namespace Tedu.Shop.Data.EF.Migrations
                         .HasColumnType("datetime2");
 
                     b.Property<string>("Description")
-                        .IsRequired()
                         .HasMaxLength(500)
                         .HasColumnType("nvarchar(500)");
 
@@ -626,7 +620,6 @@ namespace Tedu.Shop.Data.EF.Migrations
                         .HasColumnType("bit");
 
                     b.Property<string>("MoreImages")
-                        .IsRequired()
                         .HasColumnType("xml");
 
                     b.Property<string>("Name")
@@ -647,22 +640,18 @@ namespace Tedu.Shop.Data.EF.Migrations
                         .HasColumnType("int");
 
                     b.Property<string>("SeoAlias")
-                        .IsRequired()
                         .HasMaxLength(256)
                         .HasColumnType("nvarchar(256)");
 
                     b.Property<string>("SeoDescription")
-                        .IsRequired()
                         .HasMaxLength(256)
                         .HasColumnType("nvarchar(256)");
 
                     b.Property<string>("SeoKeywords")
-                        .IsRequired()
                         .HasMaxLength(256)
                         .HasColumnType("nvarchar(256)");
 
                     b.Property<string>("SeoPageTitle")
-                        .IsRequired()
                         .HasMaxLength(256)
                         .HasColumnType("nvarchar(256)");
 
@@ -670,7 +659,6 @@ namespace Tedu.Shop.Data.EF.Migrations
                         .HasColumnType("int");
 
                     b.Property<string>("Tags")
-                        .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("ThumbnailImage")
@@ -679,7 +667,6 @@ namespace Tedu.Shop.Data.EF.Migrations
                         .HasColumnType("nvarchar(256)");
 
                     b.Property<string>("Unit")
-                        .IsRequired()
                         .HasMaxLength(50)
                         .HasColumnType("nvarchar(50)");
 
@@ -700,7 +687,6 @@ namespace Tedu.Shop.Data.EF.Migrations
                         .HasColumnType("uniqueidentifier");
 
                     b.Property<string>("Code")
-                        .IsRequired()
                         .HasMaxLength(50)
                         .HasColumnType("nvarchar(50)");
 
@@ -717,7 +703,6 @@ namespace Tedu.Shop.Data.EF.Migrations
                         .HasColumnType("datetime2");
 
                     b.Property<string>("Description")
-                        .IsRequired()
                         .HasMaxLength(500)
                         .HasColumnType("nvarchar(500)");
 
@@ -728,7 +713,6 @@ namespace Tedu.Shop.Data.EF.Migrations
                         .HasColumnType("int");
 
                     b.Property<string>("Image")
-                        .IsRequired()
                         .HasMaxLength(256)
                         .HasColumnType("nvarchar(256)");
 
@@ -741,22 +725,18 @@ namespace Tedu.Shop.Data.EF.Migrations
                         .HasColumnType("uniqueidentifier");
 
                     b.Property<string>("SeoAlias")
-                        .IsRequired()
                         .HasMaxLength(256)
                         .HasColumnType("nvarchar(256)");
 
                     b.Property<string>("SeoDescription")
-                        .IsRequired()
                         .HasMaxLength(256)
                         .HasColumnType("nvarchar(256)");
 
                     b.Property<string>("SeoKeywords")
-                        .IsRequired()
                         .HasMaxLength(256)
                         .HasColumnType("nvarchar(256)");
 
                     b.Property<string>("SeoPageTitle")
-                        .IsRequired()
                         .HasMaxLength(256)
                         .HasColumnType("nvarchar(256)");
 
@@ -1015,13 +995,14 @@ namespace Tedu.Shop.Data.EF.Migrations
                         .HasColumnType("int");
 
                     b.Property<string>("Address")
-                        .IsRequired()
                         .HasMaxLength(256)
                         .HasColumnType("nvarchar(256)");
 
                     b.Property<string>("Avatar")
-                        .IsRequired()
                         .HasColumnType("nvarchar(max)");
+
+                    b.Property<decimal>("Balance")
+                        .HasColumnType("decimal(18,2)");
 
                     b.Property<DateTime?>("BirthDay")
                         .HasColumnType("datetime2");
@@ -1029,6 +1010,15 @@ namespace Tedu.Shop.Data.EF.Migrations
                     b.Property<string>("ConcurrencyStamp")
                         .IsConcurrencyToken()
                         .HasColumnType("nvarchar(max)");
+
+                    b.Property<DateTime>("DateCreated")
+                        .HasColumnType("datetime2");
+
+                    b.Property<DateTime?>("DateDeleted")
+                        .HasColumnType("datetime2");
+
+                    b.Property<DateTime?>("DateModified")
+                        .HasColumnType("datetime2");
 
                     b.Property<string>("Email")
                         .HasMaxLength(256)
@@ -1071,8 +1061,8 @@ namespace Tedu.Shop.Data.EF.Migrations
                     b.Property<string>("SecurityStamp")
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<bool?>("Status")
-                        .HasColumnType("bit");
+                    b.Property<int>("Status")
+                        .HasColumnType("int");
 
                     b.Property<bool>("TwoFactorEnabled")
                         .HasColumnType("bit");
@@ -1217,7 +1207,6 @@ namespace Tedu.Shop.Data.EF.Migrations
                         .HasColumnType("uniqueidentifier");
 
                     b.Property<string>("ParentList")
-                        .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<int>("SortOrder")

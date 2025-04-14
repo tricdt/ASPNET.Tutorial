@@ -23,6 +23,7 @@
 
   <ItemGroup>
     <ProjectReference Include="..\Tedu.Shop.Data\Tedu.Shop.Data.csproj" />
+    <ProjectReference Include="..\Tedu.Shop.Utilities\Tedu.Shop.Utilities.csproj" />
   </ItemGroup>
 
 </Project>

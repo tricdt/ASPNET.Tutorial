@@ -52,7 +52,7 @@ public class Product : DomainEntity<Guid>, ISwitchable,
     public string Name { set; get; }
 
     [MaxLength(50)]
-    public string Code { set; get; }
+    public string? Code { set; get; }
 
     [Required]
     public Guid CategoryId { set; get; }
@@ -61,7 +61,7 @@ public class Product : DomainEntity<Guid>, ISwitchable,
     public string ThumbnailImage { set; get; }
 
     [Column(TypeName = "xml")]
-    public string MoreImages { set; get; }
+    public string? MoreImages { set; get; }
     public decimal Price { set; get; }
 
     public decimal OriginalPrice { set; get; }
@@ -69,9 +69,9 @@ public class Product : DomainEntity<Guid>, ISwitchable,
     public decimal? PromotionPrice { set; get; }
 
     [MaxLength(500)]
-    public string Description { set; get; }
+    public string? Description { set; get; }
 
-    public string Content { set; get; }
+    public string? Content { set; get; }
 
     public bool? HomeFlag { set; get; }
 
@@ -79,13 +79,13 @@ public class Product : DomainEntity<Guid>, ISwitchable,
 
     public int? ViewCount { set; get; }
 
-    public string Tags { set; get; }
+    public string? Tags { set; get; }
 
     [DefaultValue(0)]
     public int Quantity { set; get; }
 
     [StringLength(50)]
-    public string Unit { get; set; }
+    public string? Unit { get; set; }
 
     public DateTime DateCreated { set; get; }
     public DateTime? DateModified { set; get; }
@@ -93,16 +93,16 @@ public class Product : DomainEntity<Guid>, ISwitchable,
     public Status Status { set; get; }
 
     [MaxLength(256)]
-    public string SeoPageTitle { set; get; }
+    public string? SeoPageTitle { set; get; }
 
     [MaxLength(256)]
-    public string SeoAlias { set; get; }
+    public string? SeoAlias { set; get; }
 
     [MaxLength(256)]
-    public string SeoKeywords { set; get; }
+    public string? SeoKeywords { set; get; }
 
     [MaxLength(256)]
-    public string SeoDescription { set; get; }
+    public string? SeoDescription { set; get; }
 
     [ForeignKey("CategoryId")]
     public virtual ProductCategory ProductCategory { set; get; }

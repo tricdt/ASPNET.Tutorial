@@ -34,7 +34,7 @@ public class Function : DomainEntity<Guid>, ISwitchable, ISortable, IHasUniqueCo
 
     public Guid? ParentId { set; get; }
 
-    public string ParentList { set; get; }
+    public string? ParentList { set; get; }
 
     public string CssClass { get; set; }
     public int SortOrder { set; get; }

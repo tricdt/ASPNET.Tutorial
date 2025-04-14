@@ -44,7 +44,7 @@ public class ContactDetail : DomainEntity<string>
     [StringLength(250)]
     public string Address { set; get; }
 
-    public string Other { set; get; }
+    public string? Other { set; get; }
 
     public double? Lat { set; get; }
 

@@ -35,7 +35,7 @@ public class Slide : DomainEntity<Guid>, ISwitchable, ISortable
     public string Name { set; get; }
 
     [StringLength(250)]
-    public string Description { set; get; }
+    public string? Description { set; get; }
 
     [StringLength(250)]
     [Required]
@@ -46,10 +46,9 @@ public class Slide : DomainEntity<Guid>, ISwitchable, ISortable
 
     public int? DisplayOrder { set; get; }
 
-    public string Content { set; get; }
+    public string? Content { set; get; }
 
-    [Required]
-    public SlideGroup GroupAlias { get; set; }
+    public SlideGroup? GroupAlias { get; set; }
 
     public int SortOrder { set; get; }
     public Status Status { set; get; }

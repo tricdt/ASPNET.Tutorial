@@ -6,4 +6,21 @@
     <Nullable>enable</Nullable>
   </PropertyGroup>
 
+  <ItemGroup>
+    <Folder Include="AutoMapper\" />
+    <Folder Include="Content\" />
+    <Folder Include="Dtos\" />
+    <Folder Include="Systems\" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\Tedu.Shop.Data.EF\Tedu.Shop.Data.EF.csproj" />
+    <ProjectReference Include="..\Tedu.Shop.Infrastructure\Tedu.Shop.Infrastructure.csproj" />
+    <ProjectReference Include="..\Tedu.Shop.Utilities\Tedu.Shop.Utilities.csproj" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <PackageReference Include="AutoMapper" Version="14.0.0" />
+  </ItemGroup>
+
 </Project>

@@ -1,0 +1,26 @@
+﻿@using Microsoft.AspNetCore.Authentication
+@using Microsoft.AspNetCore.Identity
+@using Tedu.Shop.Data.Entities.System
+@model Tedu.Shop.Models.ExternalLoginListViewModel
+<h4>Đăng nhập bằng mạng xã hội</h4>
+<hr />
+@inject SignInManager<AppUser> SignInManager
+@{
+    var loginProviders = (await SignInManager.GetExternalAuthenticationSchemesAsync()).ToList();
+    if (loginProviders.Any())
+    {
+      using (Html.BeginForm("ExternalLogin", "Account", new { ReturnUrl = Model.ReturnUrl }))
+      {
+            @Html.AntiForgeryToken()
+            <div id="socialLoginList">
+              <p>
+                @foreach (AuthenticationScheme p in loginProviders)
+                {
+                    <button type="submit" class="btn" id="@p.Name" name="provider" value="@p.Name" title="Log in using your @p.DisplayName account"><i class="fa fa-@p.Name.ToLower()"></i> @p.Name</button>
+                }
+              </p>
+            </div>
+      }
+    }
+
+}
