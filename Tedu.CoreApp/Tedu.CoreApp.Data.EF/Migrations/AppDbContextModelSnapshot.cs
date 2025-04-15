@@ -1196,7 +1196,6 @@ namespace Tedu.CoreApp.Data.EF.Migrations
             modelBuilder.Entity("Tedu.CoreApp.Data.Entities.Tag", b =>
                 {
                     b.Property<string>("Id")
-                        .ValueGeneratedOnAdd()
                         .HasMaxLength(255)
                         .HasColumnType("varchar(255)");
 
@@ -1205,10 +1204,9 @@ namespace Tedu.CoreApp.Data.EF.Migrations
                         .HasMaxLength(50)
                         .HasColumnType("nvarchar(50)");
 
-                    b.Property<string>("Type")
-                        .IsRequired()
+                    b.Property<int>("Type")
                         .HasMaxLength(50)
-                        .HasColumnType("nvarchar(50)");
+                        .HasColumnType("int");
 
                     b.HasKey("Id");
 

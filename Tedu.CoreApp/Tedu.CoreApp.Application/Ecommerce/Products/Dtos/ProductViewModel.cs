@@ -1,5 +1,8 @@
 using System;
 using System.ComponentModel.DataAnnotations;
+using AutoMapper;
+using Tedu.CoreApp.Application.Ecommerce.ProductCategories.Dtos;
+using Tedu.CoreApp.Data.Entities;
 using Tedu.CoreApp.Infrastructure.Enums;
 
 namespace Tedu.CoreApp.Application.Ecommerce.Products.Dtos;
@@ -48,4 +51,12 @@ public class ProductViewModel
     public string SeoAlias { set; get; }
     public string SeoKeywords { set; get; }
     public string SeoDescription { set; get; }
+    public virtual ProductCategoryViewModel ProductCategory { set; get; }
+    public class AutoMapperProfiles : Profile
+    {
+        public AutoMapperProfiles()
+        {
+            CreateMap<Product, ProductViewModel>();
+        }
+    }
 }

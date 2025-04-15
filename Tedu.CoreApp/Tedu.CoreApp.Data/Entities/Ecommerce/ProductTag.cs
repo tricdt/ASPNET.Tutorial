@@ -11,7 +11,7 @@ public class ProductTag : DomainEntity<Guid>
 
     [StringLength(50)]
     [Column(TypeName = "varchar")]
-    public Guid TagId { set; get; }
+    public string TagId { set; get; }
 
     [ForeignKey("ProductId")]
     public virtual Product Product { set; get; }

@@ -389,7 +389,7 @@ namespace Tedu.CoreApp.Data.EF.Migrations
                 {
                     Id = table.Column<string>(type: "varchar(255)", maxLength: 255, nullable: false),
                     Name = table.Column<string>(type: "nvarchar(50)", maxLength: 50, nullable: false),
-                    Type = table.Column<string>(type: "nvarchar(50)", maxLength: 50, nullable: false)
+                    Type = table.Column<int>(type: "int", maxLength: 50, nullable: false)
                 },
                 constraints: table =>
                 {

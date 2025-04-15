@@ -1,9 +1,9 @@
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 
 namespace Tedu.CoreApp.Areas.Admin.Controllers
 {
-    [Area("Admin")]
-    public class HomeController : Controller
+    public class HomeController : BaseController
     {
         // GET: HomeController
         public ActionResult Index()

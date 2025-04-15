@@ -48,7 +48,8 @@ public abstract class WebServiceBase<TEntity, TPrimaryKey, ViewModel> : IWebServ
 
     public virtual List<ViewModel> GetAll()
     {
-        return _repository.GetAll().ProjectTo<ViewModel>(_mapper.ConfigurationProvider).ToList();
+        var query = _repository.GetAll().AsQueryable();
+        return _mapper.ProjectTo<ViewModel>(query).ToList();
     }
 
     public virtual PagedResult<ViewModel> GetAllPaging(Expression<Func<TEntity, bool>> predicate, Func<TEntity, bool> orderBy,

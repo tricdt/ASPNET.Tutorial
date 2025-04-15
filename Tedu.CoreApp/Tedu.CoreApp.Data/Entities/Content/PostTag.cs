@@ -9,7 +9,7 @@ public class PostTag : DomainEntity<Guid>
 {
     public Guid PostId { set; get; }
 
-    public Guid TagId { set; get; }
+    public string TagId { set; get; }
 
     [ForeignKey("PostId")]
     public virtual Post Post { set; get; }

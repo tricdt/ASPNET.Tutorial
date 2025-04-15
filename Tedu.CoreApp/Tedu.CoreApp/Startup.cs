@@ -12,6 +12,7 @@ using Microsoft.Extensions.Logging;
 using Tedu.CoreApp.Helpers;
 using Tedu.CoreApp.Application.Systems.Functions.Dtos;
 using Tedu.CoreApp.Application.Systems.Functions;
+using Tedu.CoreApp.Application.Ecommerce.Products;
 namespace Tedu.CoreApp;
 
 public class Startup
@@ -31,8 +32,6 @@ public class Startup
         services.AddIdentity<AppUser, AppRole>()
                 .AddEntityFrameworkStores<AppDbContext>()
                 .AddDefaultTokenProviders();
-
-
         // Configure Identity
         services.Configure<IdentityOptions>(options =>
         {
@@ -70,8 +69,10 @@ public class Startup
         {
             options.SerializerSettings.ContractResolver = new DefaultContractResolver();
         });
-
+        services.AddAuthorization();
+        services.AddAuthentication();
         services.AddTransient<IFunctionService, FunctionService>();
+        services.AddTransient<IProductService, ProductService>();
     }
 
     // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
@@ -85,26 +86,20 @@ public class Startup
             // The default HSTS value is 30 days. You may want to change this for production scenarios, see https://aka.ms/aspnetcore-hsts.
             app.UseHsts();
         }
-
         app.UseHttpsRedirection();
         app.UseStaticFiles();
-
         app.UseRouting();
-
-        app.UseAuthorization();
         app.UseAuthentication();
+        app.UseAuthorization();
         app.UseEndpoints(endpoints =>
         {
             endpoints.MapControllerRoute(
+                name: "areaRoute",
+                pattern: "{area:exists}/{controller=Login}/{action=Index}/{id?}");
+            endpoints.MapControllerRoute(
                 name: "default",
                 pattern: "{controller=Home}/{action=Index}/{id?}");
-            endpoints.MapControllerRoute(
-               name: "areaRoute",
-               pattern: "{area:exists}/{controller=Login}/{action=Index}/{id?}");
-            // endpoints.MapAreaControllerRoute(
-            //     name: "Admin",
-            //     areaName: "Admin",
-            //     pattern: "{controller=Home}/{action=Index}/{id?}"); 
+
         });
 
         //dbInitializer.Seed().Wait();

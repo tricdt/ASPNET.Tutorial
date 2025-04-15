@@ -1,4 +1,5 @@
-﻿@using Tedu.CoreApp.Extensions
+﻿@using System.Security.Claims
+@using Tedu.CoreApp.Extensions
 <!DOCTYPE html>
 <html lang="en">
 
@@ -8,19 +9,31 @@
     <meta charset="utf-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1">
-    <title>Gentelella Alela! | </title>
+    <title>@ViewData["Title"]</title>
     <environment include="Development">
-        <!-- Bootstrap -->
-        <link href="~/lib/bootstrap/dist/css/bootstrap.css" rel="stylesheet" />
+        <link rel="stylesheet" href="~/lib/bootstrap/dist/css/bootstrap.css" />
         <!-- Font Awesome -->
-        <link href="~/lib/font-awesome/css/font-awesome.css" rel="stylesheet" />
+        <link href="~/lib/font-awesome/css/font-awesome.min.css" rel="stylesheet">
         <!-- NProgress -->
-        <link href="~/lib/nprogress/nprogress.css" rel="stylesheet" />
+        <link href="~/lib/nprogress/nprogress.css" rel="stylesheet">
+        <!-- iCheck -->
+        <link href="~/lib/iCheck/skins/flat/green.css" rel="stylesheet">
+
+        <!-- bootstrap-progressbar -->
+        <link href="~/lib/bootstrap-progressbar/css/bootstrap-progressbar-3.3.4.min.css" rel="stylesheet">
+        <!-- JQVMap -->
+        <link href="~/lib/jqvmap/dist/jqvmap.min.css" rel="stylesheet" />
         <!-- bootstrap-daterangepicker -->
-        <link href="~/lib/bootstrap-daterangepicker/daterangepicker.css" rel="stylesheet" />
+        <link href="~/lib/bootstrap-daterangepicker/daterangepicker.css" rel="stylesheet">
         <link href="~/lib/notifyjs/dist/styles/metro/notify-metro.css" rel="stylesheet" />
+
+        <link href="~/lib/ckeditor/skins/moono/editor.css" rel="stylesheet" />
+        <link href="~/lib/jQuery-EasyUI/themes/bootstrap/easyui.css" rel="stylesheet" />
+        <link href="~/lib/jQuery-EasyUI/themes/icon.css" rel="stylesheet" />
+        <link href="~/lib/jquery-treegrid/css/jquery.treegrid.css" rel="stylesheet" />
+        @RenderSection("Styles", false)
         <!-- Custom Theme Style -->
-        <link href="~/admin-side/css/custom.css" rel="stylesheet" />
+        <link href="~/admin-side/css/custom.css" rel="stylesheet">
     </environment>
 
     <environment exclude="Development">
@@ -56,8 +69,7 @@
             <div class="col-md-3 left_col">
                 <div class="left_col scroll-view">
                     <div class="navbar nav_title" style="border: 0;">
-                        <a href="index.html" class="site_title"><i class="fa fa-paw"></i> <span>Gentelella
-                                Alela!</span></a>
+                        <a href="index.html" class="site_title"><i class="fa fa-paw"></i> <span>Panda Shop</span></a>
                     </div>
 
                     <div class="clearfix"></div>
@@ -69,7 +81,12 @@
                         </div>
                         <div class="profile_info">
                             <span>Welcome,</span>
-                            <h2>@User.GetSpecificClaim("FullName")</h2>
+                            <h2>
+                                @{
+                                    var fullName = (User as ClaimsPrincipal)?.GetSpecificClaim("FullName") ?? "Guest";
+                                }
+                                @fullName
+                            </h2>
                         </div>
                     </div>
                     <!-- /menu profile quick info -->
@@ -123,7 +140,13 @@
                                         </a>
                                     </li>
                                     <li><a href="javascript:;">Help</a></li>
-                                    <li><a href="login.html"><i class="fa fa-sign-out pull-right"></i> Log Out</a></li>
+                                    <li>
+                                        <form asp-area="Admin" asp-action="Logout" asp-controller="Login" method="post">
+                                            @Html.AntiForgeryToken()
+                                            <button type="submit"><i class="fa fa-sign-out pull-right"></i> Đăng
+                                                xuất</button>
+                                        </form>
+                                    </li>
                                 </ul>
                             </li>
 
@@ -232,7 +255,7 @@
         <!-- NProgress -->
         <script src="~/lib/nprogress/nprogress.js"></script>
         <!-- Chart.js -->
-
+        <script src="~/lib/mustache/mustache.js"></script>
         <script src="~/lib/Chart.js/dist/Chart.js"></script>
         <!-- jQuery Sparklines -->
 
@@ -247,58 +270,7 @@
         <!-- Custom Theme Scripts -->
         <script src="~/admin-side/js/custom.js"></script>
     </environment>
-
-    <environment exclude="Development">
-        <!-- jQuery -->
-        <script src="https://ajax.aspnetcdn.com/ajax/jquery/jquery-2.2.0.min.js"
-            asp-fallback-src="~/lib/jquery/dist/jquery.min.js" asp-fallback-test="window.jQuery" crossorigin="anonymous"
-            integrity="sha384-K+ctZQ+LL8q6tP7I94W+qzQsfRV2a+AfHIi9k8z8l9ggpc8X+Ytst4yBo/hH+8Fk">
-            </script>
-        <!-- Bootstrap -->
-        <script src="https://ajax.aspnetcdn.com/ajax/bootstrap/3.3.7/bootstrap.min.js"
-            asp-fallback-src="~/lib/bootstrap/dist/js/bootstrap.min.js"
-            asp-fallback-test="window.jQuery && window.jQuery.fn && window.jQuery.fn.modal" crossorigin="anonymous"
-            integrity="sha384-Tc5IQib027qvyjSMfHjOMaLkfuWVxZxUPnCJA7l2mCWNIpG9mGCD8wGNIcPD7Txa">
-            </script>
-        <!-- FastClick -->
-        <script src="https://cdnjs.cloudflare.com/ajax/libs/fastclick/1.0.6/fastclick.min.js"
-            integrity="sha512-qH+R6YL4/40iiIrnN5aNZ1sEeEalNAdnzP9jfsxFPBdIslTkwUddkSazjVWhJ3f/3Y26QF6aql0xeneuVw0h/Q=="
-            crossorigin="anonymous" referrerpolicy="no-referrer"></script>
-        <!-- NProgress -->
-        <script src="https://cdnjs.cloudflare.com/ajax/libs/nprogress/0.2.0/nprogress.min.js"
-            integrity="sha512-bUg5gaqBVaXIJNuebamJ6uex//mjxPk8kljQTdM1SwkNrQD7pjS+PerntUSD+QRWPNJ0tq54/x4zRV8bLrLhZg=="
-            crossorigin="anonymous" referrerpolicy="no-referrer"></script>
-        <!-- Chart.js -->
-        <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.7.1/Chart.min.js"
-            integrity="sha512-HCG6Vbdg4S+6MkKlMJAm5EHJDeTZskUdUMTb8zNcUKoYNDteUQ0Zig30fvD9IXnRv7Y0X4/grKCnNoQ21nF2Qw=="
-            crossorigin="anonymous" referrerpolicy="no-referrer"></script>
-        <!-- jQuery Sparklines -->
-        <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery-sparklines/2.1.2/jquery.sparkline.min.js"
-            integrity="sha512-3PRVLmoBYuBDbCEojg5qdmd9UhkPiyoczSFYjnLhFb2KAFsWWEMlAPt0olX1Nv7zGhDfhGEVkXsu51a55nlYmw=="
-            crossorigin="anonymous" referrerpolicy="no-referrer"></script>
-        <!-- Moment.js -->
-        <script src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.19.1/moment.min.js"
-            integrity="sha512-Dz4zO7p6MrF+VcOD6PUbA08hK1rv0hDv/wGuxSUjImaUYxRyK2gLC6eQWVqyDN9IM1X/kUA8zkykJS/gEVOd3w=="
-            crossorigin="anonymous" referrerpolicy="no-referrer"></script>
-        <!-- daterangepicker.js -->
-        <script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-daterangepicker/2.1.25/daterangepicker.js"
-            integrity="sha512-BtaJS37hkf71yxGPz6ObCk0wG5YIvzJegFRHHQS6wUqOFV/eln1mZkl6Oo9AWPRvtYLstFlkjnUqvlC0f5t54Q=="
-            crossorigin="anonymous" referrerpolicy="no-referrer"></script>
-        <script src="https://cdnjs.cloudflare.com/ajax/libs/gentelella/1.4.0/js/custom.min.js"
-            integrity="sha512-ewZCd7YtttrXYKwKg3O0/ryrmq6lAQtLknQUdJpQO6FewqxRnTR4CV+e/XKfehvJIUvBwMuKJaoWd2owapsYYA=="
-            crossorigin="anonymous" referrerpolicy="no-referrer"></script>
-        <script src="https://cdnjs.cloudflare.com/ajax/libs/notify/0.4.2/notify.min.js"
-            integrity="sha512-efUTj3HdSPwWJ9gjfGR71X9cvsrthIA78/Fvd/IN+fttQVy7XWkOAXb295j8B3cmm/kFKVxjiNYzKw9IQJHIuQ=="
-            crossorigin="anonymous" referrerpolicy="no-referrer"></script>
-        <script src="https://cdnjs.cloudflare.com/ajax/libs/notify/0.4.2/styles/metro/notify-metro.min.js"
-            integrity="sha512-cG69LpvCJkui4+Uuj8gn/zRki74/E7FicYEXBnplyb/f+bbZCNZRHxHa5qwci1dhAFdK2r5T4dUynsztHnOS5g=="
-            crossorigin="anonymous" referrerpolicy="no-referrer"></script>
-        <script src="https://cdnjs.cloudflare.com/ajax/libs/bootbox.js/4.4.0/bootbox.min.js"
-            integrity="sha512-8NOmlkzoskIBni4iy5onHC57Mndt17mZgWkYJvxe5jwBJu3spYIRSjTkYJ9OLNS9Min+bsSqbDfGaoejWxyFiw=="
-            crossorigin="anonymous" referrerpolicy="no-referrer"></script>
-        <script src="~/app/shared/tedu.js"></script>
-        <script src="~/js/site.min.js" asp-append-version="true"></script>
-    </environment>
+    @RenderSection("Scripts", required: false)
 </body>
 
 </html>

@@ -1,15 +1,13 @@
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
-using Microsoft.EntityFrameworkCore;
 using Tedu.CoreApp.Data.Entities;
 using Tedu.CoreApp.Models.AccountViewModels;
 using Tedu.CoreApp.Utilities.Dtos;
 
 namespace Tedu.CoreApp.Areas.Admin.Controllers
 {
-    [Area("Admin")]
-    public class LoginController : Controller
+    public class LoginController : BaseController
     {
         private readonly UserManager<AppUser> _userManager;
         private readonly SignInManager<AppUser> _signInManager;
@@ -24,6 +22,7 @@ namespace Tedu.CoreApp.Areas.Admin.Controllers
             _logger = logger;
         }
         // GET: LoginController
+        [AllowAnonymous]
         public ActionResult Index()
         {
             return View();
@@ -35,9 +34,6 @@ namespace Tedu.CoreApp.Areas.Admin.Controllers
         {
             if (ModelState.IsValid)
             {
-                var count = await _userManager.Users.CountAsync();
-                var user = _userManager.FindByNameAsync("member").Result;
-                var users = await _userManager.Users.ToListAsync();
                 // This doesn't count login failures towards account lockout
                 // To enable password failures to trigger account lockout, set lockoutOnFailure: true
                 var result = await _signInManager.PasswordSignInAsync(model.UserName, model.Password, model.RememberMe, lockoutOnFailure: false);
@@ -59,6 +55,15 @@ namespace Tedu.CoreApp.Areas.Admin.Controllers
 
             // If we got this far, something failed, redisplay form
             return new ObjectResult(new GenericResult(false, model));
+        }
+
+
+        [HttpPost]
+        public async Task<IActionResult> Logout()
+        {
+            await _signInManager.SignOutAsync();
+            _logger.LogInformation("User logged out.");
+            return RedirectToAction(nameof(Index), "Login");    
         }
     }
 }

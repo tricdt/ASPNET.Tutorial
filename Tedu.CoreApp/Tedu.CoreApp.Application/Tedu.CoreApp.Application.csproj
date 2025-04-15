@@ -13,8 +13,11 @@
 
   <ItemGroup>
     <Folder Include="Content\" />
-    <Folder Include="Dtos\" />
     <Folder Include="Ecommerce\Bills\" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <PackageReference Include="EPPlus.Core" Version="1.5.4" />
   </ItemGroup>
 
 </Project>
