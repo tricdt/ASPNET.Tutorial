@@ -30,6 +30,7 @@
         "ckeditor": "~4.7.3",
         "jQuery-EasyUI": "~1.5.2",
         "jquery-treegrid": "~0.3.0",
-        "mustache": "~2.3.0"
+        "mustache": "~2.3.0",
+        "twbs-pagination": "~1.4.1"
     }
 }

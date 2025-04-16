@@ -12,7 +12,7 @@ using Tedu.CoreApp.Data.EF;
 namespace Tedu.CoreApp.Data.EF.Migrations
 {
     [DbContext(typeof(AppDbContext))]
-    [Migration("20250412094727_InitDB")]
+    [Migration("20250415102042_InitDB")]
     partial class InitDB
     {
         /// <inheritdoc />

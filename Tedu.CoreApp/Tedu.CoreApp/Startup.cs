@@ -13,6 +13,8 @@ using Tedu.CoreApp.Helpers;
 using Tedu.CoreApp.Application.Systems.Functions.Dtos;
 using Tedu.CoreApp.Application.Systems.Functions;
 using Tedu.CoreApp.Application.Ecommerce.Products;
+using Tedu.CoreApp.Application.Ecommerce.Products.Dtos;
+using Tedu.CoreApp.Application.Ecommerce.ProductCategories.Dtos;
 namespace Tedu.CoreApp;
 
 public class Startup
@@ -27,7 +29,7 @@ public class Startup
     public void ConfigureServices(IServiceCollection services)
     {
         services.AddDbContext<AppDbContext>(options =>
-              options.UseSqlServer(Configuration.GetConnectionString("DefaultConnection"),
+              options.UseLazyLoadingProxies().UseSqlServer(Configuration.GetConnectionString("DefaultConnection"),
               b => b.MigrationsAssembly("Tedu.CoreApp.Data.EF")));
         services.AddIdentity<AppUser, AppRole>()
                 .AddEntityFrameworkStores<AppDbContext>()
@@ -64,6 +66,8 @@ public class Startup
         services.AddTransient<DbInitializer>();
 
         services.AddAutoMapper(typeof(FunctionViewModel));
+        services.AddAutoMapper(typeof(ProductViewModel));
+        services.AddAutoMapper(typeof(ProductCategoryViewModel));
         services.AddScoped<IUserClaimsPrincipalFactory<AppUser>, CustomClaimsPrincipalFactory>();
         services.AddControllersWithViews().AddNewtonsoftJson(options =>
         {
