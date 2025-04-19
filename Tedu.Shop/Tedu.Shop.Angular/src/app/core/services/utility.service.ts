@@ -1,54 +1,73 @@
+import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
-import { HttpClient, HttpHeaders } from '@angular/common/http';
-import { SystemConstants } from '../common/system.constants';
-import { LoggedInUser } from '../domain/loggedin.user';
-import { map } from 'rxjs';
+import { Router } from '@angular/router';
+import { UrlConstants } from '../common/url.constants';
+import { AuthenService } from './authen.service';
 
-@Injectable({
-  providedIn: 'root'
-})
+@Injectable()
 export class UtilityService {
-  constructor(private _http: HttpClient) { }
+  private _router: Router;
 
-  login(username: string, password: string) {
-    let body = "userName=" + encodeURIComponent(username) +
-      "&password=" + encodeURIComponent(password) +
-      "&grant_type=password";
-    const headers = new HttpHeaders({
-      "Content-Type": "application/x-www-form-urlencoded"
-    });
-    return this._http.post<LoggedInUser>(SystemConstants.BASE_API + '/api/oauth/token', body, { headers }).pipe(
-      map((response: any) => {
-        let user: LoggedInUser = response;
-        if (user && user.access_token) {
-          localStorage.removeItem(SystemConstants.CURRENT_USER);
-          localStorage.setItem(SystemConstants.CURRENT_USER, JSON.stringify(user));
-        }
-      })
-    );
+  constructor(router: Router, private http: HttpClient, private authenService: AuthenService) {
+    this._router = router;
   }
 
-  logout() {
-    localStorage.removeItem(SystemConstants.CURRENT_USER);
+  convertDateTime(date: Date) {
+    var _formattedDate = new Date(date.toString());
+    return _formattedDate.toDateString();
   }
 
-  isUserAuthenticated(): boolean {
-    let user = localStorage.getItem(SystemConstants.CURRENT_USER);
-    if (user != null) {
-      return true;
+  navigate(path: string) {
+    this._router.navigate([path]);
+  }
+  navigateToLogin() {
+    this._router.navigate([UrlConstants.LOGIN]);
+  }
+  Unflatten = (arr: any[]): any[] => {
+    let map = {};
+    let roots: any[] = [];
+    for (var i = 0; i < arr.length; i += 1) {
+      let node = arr[i];
+      node.children = [];
+      map[node.Id] = i; // use map to look-up the parents
+      if (node.ParentId !== null) {
+        arr[map[node.ParentId]].children.push(node);
+      } else {
+        roots.push(node);
+      }
     }
-    else
-      return false;
+    return roots;
   }
+  
 
-  getLoggedInUser(): LoggedInUser {
-    let user: LoggedInUser;
-    if (this.isUserAuthenticated()) {
-      var userData =  JSON.parse(localStorage.getItem(SystemConstants.CURRENT_USER));
-      user = new LoggedInUser(userData.access_token, userData.username, userData.fullName, userData.email, userData.avatar);
-    }
-    else
-      user = null;
-    return user;
+  MakeSeoTitle(input: string) {
+    if (input == undefined || input == '')
+      return '';
+    //Đổi chữ hoa thành chữ thường
+    var slug = input.toLowerCase();
+
+    //Đổi ký tự có dấu thành không dấu
+    slug = slug.replace(/á|à|ả|ạ|ã|ă|ắ|ằ|ẳ|ẵ|ặ|â|ấ|ầ|ẩ|ẫ|ậ/gi, 'a');
+    slug = slug.replace(/é|è|ẻ|ẽ|ẹ|ê|ế|ề|ể|ễ|ệ/gi, 'e');
+    slug = slug.replace(/i|í|ì|ỉ|ĩ|ị/gi, 'i');
+    slug = slug.replace(/ó|ò|ỏ|õ|ọ|ô|ố|ồ|ổ|ỗ|ộ|ơ|ớ|ờ|ở|ỡ|ợ/gi, 'o');
+    slug = slug.replace(/ú|ù|ủ|ũ|ụ|ư|ứ|ừ|ử|ữ|ự/gi, 'u');
+    slug = slug.replace(/ý|ỳ|ỷ|ỹ|ỵ/gi, 'y');
+    slug = slug.replace(/đ/gi, 'd');
+    //Xóa các ký tự đặt biệt
+    slug = slug.replace(/\`|\~|\!|\@|\#|\||\$|\%|\^|\&|\*|\(|\)|\+|\=|\,|\.|\/|\?|\>|\<|\'|\"|\:|\;|_/gi, '');
+    //Đổi khoảng trắng thành ký tự gạch ngang
+    slug = slug.replace(/ /gi, "-");
+    //Đổi nhiều ký tự gạch ngang liên tiếp thành 1 ký tự gạch ngang
+    //Phòng trường hợp người nhập vào quá nhiều ký tự trắng
+    slug = slug.replace(/\-\-\-\-\-/gi, '-');
+    slug = slug.replace(/\-\-\-\-/gi, '-');
+    slug = slug.replace(/\-\-\-/gi, '-');
+    slug = slug.replace(/\-\-/gi, '-');
+    //Xóa các ký tự gạch ngang ở đầu và cuối
+    slug = '@' + slug + '@';
+    slug = slug.replace(/\@\-|\-\@|\@/gi, '');
+
+    return slug;
   }
 }
