@@ -25,5 +25,5 @@ public class Function
 
     [MaxLength(50)]
     [Column(TypeName = "varchar(50)")]
-    public string ParentId { get; set; }
+    public string? ParentId { get; set; }
 }
