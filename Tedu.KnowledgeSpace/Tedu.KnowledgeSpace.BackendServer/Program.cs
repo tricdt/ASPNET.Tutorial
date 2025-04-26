@@ -4,6 +4,8 @@ using Tedu.KnowledgeSpace.BackendServer.Data;
 using Tedu.KnowledgeSpace.BackendServer.Data.Entities;
 
 var builder = WebApplication.CreateBuilder(args);
+builder.Configuration.AddJsonFile("appsettings.json", optional: true, reloadOnChange: true)
+                    .AddJsonFile($"appsettings.{builder.Environment.EnvironmentName}.json", optional: true);
 var configuration = builder.Configuration;
 // Add services to the container.
 // Learn more about configuring OpenAPI at https://aka.ms/aspnet/openapi
@@ -46,6 +48,9 @@ if (app.Environment.IsDevelopment())
     app.UseSwaggerUI();
 }
 
+var loggerFactory = app.Services.GetRequiredService<ILoggerFactory>();
+loggerFactory.AddFile("Logs/TeduShop-{Date}.txt");
+
 using (var scope = app.Services.CreateScope())
 {
     var dbInitializer = scope.ServiceProvider.GetRequiredService<DbInitializer>();
@@ -53,11 +58,13 @@ using (var scope = app.Services.CreateScope())
 }
 
 app.UseHttpsRedirection();
-app.UseRouting(); // Add this line
+
+app.UseRouting(); 
 
 app.UseAuthorization();
 
-app.MapControllers(); // Add this line
+app.MapControllers();
+app.UseCors("AllowAllOrigins");
 
 app.Run();
 
