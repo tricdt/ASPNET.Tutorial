@@ -1,0 +1,6 @@
+@Tedu.Examination.API_HostAddress = http://localhost:5289
+
+GET {{Tedu.Examination.API_HostAddress}}/weatherforecast/
+Accept: application/json
+
+###
