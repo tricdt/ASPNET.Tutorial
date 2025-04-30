@@ -12,7 +12,7 @@ using Tedu.KnowledgeSpace.BackendServer.Data;
 namespace Tedu.KnowledgeSpace.BackendServer.Data.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    [Migration("20250425084025_InitDB")]
+    [Migration("20250429092733_InitDB")]
     partial class InitDB
     {
         /// <inheritdoc />
@@ -366,7 +366,6 @@ namespace Tedu.KnowledgeSpace.BackendServer.Data.Migrations
                         .HasColumnType("nvarchar(200)");
 
                     b.Property<string>("ParentId")
-                        .IsRequired()
                         .HasMaxLength(50)
                         .HasColumnType("varchar(50)");
 
