@@ -61,8 +61,8 @@ public class Startup
         });
 
         services.AddControllersWithViews();
-        services.AddFluentValidationAutoValidation()
-                .AddFluentValidationClientsideAdapters();
+        services.AddFluentValidationAutoValidation();
+        services.AddFluentValidationClientsideAdapters();
         services.AddValidatorsFromAssemblyContaining<RoleCreateRequestValidator>();
 
         services.AddAuthentication()
