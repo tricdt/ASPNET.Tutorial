@@ -63,7 +63,7 @@ public class Startup
         services.AddControllersWithViews();
         services.AddFluentValidationAutoValidation()
                 .AddFluentValidationClientsideAdapters();
-        services.AddValidatorsFromAssemblyContaining<RoleVmValidator>();
+        services.AddValidatorsFromAssemblyContaining<RoleCreateRequestValidator>();
 
         services.AddAuthentication()
             .AddLocalApi("Bearer", option =>
