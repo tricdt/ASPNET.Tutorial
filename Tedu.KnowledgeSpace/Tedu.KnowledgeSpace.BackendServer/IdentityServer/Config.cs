@@ -7,16 +7,21 @@ namespace Tedu.KnowledgeSpace.BackendServer.IdentityServer;
 public class Config
 {
     public static IEnumerable<IdentityResource> Ids =>
-            new IdentityResource[]
-            {
-                new IdentityResources.OpenId(),
-                new IdentityResources.Profile()
-            };
+        new IdentityResource[]
+        {
+            new IdentityResources.OpenId(),
+            new IdentityResources.Profile()
+        };
+    public static IEnumerable<ApiScope> ApiScopes =>
+        new List<ApiScope>
+        {
+            new ApiScope("api.knowledgespace", "Knowledge Space API")
+        };
 
     public static IEnumerable<ApiResource> Apis =>
         new ApiResource[]
         {
-                new ApiResource("api.knowledgespace", "KnowledgeSpace API")
+            new ApiResource("api.knowledgespace", "KnowledgeSpace API")
         };
 
     public static IEnumerable<Client> Clients =>

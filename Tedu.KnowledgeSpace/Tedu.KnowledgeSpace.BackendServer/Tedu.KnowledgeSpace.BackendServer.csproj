@@ -1,10 +1,11 @@
-<Project Sdk="Microsoft.NET.Sdk.Web">
+﻿<Project Sdk="Microsoft.NET.Sdk.Web">
 
   <PropertyGroup>
     <TargetFramework>net9.0</TargetFramework>
     <Nullable>enable</Nullable>
     <ImplicitUsings>enable</ImplicitUsings>
     <ExcludeFilesFromDeployment>wwwroot\**\*.*</ExcludeFilesFromDeployment>
+    <UserSecretsId>7a07cb0a-e144-4160-85a0-0200bb7bd98f</UserSecretsId>
   </PropertyGroup>
   <ItemGroup>
       <Content Remove="wwwroot\**\*.*" />
