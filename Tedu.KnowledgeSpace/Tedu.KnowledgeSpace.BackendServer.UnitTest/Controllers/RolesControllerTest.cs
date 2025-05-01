@@ -39,7 +39,7 @@ public class RolesControllerTest
         _mockRoleManager.Setup(x => x.CreateAsync(It.IsAny<IdentityRole>()))
             .ReturnsAsync(IdentityResult.Success);
         var rolesController = new RolesController(_mockRoleManager.Object);
-        var result = await rolesController.PostRole(new RoleVm()
+        var result = await rolesController.PostRole(new RoleCreateRequest()
         {
             Id = "test",
             Name = "test"
@@ -55,7 +55,7 @@ public class RolesControllerTest
         _mockRoleManager.Setup(x => x.CreateAsync(It.IsAny<IdentityRole>()))
             .ReturnsAsync(IdentityResult.Failed(new IdentityError[] { }));
         var rolesController = new RolesController(_mockRoleManager.Object);
-        var result = await rolesController.PostRole(new RoleVm()
+        var result = await rolesController.PostRole(new RoleCreateRequest()
         {
             Id = "test",
             Name = "test"
@@ -167,7 +167,7 @@ public class RolesControllerTest
         _mockRoleManager.Setup(x => x.UpdateAsync(It.IsAny<IdentityRole>()))
             .ReturnsAsync(IdentityResult.Success);
         var rolesController = new RolesController(_mockRoleManager.Object);
-        var result = await rolesController.PutRole("test", new RoleVm()
+        var result = await rolesController.PutRole("test", new RoleCreateRequest()
         {
             Id = "test",
             Name = "test"
@@ -191,7 +191,7 @@ public class RolesControllerTest
             .ReturnsAsync(IdentityResult.Failed(new IdentityError[] { }));
 
         var rolesController = new RolesController(_mockRoleManager.Object);
-        var result = await rolesController.PutRole("test", new RoleVm()
+        var result = await rolesController.PutRole("test", new RoleCreateRequest()
         {
             Id = "test",
             Name = "test"
