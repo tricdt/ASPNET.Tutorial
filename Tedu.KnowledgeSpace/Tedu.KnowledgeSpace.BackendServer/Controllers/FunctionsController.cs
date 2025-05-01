@@ -20,6 +20,9 @@ public class FunctionsController : BaseController
     [HttpPost]
     public async Task<IActionResult> PostFunction([FromBody] FunctionCreateRequest request)
     {
+        var dbFunction = await _context.Functions.FindAsync(request.Id);
+        if (dbFunction != null)
+            return BadRequest($"Function with id {request.Id} is existed.");
         var function = new Function()
         {
             Id = request.Id,
@@ -69,7 +72,7 @@ public class FunctionsController : BaseController
             || x.Url.Contains(filter));
         }
         var totalRecords = await query.CountAsync();
-        var items = await query.Skip((pageIndex - 1 * pageSize))
+        var items = await query.Skip((pageIndex - 1) * pageSize)
             .Take(pageSize)
             .Select(u => new FunctionVm()
             {
