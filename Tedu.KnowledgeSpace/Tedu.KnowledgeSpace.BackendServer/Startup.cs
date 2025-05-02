@@ -39,7 +39,7 @@ public class Startup
             options.Events.RaiseSuccessEvents = true;
         })
         .AddInMemoryApiResources(Config.Apis)
-        .AddInMemoryApiScopes(Config.ApiScopes) 
+        .AddInMemoryApiScopes(Config.ApiScopes)
         .AddInMemoryClients(Config.Clients)
         .AddInMemoryIdentityResources(Config.Ids)
         .AddAspNetIdentity<User>()
@@ -94,6 +94,7 @@ public class Startup
             });
         services.AddTransient<DbInitializer>();
         services.AddTransient<IEmailSender, EmailSenderService>();
+        services.AddTransient<ISequenceService, SequenceService>();
 
         services.AddSwaggerGen(c =>
         {
