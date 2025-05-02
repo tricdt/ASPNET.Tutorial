@@ -1,4 +1,5 @@
 using System;
+using Microsoft.AspNetCore.Http;
 
 namespace Tedu.KnowledgeSpace.ViewModels.Contents;
 
@@ -25,4 +26,6 @@ public class KnowledgeBaseCreateRequest
     public string Note { get; set; }
 
     public string Labels { get; set; }
+
+    public List<IFormFile> Attachments { get; set; }
 }

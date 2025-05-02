@@ -12,7 +12,7 @@ public class Report : IDateTracking
     [DatabaseGenerated(DatabaseGeneratedOption.Identity)]
     public int Id { get; set; }
 
-    public int? KnowledgeBaseId { get; set; }
+    public int KnowledgeBaseId { get; set; }
 
     public int? CommentId { get; set; }
 

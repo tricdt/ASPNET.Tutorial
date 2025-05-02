@@ -3,7 +3,7 @@ using Microsoft.EntityFrameworkCore.Migrations;
 
 #nullable disable
 
-namespace Tedu.KnowledgeSpace.BackendServer.Data.Migrations
+namespace Tedu.KnowledgeSpace.BackendServer.Migrations
 {
     /// <inheritdoc />
     public partial class InitDB : Migration
@@ -88,9 +88,7 @@ namespace Tedu.KnowledgeSpace.BackendServer.Data.Migrations
                     FilePath = table.Column<string>(type: "nvarchar(200)", maxLength: 200, nullable: false),
                     FileType = table.Column<string>(type: "varchar(4)", maxLength: 4, nullable: false),
                     FileSize = table.Column<long>(type: "bigint", nullable: false),
-                    KnowledgeBaseId = table.Column<int>(type: "int", nullable: true),
-                    CommentId = table.Column<int>(type: "int", nullable: true),
-                    Type = table.Column<string>(type: "varchar(10)", maxLength: 10, nullable: false),
+                    KnowledgeBaseId = table.Column<int>(type: "int", nullable: false),
                     CreateDate = table.Column<DateTime>(type: "datetime2", nullable: false),
                     LastModifiedDate = table.Column<DateTime>(type: "datetime2", nullable: true)
                 },
@@ -245,7 +243,7 @@ namespace Tedu.KnowledgeSpace.BackendServer.Data.Migrations
                 {
                     Id = table.Column<int>(type: "int", nullable: false)
                         .Annotation("SqlServer:Identity", "1, 1"),
-                    KnowledgeBaseId = table.Column<int>(type: "int", nullable: true),
+                    KnowledgeBaseId = table.Column<int>(type: "int", nullable: false),
                     CommentId = table.Column<int>(type: "int", nullable: true),
                     Content = table.Column<string>(type: "nvarchar(500)", maxLength: 500, nullable: false),
                     ReportUserId = table.Column<string>(type: "varchar(50)", maxLength: 50, nullable: false),

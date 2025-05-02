@@ -9,10 +9,10 @@ using Tedu.KnowledgeSpace.BackendServer.Data;
 
 #nullable disable
 
-namespace Tedu.KnowledgeSpace.BackendServer.Data.Migrations
+namespace Tedu.KnowledgeSpace.BackendServer.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    [Migration("20250429092733_InitDB")]
+    [Migration("20250502075703_InitDB")]
     partial class InitDB
     {
         /// <inheritdoc />
@@ -214,9 +214,6 @@ namespace Tedu.KnowledgeSpace.BackendServer.Data.Migrations
 
                     SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
 
-                    b.Property<int?>("CommentId")
-                        .HasColumnType("int");
-
                     b.Property<DateTime>("CreateDate")
                         .HasColumnType("datetime2");
 
@@ -238,16 +235,11 @@ namespace Tedu.KnowledgeSpace.BackendServer.Data.Migrations
                         .HasMaxLength(4)
                         .HasColumnType("varchar(4)");
 
-                    b.Property<int?>("KnowledgeBaseId")
+                    b.Property<int>("KnowledgeBaseId")
                         .HasColumnType("int");
 
                     b.Property<DateTime?>("LastModifiedDate")
                         .HasColumnType("datetime2");
-
-                    b.Property<string>("Type")
-                        .IsRequired()
-                        .HasMaxLength(10)
-                        .HasColumnType("varchar(10)");
 
                     b.HasKey("Id");
 
@@ -536,7 +528,7 @@ namespace Tedu.KnowledgeSpace.BackendServer.Data.Migrations
                     b.Property<bool>("IsProcessed")
                         .HasColumnType("bit");
 
-                    b.Property<int?>("KnowledgeBaseId")
+                    b.Property<int>("KnowledgeBaseId")
                         .HasColumnType("int");
 
                     b.Property<DateTime?>("LastModifiedDate")

@@ -13,8 +13,8 @@ public class DbInitializer
     private readonly string UserRoleName = "Member";
 
     public DbInitializer(ApplicationDbContext context,
-        UserManager<User> userManager,
-        RoleManager<IdentityRole> roleManager)
+      UserManager<User> userManager,
+      RoleManager<IdentityRole> roleManager)
     {
         _context = context;
         _userManager = userManager;
