@@ -1,6 +1,8 @@
 using System;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
+using Tedu.KnowledgeSpace.BackendServer.Authorizations;
+using Tedu.KnowledgeSpace.BackendServer.Constants;
 using Tedu.KnowledgeSpace.BackendServer.Data;
 using Tedu.KnowledgeSpace.BackendServer.Data.Entities;
 using Tedu.KnowledgeSpace.ViewModels;
@@ -45,6 +47,7 @@ public class FunctionsController : BaseController
     }
 
     [HttpGet]
+    [ClaimRequirement(FunctionCode.SYSTEM_FUNCTION, CommandCode.VIEW)]
     public async Task<IActionResult> GetFunctions()
     {
         var functions = _context.Functions;
