@@ -2,8 +2,7 @@ import { Component } from '@angular/core';
 
 @Component({
   selector: 'app-knowledge-bases',
-  standalone: true,
-  imports: [],
+  standalone: false,
   templateUrl: './knowledge-bases.component.html',
   styleUrl: './knowledge-bases.component.scss'
 })
