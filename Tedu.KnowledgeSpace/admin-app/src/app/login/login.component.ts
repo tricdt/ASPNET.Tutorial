@@ -9,7 +9,7 @@ import { routerTransition } from '@app/router.animations';
   animations: [routerTransition()],
 })
 export class LoginComponent {
-  onLoggedin() {
+  login() {
 
   }
 }
