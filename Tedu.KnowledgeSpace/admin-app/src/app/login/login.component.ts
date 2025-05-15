@@ -1,20 +1,15 @@
-import { Component, OnInit } from '@angular/core';
-import { Router } from '@angular/router';
-import { routerTransition } from '../router.animations';
+import { Component } from '@angular/core';
+import { routerTransition } from '@app/router.animations';
 
 @Component({
-    standalone: false,
-    selector: 'app-login',
-    templateUrl: './login.component.html',
-    styleUrls: ['./login.component.scss'],
-    animations: [routerTransition()]
+  standalone: false,
+  selector: 'sb-login',
+  templateUrl: './login.component.html',
+  styleUrl: './login.component.scss',
+  animations: [routerTransition()],
 })
-export class LoginComponent implements OnInit {
-    constructor(public router: Router) { }
+export class LoginComponent {
+  onLoggedin() {
 
-    ngOnInit() { }
-
-    onLoggedin() {
-        localStorage.setItem('isLoggedin', 'true');
-    }
+  }
 }

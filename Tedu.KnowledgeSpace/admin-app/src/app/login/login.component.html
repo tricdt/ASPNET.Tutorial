@@ -7,7 +7,7 @@
                 <div class="form-content">
                     <div class="form-group">
                         <input
-                            [placeholder]="'Email' | translate"
+                            [placeholder]="'Email' "
                             class="form-control input-underline input-lg"
                             type="text"
                         />
@@ -15,17 +15,17 @@
 
                     <div class="form-group">
                         <input
-                            [placeholder]="'Password' | translate"
+                            [placeholder]="'Password' "
                             class="form-control input-underline input-lg"
                             type="password"
                         />
                     </div>
                 </div>
                 <a (click)="onLoggedin()" [routerLink]="['/dashboard']" class="btn rounded-btn">
-                    {{'Log in' | translate}}
+                    {{'Log in' }}
                 </a>
                 &nbsp;
-                <a [routerLink]="['/signup']" class="btn rounded-btn">{{ 'Register' | translate }}</a>
+                <a [routerLink]="['/signup']" class="btn rounded-btn">{{ 'Register'}}</a>
             </form>
         </div>
     </div>

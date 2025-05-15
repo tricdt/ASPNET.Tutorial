@@ -1,11 +1,14 @@
-import { CommonModule } from '@angular/common';
 import { NgModule } from '@angular/core';
-
-import { AccessDeniedRoutingModule } from './access-denied-routing.module';
+import { CommonModule } from '@angular/common';
 import { AccessDeniedComponent } from './access-denied.component';
+import { AccessDeniedRoutingModule } from './access-denied-routing.module';
+
+
 
 @NgModule({
-    imports: [CommonModule, AccessDeniedRoutingModule],
-    declarations: [AccessDeniedComponent]
+  declarations: [AccessDeniedComponent],
+  imports: [
+    CommonModule, AccessDeniedRoutingModule
+  ]
 })
-export class AccessDeniedModule {}
+export class AccessDeniedModule { }

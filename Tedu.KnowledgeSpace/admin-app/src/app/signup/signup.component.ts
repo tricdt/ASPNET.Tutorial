@@ -1,15 +1,13 @@
-import { Component, OnInit } from '@angular/core';
-import { routerTransition } from '../router.animations';
+import { Component } from '@angular/core';
+import { routerTransition } from '@app/router.animations';
 
 @Component({
-    standalone: false,
-    selector: 'app-signup',
-    templateUrl: './signup.component.html',
-    styleUrls: ['./signup.component.scss'],
-    animations: [routerTransition()]
+  standalone: false,
+  selector: 'sb-signup',
+  templateUrl: './signup.component.html',
+  styleUrl: './signup.component.scss',
+  animations: [routerTransition()]
 })
-export class SignupComponent implements OnInit {
-    constructor() {}
+export class SignupComponent {
 
-    ngOnInit() {}
 }

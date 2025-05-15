@@ -1,12 +1,11 @@
-import { Component, OnInit } from '@angular/core';
+import { Component } from '@angular/core';
 
 @Component({
-    selector: 'app-access-denied',
-    templateUrl: './access-denied.component.html',
-    styleUrls: ['./access-denied.component.scss']
+  standalone: false,
+  selector: 'sb-access-denied',
+  templateUrl: './access-denied.component.html',
+  styleUrl: './access-denied.component.scss'
 })
-export class AccessDeniedComponent implements OnInit {
-    constructor() {}
+export class AccessDeniedComponent {
 
-    ngOnInit() {}
 }

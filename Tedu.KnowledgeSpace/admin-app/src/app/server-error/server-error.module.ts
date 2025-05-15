@@ -1,11 +1,14 @@
-import { CommonModule } from '@angular/common';
 import { NgModule } from '@angular/core';
-
-import { ServerErrorRoutingModule } from './server-error-routing.module';
+import { CommonModule } from '@angular/common';
 import { ServerErrorComponent } from './server-error.component';
+import { ServerErrorRoutingModule } from './server-error-routing.module';
+
+
 
 @NgModule({
-    imports: [CommonModule, ServerErrorRoutingModule],
-    declarations: [ServerErrorComponent]
+  declarations: [ServerErrorComponent],
+  imports: [
+    CommonModule, ServerErrorRoutingModule
+  ]
 })
-export class ServerErrorModule {}
+export class ServerErrorModule { }

@@ -1,65 +1,59 @@
-# SB Admin rewritten in Angular 13 and Bootstrap 5
+# SBAdmin
 
-Simple Dashboard Admin App built using Angular 13 and Bootstrap 5
+This project was generated using [Angular CLI](https://github.com/angular/angular-cli) version 19.2.11.
 
-This project is a port of the famous Free Admin Bootstrap Theme [SB Admin v8.0](http://startbootstrap.com/template-overviews/sb-admin-2/) to Angular 13 Theme.
+## Development server
 
-Powered by [StartAngular](http://startangular.com/) & [StrapUI](http://strapui.com/)
-
-## [Demo](http://rawgit.com/start-angular/SB-Admin-BS4-Angular-6/master/dist/)
-
-## [SB Admin Material version](https://github.com/start-javascript/sb-admin-material)
-
-This project was generated with [Angular CLI](https://github.com/angular/angular-cli) version 13.2.2.
-
-### Introduction
-
-Provides fast, reliable and extensible starter for the development of Angular projects.
-
-`sb-admin-bs5-angular13` provides the following features:
-
--   Developed using boostrap-v6.0.0
--   angular-v13.2.2
--   angular/cli-v13.2.2
--   [ng-bootstrap-v12.0.0](https://github.com/ng-bootstrap/)
--   [ngx-translate-v14.0.0](https://github.com/ngx-translate)
--   Following the best practices.
--   Ahead-of-Time compilation support.
--   Official Angular i18n support.
--   Production and development builds.
--   Tree-Shaking production builds.
-
-### How to start
-
-**Note** that this seed project requires **node >=v12.0.0 and npm >=6**.
-
-In order to start the project use:
+To start a local development server, run:
 
 ```bash
-$ git clone https://github.com/start-angular/SB-Admin-BS4-Angular-8.git
-$ cd SB-Admin-BS4-Angular-8
-# install the project's dependencies
-$ npm install
-# watches your files and uses livereload by default run `npm start` for a dev server. Navigate to `http://localhost:4200/`. The app will automatically reload if you change any of the source files.
-$ npm start
-# prod build, will output the production application in `dist`
-# the produced code can be deployed (rsynced) to a remote server
-$ npm run build
+ng serve
 ```
 
-### Code scaffolding
+Once the server is running, open your browser and navigate to `http://localhost:4200/`. The application will automatically reload whenever you modify any of the source files.
 
-Run `ng generate component component-name` to generate a new component. You can also use `ng generate directive/pipe/service/class/module`.
+## Code scaffolding
 
-### Running unit tests
+Angular CLI includes powerful code scaffolding tools. To generate a new component, run:
 
-Run `ng test` to execute the unit tests via [Karma](https://karma-runner.github.io).
+```bash
+ng generate component component-name
+```
 
-### Running end-to-end tests
+For a complete list of available schematics (such as `components`, `directives`, or `pipes`), run:
 
-Run `ng e2e` to execute the end-to-end tests via [Protractor](http://www.protractortest.org/).
-Before running the tests make sure you are serving the app via `ng serve`.
+```bash
+ng generate --help
+```
 
-### Further help
+## Building
 
-To get more help on the Angular CLI use `ng help` or go check out the [Angular CLI README](https://github.com/angular/angular-cli/blob/master/README.md).
+To build the project run:
+
+```bash
+ng build
+```
+
+This will compile your project and store the build artifacts in the `dist/` directory. By default, the production build optimizes your application for performance and speed.
+
+## Running unit tests
+
+To execute unit tests with the [Karma](https://karma-runner.github.io) test runner, use the following command:
+
+```bash
+ng test
+```
+
+## Running end-to-end tests
+
+For end-to-end (e2e) testing, run:
+
+```bash
+ng e2e
+```
+
+Angular CLI does not come with an end-to-end testing framework by default. You can choose one that suits your needs.
+
+## Additional Resources
+
+For more information on using the Angular CLI, including detailed command references, visit the [Angular CLI Overview and Command Reference](https://angular.dev/tools/cli) page.

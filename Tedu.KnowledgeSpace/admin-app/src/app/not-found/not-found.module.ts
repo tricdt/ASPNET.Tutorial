@@ -1,11 +1,14 @@
-import { CommonModule } from '@angular/common';
 import { NgModule } from '@angular/core';
-
-import { NotFoundRoutingModule } from './not-found-routing.module';
+import { CommonModule } from '@angular/common';
 import { NotFoundComponent } from './not-found.component';
+import { NotFoundRoutingModule } from './not-found-routing.module';
+
+
 
 @NgModule({
-    imports: [CommonModule, NotFoundRoutingModule],
-    declarations: [NotFoundComponent]
+  declarations: [NotFoundComponent],
+  imports: [
+    CommonModule, NotFoundRoutingModule
+  ]
 })
-export class NotFoundModule {}
+export class NotFoundModule { }
