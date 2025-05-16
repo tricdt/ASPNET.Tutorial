@@ -10,6 +10,10 @@
           "style": "scss",
           "skipTests": true,
           "prefix": "sb"
+        },
+        "@schematics/angular:service": {
+          "skipTests": true,
+          "flat": true
         }
       },
       "root": "",
@@ -33,6 +37,7 @@
             ],
             "styles": [
               "node_modules/font-awesome/css/font-awesome.min.css",
+              "node_modules/ngx-spinner/animations/ball-scale-multiple.css",
               "node_modules/alertifyjs/build/css/alertify.min.css",
               "node_modules/alertifyjs/build/css/themes/default.min.css",
               "src/styles/app.scss"

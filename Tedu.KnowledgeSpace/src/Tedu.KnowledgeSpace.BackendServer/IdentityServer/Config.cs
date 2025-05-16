@@ -87,7 +87,8 @@ public class Config
                     {
                         "http://localhost:4200",
                         "http://localhost:4200/authentication/login-callback",
-                        "http://localhost:4200/silent-renew.html"
+                        "http://localhost:4200/silent-renew.html",
+                        "http://localhost:4200/auth-callback"
                     },
                     PostLogoutRedirectUris = new List<string>
                     {

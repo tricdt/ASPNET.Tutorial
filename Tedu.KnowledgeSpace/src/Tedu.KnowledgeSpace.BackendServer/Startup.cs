@@ -1,6 +1,7 @@
 using System;
 using FluentValidation;
 using FluentValidation.AspNetCore;
+using Microsoft.AspNetCore.DataProtection;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Identity.UI.Services;
 using Microsoft.EntityFrameworkCore;
@@ -96,7 +97,9 @@ public class Startup
         services.AddTransient<DbInitializer>();
         services.AddTransient<IEmailSender, EmailSenderService>();
         services.AddTransient<ISequenceService, SequenceService>();
-
+        services.AddDataProtection()
+            .PersistKeysToFileSystem(new DirectoryInfo(@"C:\keys"))
+            .SetApplicationName("Tedu.KnowledgeSpace.BackendServer");
         services.AddSwaggerGen(c =>
         {
             c.SwaggerDoc("v1", new OpenApiInfo { Title = "Knowledge Space API", Version = "v1" });
