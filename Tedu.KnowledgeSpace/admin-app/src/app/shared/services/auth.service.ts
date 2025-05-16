@@ -1,7 +1,7 @@
 import { Injectable } from '@angular/core';
 import { BaseService } from './base.service';
 import { BehaviorSubject } from 'rxjs';
-import { User, UserManager, UserManagerSettings } from 'oidc-client';
+import { Profile, User, UserManager, UserManagerSettings } from 'oidc-client';
 import { environment } from '@environments/environment';
 
 @Injectable({
@@ -33,6 +33,21 @@ export class AuthService extends BaseService {
   async completeAuthentication() {
     this.user = await this.manager.signinRedirectCallback();
     this._authNavStatusSource.next(this.isAuthenticated());
+  }
+
+  get authorizationHeaderValue(): string {
+    if (this.user) {
+      return `${this.user.token_type} ${this.user.access_token}`;
+    }
+    return null;
+  }
+
+  get name(): string {
+    return this.user != null ? this.user.profile.name : '';
+  }
+
+  get profile(): Profile {
+    return this.user != null ? this.user.profile : null;
   }
 }
 

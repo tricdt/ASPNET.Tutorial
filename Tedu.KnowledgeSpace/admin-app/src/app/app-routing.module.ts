@@ -1,9 +1,14 @@
 import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
+import { AuthGuard } from './shared/guard/auth.guard';
 const routes: Routes = [
   {
     path: '',
     loadChildren: () => import('./protected-zone/layout.module').then((m) => m.ProtectedZoneModule),
+    data: {
+      functionCode: 'DASHBOARD',
+    },
+    canActivate: [AuthGuard],
   },
   { path: 'login', loadChildren: () => import('./login/login.module').then((m) => m.LoginModule) },
   { path: 'signup', loadChildren: () => import('./signup/signup.module').then((m) => m.SignupModule) },

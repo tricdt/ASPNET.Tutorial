@@ -5,6 +5,8 @@ import { AppRoutingModule } from "./app-routing.module";
 import { CommonModule } from "@angular/common";
 import { BrowserModule } from "@angular/platform-browser";
 import { BrowserAnimationsModule } from "@angular/platform-browser/animations";
+import { AuthGuard } from "./shared/guard/auth.guard";
+import { AuthInterceptor } from "./shared/interceptors/auth.interceptors";
 
 @NgModule({
     imports: [
@@ -16,7 +18,11 @@ import { BrowserAnimationsModule } from "@angular/platform-browser/animations";
     ],
     exports: [],
     declarations: [AppComponent],
-    providers: [],
+    providers: [AuthGuard, {
+        provide: 'HTTP_INTERCEPTORS',
+        useClass: AuthInterceptor,
+        multi: true
+    }],
     bootstrap: [AppComponent]
 })
 export class AppModule { }
