@@ -18,7 +18,7 @@ builder.Services.AddAuthentication(options =>
         options.ClientId = "web";
         options.ClientSecret = "secret";
         options.ResponseType = "code";
-
+        options.CallbackPath = "/auth/callback";
         options.Scope.Clear();
         options.Scope.Add("openid");
         options.Scope.Add("profile");
