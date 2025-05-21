@@ -1,3 +1,6 @@
+using Duende.IdentityServer;
+using Google.Apis.Auth.AspNetCore3;
+using Microsoft.IdentityModel.Tokens;
 using Serilog;
 
 namespace IdentityServer;
@@ -14,6 +17,37 @@ internal static class HostingExtensions
             .AddInMemoryApiScopes(Config.ApiScopes)
             .AddInMemoryClients(Config.Clients)
             .AddTestUsers(TestUsers.Users);
+
+        builder.Services.AddAuthentication().AddOpenIdConnect("oidc", "Sign-in with demo.duendesoftware.com", options =>
+        {
+            options.SignInScheme = IdentityServerConstants.ExternalCookieAuthenticationScheme;
+            options.SignOutScheme = IdentityServerConstants.SignoutScheme;
+            options.SaveTokens = true;
+        
+            options.Authority = "https://demo.duendesoftware.com";
+            options.ClientId = "interactive.confidential";
+            options.ClientSecret = "secret";
+            options.ResponseType = "code";
+        
+            options.TokenValidationParameters = new TokenValidationParameters
+            {
+                NameClaimType = "name",
+                RoleClaimType = "role"
+            };
+        });
+
+        builder.Services.AddAuthentication()
+            .AddGoogleOpenIdConnect(
+        authenticationScheme: GoogleOpenIdConnectDefaults.AuthenticationScheme,
+        displayName: "Google",
+        configureOptions: options =>
+        {
+            options.SignInScheme = IdentityServerConstants.ExternalCookieAuthenticationScheme;
+
+            options.ClientId = builder.Configuration["Authentication:Google:ClientId"];
+            options.ClientSecret = builder.Configuration["Authentication:Google:ClientSecret"];
+            options.CallbackPath = "/signin-google";
+        });
 
         return builder.Build();
     }
@@ -32,8 +66,7 @@ internal static class HostingExtensions
         app.UseRouting();
 
         app.UseIdentityServer();
-
-        // uncomment if you want to add a UI
+        app.UseAuthentication();
         app.UseAuthorization();
         app.MapRazorPages().RequireAuthorization();
 
