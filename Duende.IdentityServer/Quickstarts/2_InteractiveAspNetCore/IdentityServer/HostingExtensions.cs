@@ -1,5 +1,7 @@
 using Duende.IdentityServer;
 using Google.Apis.Auth.AspNetCore3;
+
+// using Google.Apis.Auth.AspNetCore3;
 using Microsoft.IdentityModel.Tokens;
 using Serilog;
 
@@ -49,6 +51,15 @@ internal static class HostingExtensions
             options.CallbackPath = "/signin-google";
         });
 
+        builder.Services.AddAuthentication()
+            .AddFacebook(configureOptions : facebookOptions => {
+                facebookOptions.SignInScheme = IdentityServerConstants.ExternalCookieAuthenticationScheme;
+                facebookOptions.AppId = builder.Configuration["Authentication:Facebook:AppId"] ?? "";
+                facebookOptions.AppSecret = builder.Configuration["Authentication:Facebook:AppSecret"] ?? "";
+                facebookOptions.CallbackPath = "/signin-facebook";
+        });
+
+            
         return builder.Build();
     }
 
