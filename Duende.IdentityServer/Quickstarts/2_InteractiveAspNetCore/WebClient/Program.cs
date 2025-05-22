@@ -25,6 +25,7 @@ builder.Services.AddAuthentication(options =>
         options.Scope.Add("profile");
         options.Scope.Add("verification");
         options.ClaimActions.MapJsonKey("email_verified", "email_verified");
+        options.ClaimActions.MapJsonKey("sub", "id");
         options.GetClaimsFromUserInfoEndpoint = true;
         options.MapInboundClaims = false; // Don't rename claim types
 
