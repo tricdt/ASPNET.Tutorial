@@ -36,41 +36,34 @@ internal static class HostingExtensions
                 NameClaimType = "name",
                 RoleClaimType = "role"
             };
-        });
+        })
 
-        builder.Services.AddAuthentication()
             .AddGoogleOpenIdConnect(
-        authenticationScheme: GoogleOpenIdConnectDefaults.AuthenticationScheme,
-        displayName: "Google",
-        configureOptions: options =>
-        {
-            options.SignInScheme = IdentityServerConstants.ExternalCookieAuthenticationScheme;
+                authenticationScheme: GoogleOpenIdConnectDefaults.AuthenticationScheme,
+                displayName: "Google",
+                configureOptions: options =>
+                {
+                    options.SignInScheme = IdentityServerConstants.ExternalCookieAuthenticationScheme;
 
-            options.ClientId = builder.Configuration["Authentication:Google:ClientId"];
-            options.ClientSecret = builder.Configuration["Authentication:Google:ClientSecret"];
-            options.CallbackPath = "/signin-google";
-        });
-
-        builder.Services.AddAuthentication()
+                    options.ClientId = builder.Configuration["Authentication:Google:ClientId"];
+                    options.ClientSecret = builder.Configuration["Authentication:Google:ClientSecret"];
+                    options.CallbackPath = "/signin-google";
+                })
             .AddFacebook(configureOptions: facebookOptions =>
-            {
-                facebookOptions.SignInScheme = IdentityServerConstants.ExternalCookieAuthenticationScheme;
-                facebookOptions.AppId = builder.Configuration["Authentication:Facebook:AppId"] ?? "";
-                facebookOptions.AppSecret = builder.Configuration["Authentication:Facebook:AppSecret"] ?? "";
-                facebookOptions.CallbackPath = "/signin-facebook";
-            });
+                {
+                    facebookOptions.SignInScheme = IdentityServerConstants.ExternalCookieAuthenticationScheme;
+                    facebookOptions.AppId = builder.Configuration["Authentication:Facebook:AppId"] ?? "";
+                    facebookOptions.AppSecret = builder.Configuration["Authentication:Facebook:AppSecret"] ?? "";
+                    facebookOptions.CallbackPath = "/signin-facebook";
+                })
+            .AddGitHub(options =>
+                {
+                    options.SignInScheme = IdentityServerConstants.ExternalCookieAuthenticationScheme;
 
-        // builder.Services.AddAuthentication()
-        //     .AddOpenIdConnect("Github", "Sign-in with github", options =>
-        //     {
-        //         options.SignInScheme = IdentityServerConstants.ExternalCookieAuthenticationScheme;
-
-        //         options.ClientId = builder.Configuration["Authentication:Github:ClientId"];
-        //         options.ClientSecret = builder.Configuration["Authentication:Github:ClientSecret"];
-        //         options.CallbackPath = "/signin-github";
-        //     });
-
-
+                    options.ClientId = builder.Configuration["Authentication:Github:ClientId"] ?? "";
+                    options.ClientSecret = builder.Configuration["Authentication:Github:ClientSecret"] ?? "";
+                    options.CallbackPath = "/signin-github";
+                });
 
         return builder.Build();
     }
