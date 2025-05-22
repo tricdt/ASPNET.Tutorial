@@ -25,12 +25,12 @@ internal static class HostingExtensions
             options.SignInScheme = IdentityServerConstants.ExternalCookieAuthenticationScheme;
             options.SignOutScheme = IdentityServerConstants.SignoutScheme;
             options.SaveTokens = true;
-        
+
             options.Authority = "https://demo.duendesoftware.com";
             options.ClientId = "interactive.confidential";
             options.ClientSecret = "secret";
             options.ResponseType = "code";
-        
+
             options.TokenValidationParameters = new TokenValidationParameters
             {
                 NameClaimType = "name",
@@ -52,14 +52,26 @@ internal static class HostingExtensions
         });
 
         builder.Services.AddAuthentication()
-            .AddFacebook(configureOptions : facebookOptions => {
+            .AddFacebook(configureOptions: facebookOptions =>
+            {
                 facebookOptions.SignInScheme = IdentityServerConstants.ExternalCookieAuthenticationScheme;
                 facebookOptions.AppId = builder.Configuration["Authentication:Facebook:AppId"] ?? "";
                 facebookOptions.AppSecret = builder.Configuration["Authentication:Facebook:AppSecret"] ?? "";
                 facebookOptions.CallbackPath = "/signin-facebook";
-        });
+            });
 
-            
+        // builder.Services.AddAuthentication()
+        //     .AddOpenIdConnect("Github", "Sign-in with github", options =>
+        //     {
+        //         options.SignInScheme = IdentityServerConstants.ExternalCookieAuthenticationScheme;
+
+        //         options.ClientId = builder.Configuration["Authentication:Github:ClientId"];
+        //         options.ClientSecret = builder.Configuration["Authentication:Github:ClientSecret"];
+        //         options.CallbackPath = "/signin-github";
+        //     });
+
+
+
         return builder.Build();
     }
 
