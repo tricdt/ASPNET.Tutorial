@@ -1,21 +1,12 @@
+// Copyright (c) Duende Software. All rights reserved.
+// Licensed under the MIT License. See LICENSE in the project root for license information.
+
 using Microsoft.AspNetCore.Authentication;
-using Microsoft.AspNetCore.Authentication.OpenIdConnect;
-using Duende.IdentityServer.Licensing;
 
 var builder = WebApplication.CreateBuilder(args);
 
 // Add services to the container.
 builder.Services.AddRazorPages();
-
-// Add Duende IdentityServer license
-builder.Services.AddIdentityServer()
-    .AddDeveloperSigningCredential()
-    .AddInMemoryApiScopes(Config.ApiScopes)
-    .AddInMemoryApiResources(Config.ApiResources)
-    .AddInMemoryClients(Config.Clients)
-    .AddInMemoryIdentityResources(Config.IdentityResources)
-    .AddLicense("your-license-key-here"); // Replace with your actual license key
-
 builder.Services.AddAuthentication(options =>
     {
         options.DefaultScheme = "Cookies";
@@ -29,19 +20,19 @@ builder.Services.AddAuthentication(options =>
         options.ClientId = "web";
         options.ClientSecret = "secret";
         options.ResponseType = "code";
-        options.CallbackPath = "/signin-oidc";
+
         options.Scope.Clear();
         options.Scope.Add("openid");
         options.Scope.Add("profile");
+        options.Scope.Add("api1");
+        options.Scope.Add("offline_access");
         options.Scope.Add("verification");
         options.ClaimActions.MapJsonKey("email_verified", "email_verified");
-        options.ClaimActions.MapJsonKey("sub", "id");
         options.GetClaimsFromUserInfoEndpoint = true;
+
         options.MapInboundClaims = false; // Don't rename claim types
 
         options.SaveTokens = true;
-
-
     });
 
 var app = builder.Build();
@@ -55,14 +46,12 @@ if (!app.Environment.IsDevelopment())
 }
 
 app.UseHttpsRedirection();
+app.UseStaticFiles();
 
 app.UseRouting();
 app.UseAuthentication();
 app.UseAuthorization();
 
-app.MapStaticAssets();
-
-app.MapRazorPages()
-   .RequireAuthorization();
+app.MapRazorPages().RequireAuthorization();
 
 app.Run();
