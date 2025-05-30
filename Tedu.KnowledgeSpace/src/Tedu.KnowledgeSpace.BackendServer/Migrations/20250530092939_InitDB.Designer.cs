@@ -12,7 +12,7 @@ using Tedu.KnowledgeSpace.BackendServer.Data;
 namespace Tedu.KnowledgeSpace.BackendServer.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    [Migration("20250502075703_InitDB")]
+    [Migration("20250530092939_InitDB")]
     partial class InitDB
     {
         /// <inheritdoc />

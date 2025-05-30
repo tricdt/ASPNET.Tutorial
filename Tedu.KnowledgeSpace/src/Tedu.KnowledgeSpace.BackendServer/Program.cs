@@ -2,39 +2,50 @@ using Serilog;
 using Tedu.KnowledgeSpace.BackendServer;
 using Tedu.KnowledgeSpace.BackendServer.Data;
 
-public class Program
+Log.Logger = new LoggerConfiguration()
+    .WriteTo.Console()
+    .CreateBootstrapLogger();
+
+Log.Information("Starting up");
+
+try
 {
-    public static void Main(string[] args)
+    var builder = WebApplication.CreateBuilder(args);
+
+    builder.Host.UseSerilog((ctx, lc) => lc
+        .WriteTo.Console(outputTemplate: "[{Timestamp:HH:mm:ss} {Level}] {SourceContext}{NewLine}{Message:lj}{NewLine}{Exception}{NewLine}")
+        .Enrich.FromLogContext()
+        .ReadFrom.Configuration(ctx.Configuration));
+
+    var app = builder
+        .ConfigureServices()
+        .ConfigurePipeline();
+
+
+    using (var scope = app.Services.GetRequiredService<IServiceScopeFactory>().CreateScope())
     {
-        Log.Logger = new LoggerConfiguration()
-                         .Enrich.FromLogContext()
-                         .WriteTo.Console()
-                         .CreateLogger();
-        var host = CreateHostBuilder(args).Build();
-
-        using (var scope = host.Services.CreateScope())
+        var services = scope.ServiceProvider;
+        try
         {
-            var services = scope.ServiceProvider;
-            try
-            {
-                Log.Information("Seeding data...");
-                var dbInitializer = services.GetService<DbInitializer>();
-                dbInitializer.Seed().Wait();
-            }
-            catch (Exception ex)
-            {
-                var logger = services.GetRequiredService<ILogger<Program>>();
-                logger.LogError(ex, "An error occurred while seeding the database.");
-            }
+            Log.Information("Seeding data...");
+            var dbInitializer = services.GetRequiredService<DbInitializer>();
+            await dbInitializer.Seed();
+            Log.Information("Done seeding data.");
         }
-        host.Run();
+        catch (Exception ex)
+        {
+            Log.Fatal(ex, "An error occurred while seeding the database.");
+            throw;
+        }
     }
-
-    public static IHostBuilder CreateHostBuilder(string[] args) =>
-        Host.CreateDefaultBuilder(args)
-            .UseSerilog()
-            .ConfigureWebHostDefaults(webBuilder =>
-            {
-                webBuilder.UseStartup<Startup>();
-            });
+    app.Run();
+}
+catch (Exception ex) when (ex is not HostAbortedException)
+{
+    Log.Fatal(ex, "Unhandled exception");
+}
+finally
+{
+    Log.Information("Shut down complete");
+    Log.CloseAndFlush();
 }
