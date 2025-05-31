@@ -1,0 +1,6 @@
+@Apis.ResourceBased_HostAddress = http://localhost:5133
+
+GET {{Apis.ResourceBased_HostAddress}}/weatherforecast/
+Accept: application/json
+
+###
