@@ -16,6 +16,9 @@ try
 
     builder.Host.UseSerilog((ctx, lc) => lc
         .WriteTo.Console(outputTemplate: "[{Timestamp:HH:mm:ss} {Level}] {SourceContext}{NewLine}{Message:lj}{NewLine}{Exception}{NewLine}")
+        .WriteTo.File("logs/identityserver.log", rollingInterval: RollingInterval.Day, 
+            outputTemplate: "[{Timestamp:HH:mm:ss} {Level}] {SourceContext}{NewLine}{Message:lj}{NewLine}{Exception}{NewLine}")
+        .MinimumLevel.Override("Microsoft", Serilog.Events.LogEventLevel.Warning)
         .Enrich.FromLogContext()
         .ReadFrom.Configuration(ctx.Configuration));
 
