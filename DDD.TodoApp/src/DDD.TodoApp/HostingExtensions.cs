@@ -13,6 +13,8 @@ internal static class HostingExtensions
         {
             options.UseSqlite(builder.Configuration.GetConnectionString("DefaultConnection"));
         });
+
+        builder.Services.AddControllersWithViews();
         return builder.Build();
     }
 
@@ -25,9 +27,14 @@ internal static class HostingExtensions
             app.UseDeveloperExceptionPage();
         }
 
-        //app.UseStaticFiles();
-        //app.UseRouting();
+        app.UseStaticFiles();
 
+        app.UseRouting();
+        
+        app.MapControllerRoute(
+            name: "default",
+            pattern: "{controller=Home}/{action=Index}/{id?}"
+        );
         //app.UseIdentityServer();
 
         //app.UseAuthorization();
