@@ -1,11 +1,22 @@
+using AutoMapper;
 using DDD.TodoApp.ViewModels.Tasks;
+using MediatR;
 using Microsoft.AspNetCore.Mvc;
 
 namespace DDD.TodoApp.Controllers
 {
     public class TasksController : Controller
     {
-        // GET: TasksController
+        private readonly IMediator _mediator;
+        private readonly IMapper _mapper;
+
+        private const string NotificationMessageKey = "NotificationMessage";
+
+        public TasksController(IMediator mediator, IMapper mapper)
+        {
+            _mediator = mediator;
+            _mapper = mapper;
+        }
         public ActionResult Index()
         {
             return View();
@@ -13,8 +24,7 @@ namespace DDD.TodoApp.Controllers
 
         public async Task<IActionResult> Add()
         {
-            var model = new TasksEditViewModel();
-
+            var model = await _mediator.Send(new TasksEditViewModelQuery());
             return View("Edit", model);
         }
 

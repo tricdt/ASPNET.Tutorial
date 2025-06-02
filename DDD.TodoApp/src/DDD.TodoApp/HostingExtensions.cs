@@ -1,3 +1,4 @@
+using System.Reflection;
 using DDD.TodoApp.Models;
 using Microsoft.EntityFrameworkCore;
 using Serilog;
@@ -15,6 +16,11 @@ internal static class HostingExtensions
         });
 
         builder.Services.AddControllersWithViews();
+        builder.Services.AddAutoMapper(GetExecutingAssembly());
+        builder.Services.AddMediatR(cfg =>
+        {
+            cfg.RegisterServicesFromAssembly(GetExecutingAssembly());
+        });
         return builder.Build();
     }
 
@@ -30,7 +36,7 @@ internal static class HostingExtensions
         app.UseStaticFiles();
 
         app.UseRouting();
-        
+
         app.MapControllerRoute(
             name: "default",
             pattern: "{controller=Home}/{action=Index}/{id?}"
@@ -41,5 +47,10 @@ internal static class HostingExtensions
         //app.MapRazorPages().RequireAuthorization();
 
         return app;
+    }
+
+    private static Assembly GetExecutingAssembly()
+    {
+        return typeof(Program).GetTypeInfo().Assembly;
     }
 }
