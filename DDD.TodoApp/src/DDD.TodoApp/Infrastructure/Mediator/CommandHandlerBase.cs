@@ -6,9 +6,8 @@ namespace DDD.TodoApp.Infrastructure.Mediator;
 
 public abstract class CommandHandlerBase : HandlerBase
 {
-    protected IMapper Mapper { get; private set; }
-    protected CommandHandlerBase(ApplicationDbContext context, IMapper mapper) : base(context)
+    protected CommandHandlerBase(ApplicationDbContext context)
+        : base(context)
     {
-        Mapper = mapper ?? throw new ArgumentNullException(nameof(mapper));
     }
 }

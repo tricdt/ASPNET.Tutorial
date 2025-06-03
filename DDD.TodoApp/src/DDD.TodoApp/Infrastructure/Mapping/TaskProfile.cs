@@ -10,6 +10,7 @@ public class TaskProfile : Profile
         CreateMap<Models.Task, TasksIndexViewModel.TaskListEntry>();
         CreateMap<TasksEditViewModel, TaskAddOrEditCommand>();
         CreateMap<Models.Task, TasksEditViewModel>();
-
+        CreateMap<Models.Task, TasksDeleteViewModel>();
+        CreateMap<TasksDeleteViewModel, TaskDeleteCommand>();
     }
 }

@@ -8,7 +8,7 @@ namespace DDD.TodoApp.Commands.Tasks;
 
 public abstract class SingleTaskCommandHandlerBase : CommandHandlerBase
 {
-    protected SingleTaskCommandHandlerBase(ApplicationDbContext context, IMapper mapper) : base(context, mapper)
+    protected SingleTaskCommandHandlerBase(ApplicationDbContext context) : base(context)
     {
     }
 

@@ -8,7 +8,7 @@ namespace DDD.TodoApp.Commands.Tasks;
 
 public class TaskAddOrEditCommandHandler : SingleTaskCommandHandlerBase, IRequestHandler<TaskAddOrEditCommand, CommandResult<int>>
 {
-    public TaskAddOrEditCommandHandler(ApplicationDbContext context, IMapper mapper) : base(context, mapper)
+    public TaskAddOrEditCommandHandler(ApplicationDbContext context) : base(context)
     {
     }
 

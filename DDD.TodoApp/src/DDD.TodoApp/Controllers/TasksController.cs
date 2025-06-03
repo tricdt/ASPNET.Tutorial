@@ -63,6 +63,36 @@ namespace DDD.TodoApp.Controllers
 
             return View(model);
         }
+        public async Task<IActionResult> Delete(TasksDeleteViewModelQuery query)
+        {
+            var model = await _mediator.Send(query);
+            if (model.Id == 0)
+            {
+                return NotFound();
+            }
 
+            return View(model);
+        }
+
+         [HttpPost]
+        [ValidateAntiForgeryToken]
+        public async Task<IActionResult> Delete(TasksDeleteViewModel model)
+        {
+            if (ModelState.IsValid)
+            {
+                var command = new TaskDeleteCommand();
+                _mapper.Map(model, command);
+                var result = await _mediator.Send(command);
+                if (result.Success)
+                {
+                    TempData[NotificationMessageKey] = "Task deleted";
+                    return RedirectToAction("Index");
+                }
+
+                ModelState.AddModelError(string.Empty, result.ErrorMessage);
+            }
+
+            return View(model);
+        }
     }
 }
