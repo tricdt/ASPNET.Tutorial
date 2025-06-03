@@ -74,7 +74,7 @@ namespace DDD.TodoApp.Controllers
             return View(model);
         }
 
-         [HttpPost]
+        [HttpPost]
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> Delete(TasksDeleteViewModel model)
         {
@@ -93,6 +93,32 @@ namespace DDD.TodoApp.Controllers
             }
 
             return View(model);
+        }
+
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public async Task<IActionResult> UpdateStatus(int id, bool completed, int? categoryId)
+        {
+            if (completed)
+            {
+                var command = new TaskCompleteCommand
+                {
+                    Id = id,
+                };
+                await _mediator.Send(command);
+                TempData[NotificationMessageKey] = $"Task marked as completed";
+            }
+            else
+            {
+                var command = new TaskResetCommand
+                {
+                    Id = id,
+                };
+                await _mediator.Send(command);
+                TempData[NotificationMessageKey] = $"Task reset";
+            }
+
+            return RedirectToAction("Index", categoryId.HasValue ? new { CategoryId = categoryId.Value } : null);
         }
     }
 }
