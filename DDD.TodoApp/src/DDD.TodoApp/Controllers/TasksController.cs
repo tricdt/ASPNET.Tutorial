@@ -18,9 +18,11 @@ namespace DDD.TodoApp.Controllers
             _mediator = mediator;
             _mapper = mapper;
         }
-        public ActionResult Index()
+        public async Task<IActionResult> Index(TasksIndexViewModelQuery query)
         {
-            return View();
+            var model = await _mediator.Send(query);
+            model.NotificationMessage = TempData[NotificationMessageKey] as string;
+            return View(model);
         }
 
         public async Task<IActionResult> Add()
