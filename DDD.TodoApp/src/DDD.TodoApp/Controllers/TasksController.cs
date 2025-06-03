@@ -31,6 +31,18 @@ namespace DDD.TodoApp.Controllers
             return View("Edit", model);
         }
 
+        public async Task<IActionResult> Edit(TasksEditViewModelQuery query)
+        {
+            var model = await _mediator.Send(query);
+            if (model.Id == 0)
+            {
+                return NotFound();
+            }
+
+            return View(model);
+        }
+
+
         [HttpPost]
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> Edit(TasksEditViewModel model)
