@@ -1,4 +1,3 @@
-using System;
 using AutoMapper;
 using DDD.TodoApp.Commands.Tasks;
 using DDD.TodoApp.ViewModels.Tasks;
@@ -8,6 +7,7 @@ public class TaskProfile : Profile
 {
     public TaskProfile()
     {
-          CreateMap<TasksEditViewModel, TaskAddOrEditCommand>();
+        CreateMap<Models.Task, TasksIndexViewModel.TaskListEntry>();
+        CreateMap<TasksEditViewModel, TaskAddOrEditCommand>();
     }
 }
