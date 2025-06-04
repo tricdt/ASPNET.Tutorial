@@ -1,5 +1,7 @@
 using System.Text.Json.Serialization;
 using DDD.Services.Api.StartupExtensions;
+using Microsoft.AspNetCore.Mvc.Versioning;
+using Microsoft.AspNetCore.Mvc.ApiExplorer;
 using Serilog;
 using Serilog.Events;
 using Serilog.Sinks.SystemConsole.Themes;
@@ -64,23 +66,23 @@ builder.Services.AddControllers()
         // x.JsonSerializerOptions.PropertyNamingPolicy = JsonNamingPolicy.CamelCase;
     });
 
-// builder.Services.AddApiVersioning(opt =>
-// {
-//     opt.DefaultApiVersion = new Microsoft.AspNetCore.Mvc.ApiVersion(1, 0);
-//     opt.AssumeDefaultVersionWhenUnspecified = true;
-//     opt.ReportApiVersions = true;
-//     opt.ApiVersionReader = ApiVersionReader.Combine(
-//         new UrlSegmentApiVersionReader(),
-//         new HeaderApiVersionReader("x-api-version"),
-//         new MediaTypeApiVersionReader("x-api-version"));
-// });
+builder.Services.AddApiVersioning(opt =>
+{
+    opt.DefaultApiVersion = new Microsoft.AspNetCore.Mvc.ApiVersion(1, 0);
+    opt.AssumeDefaultVersionWhenUnspecified = true;
+    opt.ReportApiVersions = true;
+    opt.ApiVersionReader = ApiVersionReader.Combine(
+        new UrlSegmentApiVersionReader(),
+        new HeaderApiVersionReader("x-api-version"),
+        new MediaTypeApiVersionReader("x-api-version"));
+});
 
 // Add ApiExplorer to discover versions
-// builder.Services.AddVersionedApiExplorer(setup =>
-// {
-//     setup.GroupNameFormat = "'v'VVV";
-//     setup.SubstituteApiVersionInUrl = true;
-// });
+builder.Services.AddVersionedApiExplorer(setup =>
+{
+    setup.GroupNameFormat = "'v'VVV";
+    setup.SubstituteApiVersionInUrl = true;
+});
 
 builder.Services.AddEndpointsApiExplorer();
 
