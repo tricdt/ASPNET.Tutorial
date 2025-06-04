@@ -1,0 +1,1 @@
+dotnet ef migrations add InitialCreate --project ../DDD.Infra.Data --startup-project ../DDD.Services.Api --output-dir Migrations --context ApplicationDbContext

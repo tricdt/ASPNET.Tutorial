@@ -11,5 +11,5 @@ public class AuthDbContext : IdentityDbContext<ApplicationUser>
         : base(options)
     {
     }
-
+    public DbSet<RefreshToken> RefreshTokens { get; set; }
 }

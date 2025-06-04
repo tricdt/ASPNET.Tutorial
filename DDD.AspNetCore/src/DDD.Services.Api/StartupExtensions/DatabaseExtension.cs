@@ -9,6 +9,7 @@ public static class DatabaseExtension
 {
     public static IServiceCollection AddCustomizedDatabase(this IServiceCollection services, IConfiguration configuration, IWebHostEnvironment env)
     {
+        //dotnet ef migrations add Initial --project ../DDD.Infra.CrossCutting.Identity --startup-project ../DDD.Services.Api --output-dir Data/Migrations --context AuthDbContext
         services.AddDbContext<AuthDbContext>(options =>
         {
             options.UseSqlServer(configuration.GetConnectionString("DefaultConnection"));
@@ -27,6 +28,7 @@ public static class DatabaseExtension
             }
         });
 
+        //dotnet ef migrations add Initial --project ../DDD.Infra.Data --startup-project ../DDD.Services.Api --output-dir Migrations --context ApplicationDbContext
         services.AddDbContext<ApplicationDbContext>(options =>
         {
             options.UseSqlServer(configuration.GetConnectionString("DefaultConnection"));
@@ -39,6 +41,7 @@ public static class DatabaseExtension
             }
         });
 
+        //dotnet ef migrations add Initial --project ../DDD.Infra.Data --startup-project ../DDD.Services.Api --output-dir Migrations/EventStoreSQL --context EventStoreSqlContext
         services.AddDbContext<EventStoreSqlContext>(options =>
         {
             options.UseSqlServer(configuration.GetConnectionString("DefaultConnection"));
