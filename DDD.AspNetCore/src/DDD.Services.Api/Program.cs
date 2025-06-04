@@ -1,7 +1,26 @@
 using System.Text.Json.Serialization;
 using DDD.Services.Api.StartupExtensions;
+using Serilog;
+using Serilog.Events;
+using Serilog.Sinks.SystemConsole.Themes;
+
+Log.Logger = new LoggerConfiguration()
+    .WriteTo.Console()
+    .CreateBootstrapLogger();
+
+Log.Information("Starting up");
 
 var builder = WebApplication.CreateBuilder(args);
+
+
+builder.Host.UseSerilog((ctx, lc) => lc
+    .MinimumLevel.Debug()
+    .MinimumLevel.Override("Microsoft", LogEventLevel.Warning)
+    .MinimumLevel.Override("Microsoft.Hosting.Lifetime", LogEventLevel.Information)
+    .MinimumLevel.Override("System", LogEventLevel.Warning)
+    .MinimumLevel.Override("Microsoft.AspNetCore.Authentication", LogEventLevel.Information)
+    .Enrich.FromLogContext()
+    .WriteTo.Console(outputTemplate: "[{Timestamp:HH:mm:ss} {Level}] {SourceContext}{NewLine}{Message:lj}{NewLine}{Exception}{NewLine}", theme: AnsiConsoleTheme.Code));
 
 // START: Variables
 // END: Variables
@@ -74,6 +93,8 @@ builder.Services.AddCustomizedHealthCheck(builder.Configuration, builder.Environ
 
 var app = builder.Build();
 
+app.UseSerilogRequestLogging();
+
 // Configure the HTTP request pipeline.
 
 // START: Custom middlewares
@@ -93,13 +114,13 @@ app.UseCors(x => x
     .AllowAnyHeader());
 
 // ----- Auth -----
-app.UseCustomizedAuth();
+//app.UseCustomizedAuth();
 
 // ----- SignalR -----
-app.UseCustomizedSignalR();
+//app.UseCustomizedSignalR();
 
 // ----- Quartz -----
-app.UseCustomizedQuartz();
+//app.UseCustomizedQuartz();
 
 // ----- Controller -----
 app.MapControllers();
