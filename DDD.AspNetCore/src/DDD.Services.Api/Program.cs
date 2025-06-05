@@ -1,4 +1,5 @@
 using System.Text.Json.Serialization;
+using DDD.Services.Api.Configurations;
 using DDD.Services.Api.StartupExtensions;
 using Microsoft.AspNetCore.Mvc.Versioning;
 using Serilog;
@@ -35,7 +36,7 @@ builder.Services.AddCustomizedAuth(builder.Configuration);
 builder.Services.AddCustomizedHttp(builder.Configuration);
 
 // ----- AutoMapper -----
-//builder.Services.AddAutoMapperSetup();
+builder.Services.AddAutoMapperSetup();
 
 // Adding MediatR for Domain Events and Notifications
 // builder.Services.AddMediatR(cfg =>
