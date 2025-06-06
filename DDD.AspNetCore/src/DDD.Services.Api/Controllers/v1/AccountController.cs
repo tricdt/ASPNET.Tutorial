@@ -1,16 +1,17 @@
 using System;
 using DDD.Domain.Core.Bus;
 using DDD.Domain.Core.Notifications;
+using DDD.Domain.Interfaces;
 using DDD.Infra.CrossCutting.Identity.Data;
 using DDD.Infra.CrossCutting.Identity.Models;
 using DDD.Infra.CrossCutting.Identity.Models.AccountViewModels;
+using DDD.Infra.CrossCutting.Identity.Services;
 using k8s.KubeConfigModels;
 using MediatR;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore.Metadata.Internal;
-using Serilog;
 
 namespace DDD.Services.Api.Controllers.v1;
 
@@ -21,13 +22,17 @@ public class AccountController : ApiController
     private readonly SignInManager<ApplicationUser> _signInManager;
     private readonly RoleManager<IdentityRole> _roleManager;
     private readonly AuthDbContext _dbContext;
-
-
+    private readonly IUser _user;
+    private readonly IJwtFactory _jwtFactory;
+     private readonly ILogger _logger;
     public AccountController(
         UserManager<ApplicationUser> userManager,
         SignInManager<ApplicationUser> signInManager,
         RoleManager<IdentityRole> roleManager,
         AuthDbContext dbContext,
+        IUser user,
+        IJwtFactory jwtFactory,
+        ILoggerFactory loggerFactory,
         INotificationHandler<DomainNotification> notifications,
         IMediatorHandler mediator)
         : base(notifications, mediator)
@@ -36,8 +41,11 @@ public class AccountController : ApiController
         _signInManager = signInManager;
         _roleManager = roleManager;
         _dbContext = dbContext;
-
+        _user = user;
+        _jwtFactory = jwtFactory;
+        _logger = loggerFactory.CreateLogger<AccountController>();
     }
+
     [HttpPost]
     [AllowAnonymous]
     [Route("login")]
@@ -45,11 +53,13 @@ public class AccountController : ApiController
     {
         if (!ModelState.IsValid)
         {
-            Log.Information("Invalid login attempt for user {Email}", model.Email);
+            //Log.Information("Invalid login attempt for user {Email}", model.Email);
             // NotifyModelStateErrors();
             // return Response();
+            _logger.LogWarning("Invalid login attempt for user {Email}", model.Email);
         }
-        Log.Information("Attempting to login user {Email}", model.Email);
+        _logger.LogInformation("Attempting to login user {Email}", model.Email);
+        //Log.Information("Attempting to login user {Email}", model.Email);
         return Ok(new
         {
             Message = "Login successful",
