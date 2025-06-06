@@ -1,4 +1,6 @@
+using System.Reflection;
 using System.Text.Json.Serialization;
+using DDD.Infra.CrossCutting.IoC;
 using DDD.Services.Api.Configurations;
 using DDD.Services.Api.StartupExtensions;
 using Microsoft.AspNetCore.Mvc.Versioning;
@@ -39,10 +41,10 @@ builder.Services.AddCustomizedHttp(builder.Configuration);
 builder.Services.AddAutoMapperSetup();
 
 // Adding MediatR for Domain Events and Notifications
-// builder.Services.AddMediatR(cfg =>
-// {
-//     cfg.RegisterServicesFromAssembly(Assembly.GetExecutingAssembly());
-// });
+builder.Services.AddMediatR(cfg =>
+{
+    cfg.RegisterServicesFromAssembly(Assembly.GetExecutingAssembly());
+});
 
 // ----- Hash -----
 builder.Services.AddCustomizedHash(builder.Configuration);
@@ -54,7 +56,7 @@ builder.Services.AddCustomizedSignalR();
 builder.Services.AddCustomizedQuartz(builder.Configuration);
 
 // .NET Native DI Abstraction
-//NativeInjectorBootStrapper.RegisterServices(builder.Services);
+NativeInjectorBootStrapper.RegisterServices(builder.Services);
 
 builder.Services.AddControllers()
     .AddJsonOptions(x =>

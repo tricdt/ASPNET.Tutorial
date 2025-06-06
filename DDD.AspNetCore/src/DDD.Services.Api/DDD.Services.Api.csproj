@@ -2,7 +2,7 @@
 
   <PropertyGroup>
     <TargetFramework>net9.0</TargetFramework>
-    <Nullable>enable</Nullable>
+    <Nullable>disable</Nullable>
     <ImplicitUsings>enable</ImplicitUsings>
   </PropertyGroup>
 
@@ -28,6 +28,7 @@
   <ItemGroup>
     <ProjectReference Include="..\DDD.Application\DDD.Application.csproj" />
     <ProjectReference Include="..\DDD.Infra.CrossCutting.Identity\DDD.Infra.CrossCutting.Identity.csproj" />
+    <ProjectReference Include="..\DDD.Infra.CrossCutting.IoC\DDD.Infra.CrossCutting.IoC.csproj" />
     <ProjectReference Include="..\DDD.Infra.Data\DDD.Infra.Data.csproj" />
   </ItemGroup>
 

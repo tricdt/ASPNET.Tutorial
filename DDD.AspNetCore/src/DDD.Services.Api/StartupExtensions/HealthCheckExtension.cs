@@ -6,31 +6,37 @@ namespace DDD.Services.Api.StartupExtensions;
 
 public static class HealthCheckExtension
 {
-    public static IServiceCollection AddCustomizedHealthCheck(this IServiceCollection services, IConfiguration configuration, IWebHostEnvironment env)
+   public static IServiceCollection AddCustomizedHealthCheck(this IServiceCollection services, IConfiguration configuration, IWebHostEnvironment env)
     {
-        services.AddHealthChecks()
-            .AddSqlServer(configuration.GetConnectionString("DefaultConnection"))
-            .AddDbContextCheck<ApplicationDbContext>();
-
-        services.AddHealthChecksUI(opt =>
+        if (env.IsProduction() || env.IsStaging())
         {
-            opt.SetEvaluationTimeInSeconds(15); // time in seconds between check
-        }).AddInMemoryStorage();
+            services.AddHealthChecks()
+                .AddSqlServer(configuration.GetConnectionString("DefaultConnection"))
+                .AddDbContextCheck<ApplicationDbContext>();
+            services.AddHealthChecksUI(opt =>
+            {
+                opt.SetEvaluationTimeInSeconds(15); // time in seconds between check
+            }).AddInMemoryStorage();
+        }
+
         return services;
     }
 
     public static void UseCustomizedHealthCheck(IEndpointRouteBuilder endpoints, IWebHostEnvironment env)
     {
-        endpoints.MapHealthChecks("/hc", new HealthCheckOptions
+        if (env.IsProduction() || env.IsStaging())
         {
-            Predicate = _ => true,
-            ResponseWriter = UIResponseWriter.WriteHealthCheckUIResponse,
-        });
+            endpoints.MapHealthChecks("/hc", new HealthCheckOptions
+            {
+                Predicate = _ => true,
+                ResponseWriter = UIResponseWriter.WriteHealthCheckUIResponse,
+            });
 
-        endpoints.MapHealthChecksUI(setup =>
-        {
-            setup.UIPath = "/hc-ui";
-            setup.ApiPath = "/hc-json";
-        });
+            endpoints.MapHealthChecksUI(setup =>
+            {
+                setup.UIPath = "/hc-ui";
+                setup.ApiPath = "/hc-json";
+            });
+        }
     }
 }
