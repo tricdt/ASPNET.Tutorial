@@ -84,6 +84,8 @@ public static class AuthExtension
 
     public static IApplicationBuilder UseCustomizedAuth(this IApplicationBuilder app)
     {
+        app.UseAuthentication();
+        app.UseAuthorization();
         return app;
     }
 }

@@ -116,7 +116,7 @@ app.UseCors(x => x
     .AllowAnyHeader());
 
 // ----- Auth -----
-//app.UseCustomizedAuth();
+app.UseCustomizedAuth();
 
 // ----- SignalR -----
 //app.UseCustomizedSignalR();
