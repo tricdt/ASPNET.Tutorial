@@ -1,4 +1,8 @@
 using System;
+using DDD.Application.Interfaces;
+using DDD.Application.Services;
+using DDD.Domain.CommandHandler;
+using DDD.Domain.Commands;
 using DDD.Domain.Core.Bus;
 using DDD.Domain.Core.Events;
 using DDD.Domain.Core.Notifications;
@@ -7,7 +11,9 @@ using DDD.Infra.CrossCutting.Bus;
 using DDD.Infra.CrossCutting.Identity.Models;
 using DDD.Infra.CrossCutting.Identity.Services;
 using DDD.Infra.Data.EventSourcing;
+using DDD.Infra.Data.Repository;
 using DDD.Infra.Data.Repository.EventSourcing;
+using DDD.Infra.Data.UoW;
 using MediatR;
 using Microsoft.Extensions.DependencyInjection;
 
@@ -20,8 +26,18 @@ public class NativeInjectorBootStrapper
         // Domain Bus (Mediator)
         services.AddScoped<IMediatorHandler, InMemoryBus>();
 
+        // Application
+        services.AddScoped<ICustomerAppService, CustomerAppService>();
+
         // Domain - Events
         services.AddScoped<INotificationHandler<DomainNotification>, DomainNotificationHandler>();
+
+          // Domain - Commands
+        services.AddScoped<IRequestHandler<RegisterNewCustomerCommand, bool>, CustomerCommandHandler>();
+
+        // Infra - Data
+        services.AddScoped<ICustomerRepository, CustomerRepository>();
+        services.AddScoped<IUnitOfWork, UnitOfWork>();
 
         // Infra - Data EventSourcing
         services.AddScoped<IEventStoreRepository, EventStoreSqlRepository>();

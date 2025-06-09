@@ -1,0 +1,73 @@
+using System;
+using AutoMapper;
+using AutoMapper.QueryableExtensions;
+using DDD.Application.EventSourcedNormalizers;
+using DDD.Application.Interfaces;
+using DDD.Application.ViewModels;
+using DDD.Domain.Commands;
+using DDD.Domain.Core.Bus;
+using DDD.Domain.Interfaces;
+using DDD.Domain.Specifications;
+using DDD.Infra.Data.Repository.EventSourcing;
+
+namespace DDD.Application.Services;
+
+public class CustomerAppService : ICustomerAppService
+{
+    private readonly IMapper _mapper;
+    private readonly ICustomerRepository _customerRepository;
+    private readonly IEventStoreRepository _eventStoreRepository;
+    private readonly IMediatorHandler _bus;
+
+    public CustomerAppService(
+        IMapper mapper,
+        ICustomerRepository customerRepository,
+        IEventStoreRepository eventStoreRepository,
+        IMediatorHandler bus)
+    {
+        _mapper = mapper;
+        _customerRepository = customerRepository;
+        _eventStoreRepository = eventStoreRepository;
+        _bus = bus;
+    }
+
+    public IEnumerable<CustomerViewModel> GetAll()
+    {
+        return _customerRepository.GetAll().ProjectTo<CustomerViewModel>(_mapper.ConfigurationProvider);
+    }
+
+    public IEnumerable<CustomerViewModel> GetAll(int skip, int take)
+    {
+        return _customerRepository.GetAll(new CustomerFilterPaginatedSpecification(skip, take))
+            .ProjectTo<CustomerViewModel>(_mapper.ConfigurationProvider);
+    }
+
+    public CustomerViewModel GetById(Guid id)
+    {
+        return _mapper.Map<CustomerViewModel>(_customerRepository.GetById(id));
+    }
+
+    public void Register(CustomerViewModel customerViewModel)
+    {
+        var registerCommand = _mapper.Map<RegisterNewCustomerCommand>(customerViewModel);
+        _bus.SendCommand(registerCommand);
+    }
+
+    public void Remove(Guid id)
+    {
+    }
+
+    public void Update(CustomerViewModel customerViewModel)
+    {
+    }
+
+    public IList<CustomerHistoryData> GetAllHistory(Guid id)
+    {
+        return CustomerHistory.ToJavaScriptCustomerHistory(_eventStoreRepository.All(id));
+    }
+
+    public void Dispose()
+    {
+        GC.SuppressFinalize(this);
+    }
+}

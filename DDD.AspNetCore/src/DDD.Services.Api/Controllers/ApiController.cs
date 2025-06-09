@@ -21,7 +21,7 @@ public abstract class ApiController : ControllerBase
         _mediator = mediator;
     }
 
-     protected IEnumerable<DomainNotification> Notifications => _notifications.GetNotifications();
+    protected IEnumerable<DomainNotification> Notifications => _notifications.GetNotifications();
 
     protected bool IsValidOperation()
     {
