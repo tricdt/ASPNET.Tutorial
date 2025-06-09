@@ -55,6 +55,8 @@ public class CustomerAppService : ICustomerAppService
 
     public void Remove(Guid id)
     {
+        var removeCommand = new RemoveCustomerCommand(id);
+        _bus.SendCommand(removeCommand);
     }
 
     public void Update(CustomerViewModel customerViewModel)

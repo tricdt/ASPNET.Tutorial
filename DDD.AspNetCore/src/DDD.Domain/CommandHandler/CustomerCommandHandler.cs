@@ -10,7 +10,8 @@ using MediatR;
 namespace DDD.Domain.CommandHandler;
 
 public class CustomerCommandHandler : CommandHandler,
-    IRequestHandler<RegisterNewCustomerCommand, bool>
+    IRequestHandler<RegisterNewCustomerCommand, bool>,
+    IRequestHandler<RemoveCustomerCommand, bool>
 {
     private readonly ICustomerRepository _customerRepository;
     private readonly IMediatorHandler _bus;
@@ -26,7 +27,7 @@ public class CustomerCommandHandler : CommandHandler,
     }
     public Task<bool> Handle(RegisterNewCustomerCommand message, CancellationToken cancellationToken)
     {
-         if (!message.IsValid())
+        if (!message.IsValid())
         {
             NotifyValidationErrors(message);
             return Task.FromResult(false);
@@ -45,6 +46,24 @@ public class CustomerCommandHandler : CommandHandler,
         if (Commit())
         {
             _bus.RaiseEvent(new CustomerRegisteredEvent(customer.Id, customer.Name, customer.Email, customer.BirthDate));
+        }
+
+        return Task.FromResult(true);
+    }
+
+    public Task<bool> Handle(RemoveCustomerCommand message, CancellationToken cancellationToken)
+    {
+        if (!message.IsValid())
+        {
+            NotifyValidationErrors(message);
+            return Task.FromResult(false);
+        }
+
+        _customerRepository.Remove(message.Id);
+
+        if (Commit())
+        {
+            _bus.RaiseEvent(new CustomerRemovedEvent(message.Id));
         }
 
         return Task.FromResult(true);
