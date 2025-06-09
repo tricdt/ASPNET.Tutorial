@@ -6,6 +6,8 @@ using DDD.Domain.Commands;
 using DDD.Domain.Core.Bus;
 using DDD.Domain.Core.Events;
 using DDD.Domain.Core.Notifications;
+using DDD.Domain.EventHandlers;
+using DDD.Domain.Events;
 using DDD.Domain.Interfaces;
 using DDD.Infra.CrossCutting.Bus;
 using DDD.Infra.CrossCutting.Identity.Models;
@@ -21,30 +23,31 @@ namespace DDD.Infra.CrossCutting.IoC;
 
 public class NativeInjectorBootStrapper
 {
-    public static void RegisterServices(IServiceCollection services)
-    {
-        // Domain Bus (Mediator)
-        services.AddScoped<IMediatorHandler, InMemoryBus>();
+  public static void RegisterServices(IServiceCollection services)
+  {
+    // Domain Bus (Mediator)
+    services.AddScoped<IMediatorHandler, InMemoryBus>();
 
-        // Application
-        services.AddScoped<ICustomerAppService, CustomerAppService>();
+    // Application
+    services.AddScoped<ICustomerAppService, CustomerAppService>();
 
-        // Domain - Events
-        services.AddScoped<INotificationHandler<DomainNotification>, DomainNotificationHandler>();
+    // Domain - Events
+    services.AddScoped<INotificationHandler<DomainNotification>, DomainNotificationHandler>();
+    services.AddScoped<INotificationHandler<CustomerRegisteredEvent>, CustomerEventHandler>();
 
-          // Domain - Commands
-        services.AddScoped<IRequestHandler<RegisterNewCustomerCommand, bool>, CustomerCommandHandler>();
+    // Domain - Commands
+    services.AddScoped<IRequestHandler<RegisterNewCustomerCommand, bool>, CustomerCommandHandler>();
 
-        // Infra - Data
-        services.AddScoped<ICustomerRepository, CustomerRepository>();
-        services.AddScoped<IUnitOfWork, UnitOfWork>();
+    // Infra - Data
+    services.AddScoped<ICustomerRepository, CustomerRepository>();
+    services.AddScoped<IUnitOfWork, UnitOfWork>();
 
-        // Infra - Data EventSourcing
-        services.AddScoped<IEventStoreRepository, EventStoreSqlRepository>();
-        services.AddScoped<IEventStore, SqlEventStore>();
+    // Infra - Data EventSourcing
+    services.AddScoped<IEventStoreRepository, EventStoreSqlRepository>();
+    services.AddScoped<IEventStore, SqlEventStore>();
 
-        // Infra - Identity
-        services.AddScoped<IUser, AspNetUser>();
-        services.AddSingleton<IJwtFactory, JwtFactory>();
-    }
+    // Infra - Identity
+    services.AddScoped<IUser, AspNetUser>();
+    services.AddSingleton<IJwtFactory, JwtFactory>();
+  }
 }
