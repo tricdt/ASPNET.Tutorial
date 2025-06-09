@@ -6,7 +6,8 @@ namespace DDD.Domain.EventHandlers;
 
 public class CustomerEventHandler :
     INotificationHandler<CustomerRegisteredEvent>,
-    INotificationHandler<CustomerRemovedEvent>
+    INotificationHandler<CustomerRemovedEvent>,
+    INotificationHandler<CustomerUpdatedEvent>
 {
     public Task Handle(CustomerRegisteredEvent notification, CancellationToken cancellationToken)
     {
@@ -14,6 +15,11 @@ public class CustomerEventHandler :
     }
 
     public Task Handle(CustomerRemovedEvent notification, CancellationToken cancellationToken)
+    {
+        return Task.CompletedTask;
+    }
+
+    public Task Handle(CustomerUpdatedEvent notification, CancellationToken cancellationToken)
     {
         return Task.CompletedTask;
     }

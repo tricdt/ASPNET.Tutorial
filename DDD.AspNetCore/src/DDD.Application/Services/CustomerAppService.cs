@@ -61,6 +61,8 @@ public class CustomerAppService : ICustomerAppService
 
     public void Update(CustomerViewModel customerViewModel)
     {
+        var updateCommand = _mapper.Map<UpdateCustomerCommand>(customerViewModel);
+        _bus.SendCommand(updateCommand);
     }
 
     public IList<CustomerHistoryData> GetAllHistory(Guid id)

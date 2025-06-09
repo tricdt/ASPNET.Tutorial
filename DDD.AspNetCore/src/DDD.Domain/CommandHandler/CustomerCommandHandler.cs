@@ -11,7 +11,8 @@ namespace DDD.Domain.CommandHandler;
 
 public class CustomerCommandHandler : CommandHandler,
     IRequestHandler<RegisterNewCustomerCommand, bool>,
-    IRequestHandler<RemoveCustomerCommand, bool>
+    IRequestHandler<RemoveCustomerCommand, bool>,
+    IRequestHandler<UpdateCustomerCommand, bool>
 {
     private readonly ICustomerRepository _customerRepository;
     private readonly IMediatorHandler _bus;
@@ -64,6 +65,36 @@ public class CustomerCommandHandler : CommandHandler,
         if (Commit())
         {
             _bus.RaiseEvent(new CustomerRemovedEvent(message.Id));
+        }
+
+        return Task.FromResult(true);
+    }
+
+    public Task<bool> Handle(UpdateCustomerCommand message, CancellationToken cancellationToken)
+    {
+        if (!message.IsValid())
+        {
+            NotifyValidationErrors(message);
+            return Task.FromResult(false);
+        }
+
+        var customer = new Customer(message.Id, message.Name, message.Email, message.BirthDate);
+        var existingCustomer = _customerRepository.GetByEmail(customer.Email);
+
+        if (existingCustomer != null && existingCustomer.Id != customer.Id)
+        {
+            if (!existingCustomer.Equals(customer))
+            {
+                _bus.RaiseEvent(new DomainNotification(message.MessageType, "The customer e-mail has already been taken."));
+                return Task.FromResult(false);
+            }
+        }
+
+        _customerRepository.Update(customer);
+
+        if (Commit())
+        {
+            _bus.RaiseEvent(new CustomerUpdatedEvent(customer.Id, customer.Name, customer.Email, customer.BirthDate));
         }
 
         return Task.FromResult(true);
