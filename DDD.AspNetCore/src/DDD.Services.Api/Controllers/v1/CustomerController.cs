@@ -42,6 +42,7 @@ public class CustomerController : ApiController
     }
 
     [HttpPost]
+    [Authorize(Policy = "CanWriteCustomerData", Roles = Roles.Admin)]
     [Route("customer-management")]
     public IActionResult Post([FromBody] CustomerViewModel customerViewModel)
     {
@@ -57,6 +58,7 @@ public class CustomerController : ApiController
     }
 
     [HttpPut]
+    [Authorize(Policy = "CanWriteCustomerData", Roles = Roles.Admin)]
     [Route("customer-management")]
     public IActionResult Put([FromBody] CustomerViewModel customerViewModel)
     {
@@ -73,6 +75,7 @@ public class CustomerController : ApiController
 
 
     [HttpDelete]
+    [Authorize(Policy = "CanRemoveCustomerData", Roles = Roles.Admin)]
     [Route("customer-management")]
     public IActionResult Delete(Guid id)
     {
