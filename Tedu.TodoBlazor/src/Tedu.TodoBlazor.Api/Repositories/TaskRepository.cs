@@ -16,7 +16,8 @@ public class TaskRepository : ITaskRepository
     }
     public async Task<IEnumerable<Task>> GetTaskList()
     {
-        return await _context.Tasks.ToListAsync();
+        return await _context.Tasks
+            .Include(x => x.Assignee).ToListAsync();
     }
 
     public async Task<Task> Create(Task task)

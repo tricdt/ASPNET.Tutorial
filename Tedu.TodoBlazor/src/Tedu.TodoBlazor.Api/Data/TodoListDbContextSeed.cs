@@ -4,7 +4,7 @@ using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
 using Serilog;
 using Tedu.TodoBlazor.Api.Entities;
-using Tedu.TodoBlazor.Api.Enums;
+using Tedu.TodoBlazor.Models.Enums;
 using Task = System.Threading.Tasks.Task;
 namespace Tedu.TodoBlazor.Api.Data;
 

@@ -1,4 +1,4 @@
-namespace Tedu.TodoBlazor.Api.Enums;
+namespace Tedu.TodoBlazor.Models.Enums;
 
 public enum Priority
 {
