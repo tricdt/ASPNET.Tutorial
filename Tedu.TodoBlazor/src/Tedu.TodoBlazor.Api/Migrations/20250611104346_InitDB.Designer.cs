@@ -12,8 +12,8 @@ using Tedu.TodoBlazor.Api.Data;
 namespace Tedu.TodoBlazor.Api.Migrations
 {
     [DbContext(typeof(TodoListDbContext))]
-    [Migration("20250611025249_AddIdentity01")]
-    partial class AddIdentity01
+    [Migration("20250611104346_InitDB")]
+    partial class InitDB
     {
         /// <inheritdoc />
         protected override void BuildTargetModel(ModelBuilder modelBuilder)

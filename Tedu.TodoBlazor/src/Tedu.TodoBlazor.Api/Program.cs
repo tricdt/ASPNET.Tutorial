@@ -1,8 +1,9 @@
 using Microsoft.EntityFrameworkCore;
 using Serilog;
 using Serilog.Events;
+using Tedu.TodoBlazor.Api;
 using Tedu.TodoBlazor.Api.Data;
-
+Console.WriteLine(args);
 Log.Logger = new LoggerConfiguration()
     .WriteTo.Console()
     .CreateBootstrapLogger();
@@ -18,41 +19,16 @@ builder.Host.UseSerilog((ctx, lc) => lc
     .MinimumLevel.Override("Microsoft", LogEventLevel.Warning)
     .Enrich.FromLogContext()
     .ReadFrom.Configuration(ctx.Configuration));
-    
-builder.Services.AddDbContext<TodoListDbContext>(options =>
-    options.UseSqlServer(builder.Configuration.GetConnectionString("DefaultConnection")));
+var app = builder
+    .ConfigureServices()
+    .ConfigurePipeline();
 
-builder.Services.AddControllers();
-
-builder.Services.AddSwaggerGen(options =>
+if (!args.Contains("/seed"))
 {
-    options.SwaggerDoc("v1", new Microsoft.OpenApi.Models.OpenApiInfo
-    {
-        Title = "Todo List API",
-        Version = "v1",
-        Description = "A simple API for managing todo lists"
-    });
-});
-var app = builder.Build();
-
-if (app.Environment.IsDevelopment())
-{
-    app.UseDeveloperExceptionPage();
-    app.UseSwagger();
-    app.UseSwaggerUI(c => c.SwaggerEndpoint("/swagger/v1/swagger.json", "Todo List API v1"));
+    Log.Information("Seeding database...");
+    await TodoListDbContextSeed.SeedAsync(app);
+    Log.Information("Done seeding database. Exiting.");
+    return;
 }
-else
-{
-    app.UseExceptionHandler("/error");
-    app.UseHsts();
-}
-
-app.UseSerilogRequestLogging();
-
-app.UseHttpsRedirection();
-
-app.UseRouting();
-
-app.MapControllers();
 
 app.Run();
