@@ -1,0 +1,6 @@
+@Tedu.TodoBlazor.Api_HostAddress = http://localhost:5261
+
+GET {{Tedu.TodoBlazor.Api_HostAddress}}/weatherforecast/
+Accept: application/json
+
+###
