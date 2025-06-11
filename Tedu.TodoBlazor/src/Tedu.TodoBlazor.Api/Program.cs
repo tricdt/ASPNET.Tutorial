@@ -23,7 +23,7 @@ var app = builder
     .ConfigureServices()
     .ConfigurePipeline();
 
-if (!args.Contains("/seed"))
+if (args.Contains("/seed"))
 {
     Log.Information("Seeding database...");
     await TodoListDbContextSeed.SeedAsync(app);

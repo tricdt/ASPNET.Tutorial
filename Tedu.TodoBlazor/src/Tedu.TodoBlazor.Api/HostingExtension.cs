@@ -2,6 +2,7 @@ using System;
 using Microsoft.EntityFrameworkCore;
 using Serilog;
 using Tedu.TodoBlazor.Api.Data;
+using Tedu.TodoBlazor.Api.Repositories;
 
 namespace Tedu.TodoBlazor.Api;
 
@@ -23,6 +24,8 @@ public static class HostingExtension
                 Description = "A simple API for managing todo lists"
             });
         });
+
+        builder.Services.AddTransient<ITaskRepository, TaskRepository>();
         return builder.Build();
     }
     public static WebApplication ConfigurePipeline(this WebApplication app)
@@ -46,7 +49,7 @@ public static class HostingExtension
         app.UseRouting();
 
         app.MapControllers();
-        
+
         return app;
     }
 }
