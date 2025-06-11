@@ -25,6 +25,16 @@ public static class HostingExtension
             });
         });
 
+        builder.Services.AddCors(options =>
+            {
+                options.AddPolicy("CorsPolicy",
+                    builder => builder
+                        .SetIsOriginAllowed((host) => true)
+                        .AllowAnyMethod()
+                        .AllowAnyHeader()
+                        .AllowCredentials());
+            });
+
         builder.Services.AddTransient<ITaskRepository, TaskRepository>();
         return builder.Build();
     }
@@ -47,6 +57,8 @@ public static class HostingExtension
         app.UseHttpsRedirection();
 
         app.UseRouting();
+
+        app.UseCors("CorsPolicy");
 
         app.MapControllers();
 
