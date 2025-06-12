@@ -6,4 +6,5 @@ namespace Tedu.TodoBlazor.Wasm.Services;
 public interface ITaskApiClient
 {
     Task<List<TaskDto>> GetTaskList();
+    Task<TaskDto> GetTaskDetail(string id);
 }

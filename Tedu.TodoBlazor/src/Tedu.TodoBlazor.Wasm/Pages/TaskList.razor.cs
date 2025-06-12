@@ -5,7 +5,7 @@ using Tedu.TodoBlazor.Wasm.Services;
 
 namespace Tedu.TodoBlazor.Wasm.Pages;
 
-public partial class TodoList
+public partial class TaskList
 {
     [Inject] private ITaskApiClient TaskApiClient { set; get; }
 
