@@ -5,7 +5,7 @@
 
 @if (Tasks == null)
 {
-   <LoadingIndicator></LoadingIndicator>
+    <LoadingIndicator></LoadingIndicator>
 }
 else
 {
@@ -32,6 +32,9 @@ else
                     <td>@item.AssigneeName</td>
                     <td>@item.CreatedDate.ToString("dd/MM/yyy hh:mm")</td>
                     <td>@item.Status</td>
+                    <td>
+                        <a href="/taskDetails/@item.Id">Detail</a>
+                    </td>
                 </tr>
             }
 
