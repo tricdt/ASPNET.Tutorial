@@ -37,7 +37,7 @@ namespace Tedu.TodoBlazor.Api.Controllers
         }
 
         [HttpPost]
-        public async Task<IActionResult> Create(TaskCreateRequest request)
+        public async Task<IActionResult> Create([FromBody]TaskCreateRequest request)
         {
             if (!ModelState.IsValid)
                 return BadRequest(ModelState);

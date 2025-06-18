@@ -1,11 +1,14 @@
 ﻿@page "/taskCreate"
 @using Tedu.TodoBlazor.Models
 @using Tedu.TodoBlazor.Models.Enums
+@using Tedu.TodoBlazor.Wasm.Services
 
+@inject ITaskApiClient TaskApiClient;
+@inject NavigationManager NavigationManager;
 
 <h3>TaskCreate</h3>
 
-<EditForm Model="Task">
+<EditForm Model="Task" OnValidSubmit="@SubmitTask">
     <DataAnnotationsValidator />
     <div class="form-group">
         <InputText class="form-control" @bind-Value="Task.Name"></InputText>
@@ -29,4 +32,13 @@
 
 @code {
     private TaskCreateRequest Task = new TaskCreateRequest();
+
+    private async Task SubmitTask(EditContext context)
+    {
+        var result = await TaskApiClient.CreateTask(Task);
+        if (result)
+        {
+            NavigationManager.NavigateTo("/taskList");
+        }
+    }
 }

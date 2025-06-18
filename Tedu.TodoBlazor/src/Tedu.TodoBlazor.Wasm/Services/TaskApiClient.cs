@@ -25,4 +25,10 @@ public class TaskApiClient : ITaskApiClient
         var result = await _httpClient.GetFromJsonAsync<List<TaskDto>>(url);
         return result;
     }
+    public async Task<bool> CreateTask(TaskCreateRequest request)
+    {
+        var result = await _httpClient.PostAsJsonAsync("/api/tasks", request);
+        return result.IsSuccessStatusCode;
+
+    }
 }

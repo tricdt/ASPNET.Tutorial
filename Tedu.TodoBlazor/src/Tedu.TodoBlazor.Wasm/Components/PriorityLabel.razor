@@ -1,0 +1,20 @@
+﻿@using Tedu.TodoBlazor.Models.Enums
+@switch (Priority)
+{
+    case Priority.Low:
+        <span class="badge text-bg-secondary">Low</span>
+        break;
+    case Priority.High:
+        <span class="badge text-bg-danger">High</span>
+        break;
+    case Priority.Medium:
+        <span class="badge text-bg-warning">Medium</span>
+        break;
+}
+
+
+@code {
+    [Parameter]
+    public Priority Priority { set; get; }
+}
+
