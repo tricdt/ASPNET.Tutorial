@@ -1,4 +1,5 @@
 using System;
+using Blazored.Toast.Services;
 using Microsoft.AspNetCore.Components;
 using Microsoft.AspNetCore.Components.Forms;
 using Tedu.TodoBlazor.Models;
@@ -10,6 +11,7 @@ public partial class TaskList
 {
     [Inject] private ITaskApiClient TaskApiClient { set; get; }
     [Inject] private IUserApiClient UserApiClient { set; get; }
+    [Inject] private IToastService ToastService { set; get; }
 
     private List<TaskDto> Tasks;
     private List<AssigneeDto> Assignees;
@@ -24,5 +26,6 @@ public partial class TaskList
     private async Task SearchForm(EditContext context)
     {
         Tasks = await TaskApiClient.GetTaskList(TaskListSearch);
+        ToastService.ShowInfo("Search completed");
     }
 }
