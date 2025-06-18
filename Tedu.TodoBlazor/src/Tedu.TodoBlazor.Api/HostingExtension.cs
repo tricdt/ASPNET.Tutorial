@@ -36,6 +36,7 @@ public static class HostingExtension
             });
 
         builder.Services.AddTransient<ITaskRepository, TaskRepository>();
+        builder.Services.AddTransient<IUserRepository, UserRepository>();
         return builder.Build();
     }
     public static WebApplication ConfigurePipeline(this WebApplication app)

@@ -1,7 +1,7 @@
 using System;
 using Microsoft.EntityFrameworkCore;
 using Tedu.TodoBlazor.Api.Data;
-
+using Tedu.TodoBlazor.Models;
 using Task = Tedu.TodoBlazor.Api.Entities.Task;
 
 namespace Tedu.TodoBlazor.Api.Repositories;
@@ -14,10 +14,22 @@ public class TaskRepository : ITaskRepository
     {
         _context = context;
     }
-    public async Task<IEnumerable<Task>> GetTaskList()
+    public async Task<IEnumerable<Entities.Task>> GetTaskList(TaskListSearch taskListSearch)
     {
-        return await _context.Tasks
-            .Include(x => x.Assignee).ToListAsync();
+        var query = _context.Tasks
+            .Include(x => x.Assignee).AsQueryable();
+
+        if (!string.IsNullOrEmpty(taskListSearch.Name))
+            query = query.Where(x => x.Name.Contains(taskListSearch.Name));
+
+        if (taskListSearch.AssigneeId.HasValue)
+            query = query.Where(x => x.AssigneeId == taskListSearch.AssigneeId.Value);
+
+        if (taskListSearch.Priority.HasValue)
+            query = query.Where(x => x.Priority == taskListSearch.Priority.Value);
+
+        return await query.ToListAsync();
+
     }
 
     public async Task<Task> Create(Task task)
