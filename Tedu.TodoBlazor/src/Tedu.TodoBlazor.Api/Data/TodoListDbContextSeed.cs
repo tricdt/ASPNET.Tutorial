@@ -26,8 +26,11 @@ public class TodoListDbContextSeed
                     FirstName = "Mr",
                     LastName = "A",
                     Email = "admin1@gmail.com",
+                    NormalizedEmail = "ADMIN1@GMAIL.COM",
                     PhoneNumber = "032132131",
-                    UserName = "admin"
+                    UserName = "admin",
+                    NormalizedUserName = "ADMIN",
+                    SecurityStamp = Guid.NewGuid().ToString()
                 };
                 user.PasswordHash = _passwordHasher.HashPassword(user, "Admin@123$");
                 context.Users.Add(user);

@@ -1,7 +1,11 @@
 using System;
+using System.Text;
+using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.EntityFrameworkCore;
+using Microsoft.IdentityModel.Tokens;
 using Serilog;
 using Tedu.TodoBlazor.Api.Data;
+using Tedu.TodoBlazor.Api.Entities;
 using Tedu.TodoBlazor.Api.Repositories;
 
 namespace Tedu.TodoBlazor.Api;
@@ -12,6 +16,23 @@ public static class HostingExtension
     {
         builder.Services.AddDbContext<TodoListDbContext>(options =>
             options.UseSqlServer(builder.Configuration.GetConnectionString("DefaultConnection")));
+
+        builder.Services.AddIdentity<User, Role>()
+            .AddEntityFrameworkStores<TodoListDbContext>();
+        builder.Services.AddAuthentication(JwtBearerDefaults.AuthenticationScheme)
+            .AddJwtBearer(options =>
+            {
+                options.TokenValidationParameters = new TokenValidationParameters
+                {
+                    ValidateIssuer = true,
+                    ValidateAudience = true,
+                    ValidateLifetime = true,
+                    ValidateIssuerSigningKey = true,
+                    ValidIssuer = builder.Configuration["JwtIssuer"],
+                    ValidAudience = builder.Configuration["JwtAudience"],
+                    IssuerSigningKey = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(builder.Configuration["JwtSecurityKey"]))
+                };
+            });
 
         builder.Services.AddControllers();
 
