@@ -5,6 +5,7 @@ using Microsoft.AspNetCore.Components.Forms;
 using Tedu.TodoBlazor.Models;
 using Tedu.TodoBlazor.Models.SeedWork;
 using Tedu.TodoBlazor.Wasm.Components;
+using Tedu.TodoBlazor.Wasm.Layout;
 using Tedu.TodoBlazor.Wasm.Services;
 
 namespace Tedu.TodoBlazor.Wasm.Pages;
@@ -19,6 +20,8 @@ public partial class TaskList
     private List<TaskDto> Tasks;
     public MetaData MetaData { get; set; } = new MetaData();
     private TaskListSearch TaskListSearch = new TaskListSearch();
+    [CascadingParameter]
+    private Error Error { set; get; }
     protected override async Task OnInitializedAsync()
     {
         await GetTasks();
@@ -57,9 +60,17 @@ public partial class TaskList
 
     private async Task GetTasks()
     {
-        var pagingResponse = await TaskApiClient.GetTaskList(TaskListSearch);
-        Tasks = pagingResponse.Items;
-        MetaData = pagingResponse.MetaData;
+        try
+        {
+            var pagingResponse = await TaskApiClient.GetTaskList(TaskListSearch);
+            Tasks = pagingResponse.Items;
+            MetaData = pagingResponse.MetaData;
+        }
+        catch (Exception ex)
+        {
+            Error.ProcessError(ex);
+        }
+
     }
     private async Task SelectedPage(int page)
     {
