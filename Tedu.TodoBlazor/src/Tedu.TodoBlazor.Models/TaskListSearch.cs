@@ -1,9 +1,10 @@
 using System;
 using Tedu.TodoBlazor.Models.Enums;
+using Tedu.TodoBlazor.Models.SeedWork;
 
 namespace Tedu.TodoBlazor.Models;
 
-public class TaskListSearch
+public class TaskListSearch : PagingParameters
 {
     public string Name { get; set; }
 

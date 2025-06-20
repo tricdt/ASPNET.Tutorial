@@ -3,6 +3,7 @@ using Microsoft.AspNetCore.Mvc;
 using Tedu.TodoBlazor.Api.Repositories;
 using Tedu.TodoBlazor.Models;
 using Tedu.TodoBlazor.Models.Enums;
+using Tedu.TodoBlazor.Models.SeedWork;
 
 namespace Tedu.TodoBlazor.Api.Controllers
 {
@@ -21,8 +22,8 @@ namespace Tedu.TodoBlazor.Api.Controllers
         [HttpGet]
         public async Task<IActionResult> GetAll([FromQuery] TaskListSearch taskListSearch)
         {
-            var tasks = await _taskRepository.GetTaskList(taskListSearch);
-            var taskDtos = tasks.Select(x => new TaskDto()
+            var pagedList = await _taskRepository.GetTaskList(taskListSearch);
+            var taskDtos = pagedList.Items.Select(x => new TaskDto()
             {
                 Status = x.Status,
                 Name = x.Name,
@@ -33,7 +34,10 @@ namespace Tedu.TodoBlazor.Api.Controllers
                 AssigneeName = x.Assignee != null ? x.Assignee.FirstName + ' ' + x.Assignee.LastName : "N/A"
             });
 
-            return Ok(taskDtos);
+            return Ok(new PagedList<TaskDto>(taskDtos.ToList(),
+                pagedList.MetaData.TotalCount,
+                pagedList.MetaData.CurrentPage,
+                pagedList.MetaData.PageSize));
         }
 
         [HttpPost]

@@ -2,6 +2,7 @@ using System;
 using Microsoft.EntityFrameworkCore;
 using Tedu.TodoBlazor.Api.Data;
 using Tedu.TodoBlazor.Models;
+using Tedu.TodoBlazor.Models.SeedWork;
 using Task = Tedu.TodoBlazor.Api.Entities.Task;
 
 namespace Tedu.TodoBlazor.Api.Repositories;
@@ -14,7 +15,7 @@ public class TaskRepository : ITaskRepository
     {
         _context = context;
     }
-    public async Task<IEnumerable<Entities.Task>> GetTaskList(TaskListSearch taskListSearch)
+    public async Task<PagedList<Entities.Task>> GetTaskList(TaskListSearch taskListSearch)
     {
         var query = _context.Tasks
             .Include(x => x.Assignee).AsQueryable();
@@ -28,7 +29,13 @@ public class TaskRepository : ITaskRepository
         if (taskListSearch.Priority.HasValue)
             query = query.Where(x => x.Priority == taskListSearch.Priority.Value);
 
-        return await query.OrderByDescending(x => x.CreatedDate).ToListAsync();
+        var count = await query.CountAsync();
+
+        var data = await query.OrderByDescending(x => x.CreatedDate)
+               .Skip((taskListSearch.PageNumber - 1) * taskListSearch.PageSize)
+               .Take(taskListSearch.PageSize)
+               .ToListAsync();
+        return new PagedList<Entities.Task>(data, count, taskListSearch.PageNumber, taskListSearch.PageSize);
 
     }
 

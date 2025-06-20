@@ -3,6 +3,7 @@ using Blazored.Toast.Services;
 using Microsoft.AspNetCore.Components;
 using Microsoft.AspNetCore.Components.Forms;
 using Tedu.TodoBlazor.Models;
+using Tedu.TodoBlazor.Models.SeedWork;
 using Tedu.TodoBlazor.Wasm.Components;
 using Tedu.TodoBlazor.Wasm.Services;
 
@@ -16,15 +17,16 @@ public partial class TaskList
     protected AssignTask AssignTaskDialog { set; get; }
     private Guid DeleteId { set; get; }
     private List<TaskDto> Tasks;
+    public MetaData MetaData { get; set; } = new MetaData();
     private TaskListSearch TaskListSearch = new TaskListSearch();
     protected override async Task OnInitializedAsync()
     {
-        Tasks = await TaskApiClient.GetTaskList(TaskListSearch);
+        await GetTasks();
     }
     public async Task SearchTask(TaskListSearch taskListSearch)
     {
         TaskListSearch = taskListSearch;
-        Tasks = await TaskApiClient.GetTaskList(TaskListSearch);
+        await GetTasks();
     }
     public void OnDeleteTask(Guid deleteId)
     {
@@ -36,7 +38,7 @@ public partial class TaskList
         if (deleteConfirmed)
         {
             await TaskApiClient.DeleteTask(DeleteId);
-            Tasks = await TaskApiClient.GetTaskList(TaskListSearch);
+            await GetTasks();
         }
     }
 
@@ -49,7 +51,19 @@ public partial class TaskList
     {
         if (result)
         {
-            Tasks = await TaskApiClient.GetTaskList(TaskListSearch);
+            await GetTasks();
         }
+    }
+
+    private async Task GetTasks()
+    {
+        var pagingResponse = await TaskApiClient.GetTaskList(TaskListSearch);
+        Tasks = pagingResponse.Items;
+        MetaData = pagingResponse.MetaData;
+    }
+    private async Task SelectedPage(int page)
+    {
+        TaskListSearch.PageNumber = page;
+        await GetTasks();
     }
 }

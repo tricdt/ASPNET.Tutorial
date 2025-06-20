@@ -1,12 +1,12 @@
 using System;
 using Tedu.TodoBlazor.Models;
+using Tedu.TodoBlazor.Models.SeedWork;
 using Task = Tedu.TodoBlazor.Api.Entities.Task;
 namespace Tedu.TodoBlazor.Api.Repositories;
 
 public interface ITaskRepository
 {
-    Task<IEnumerable<Task>> GetTaskList(TaskListSearch taskListSearch);
-
+    Task<PagedList<Task>> GetTaskList(TaskListSearch taskListSearch);
     Task<Task> Create(Task task);
 
     Task<Task> Update(Task task);
