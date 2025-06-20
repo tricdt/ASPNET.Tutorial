@@ -13,7 +13,7 @@ public partial class TaskList
     [Inject] private ITaskApiClient TaskApiClient { set; get; }
 
     protected Confirmation DeleteConfirmation { set; get; }
-
+    protected AssignTask AssignTaskDialog { set; get; }
     private Guid DeleteId { set; get; }
     private List<TaskDto> Tasks;
     private TaskListSearch TaskListSearch = new TaskListSearch();
@@ -36,6 +36,19 @@ public partial class TaskList
         if (deleteConfirmed)
         {
             await TaskApiClient.DeleteTask(DeleteId);
+            Tasks = await TaskApiClient.GetTaskList(TaskListSearch);
+        }
+    }
+
+    public void OpenAssignPopup(Guid id)
+    {
+        AssignTaskDialog.Show(id);
+    }
+
+    public async Task AssignTaskSuccess(bool result)
+    {
+        if (result)
+        {
             Tasks = await TaskApiClient.GetTaskList(TaskListSearch);
         }
     }

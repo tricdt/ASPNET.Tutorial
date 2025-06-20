@@ -28,7 +28,7 @@ public class TaskRepository : ITaskRepository
         if (taskListSearch.Priority.HasValue)
             query = query.Where(x => x.Priority == taskListSearch.Priority.Value);
 
-        return await query.OrderByDescending(x=>x.CreatedDate).ToListAsync();
+        return await query.OrderByDescending(x => x.CreatedDate).ToListAsync();
 
     }
 
@@ -55,6 +55,6 @@ public class TaskRepository : ITaskRepository
 
     public async Task<Task> GetById(Guid id)
     {
-        return await _context.Tasks.FindAsync(id);
+        return await _context.Tasks.Include(t => t.Assignee).FirstOrDefaultAsync(t => t.Id == id);
     }
 }
