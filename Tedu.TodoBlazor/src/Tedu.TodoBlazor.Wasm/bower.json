@@ -1,0 +1,10 @@
+{
+  "name": "TodoApp",
+  "homepage": "https://github.com/tricdt/ASPNET.Tutorial",
+  "description": "",
+  "main": "",
+  "license": "MIT",
+  "dependencies": {
+    "bootstrap": "^5.3.7"
+  }
+}
