@@ -15,7 +15,7 @@ public class TaskRepository : ITaskRepository
     {
         _context = context;
     }
-    public async Task<PagedList<Entities.Task>> GetTaskList(TaskListSearch taskListSearch)
+    public async Task<PagedList<Task>> GetTaskList(TaskListSearch taskListSearch)
     {
         var query = _context.Tasks
             .Include(x => x.Assignee).AsQueryable();
@@ -35,7 +35,7 @@ public class TaskRepository : ITaskRepository
                .Skip((taskListSearch.PageNumber - 1) * taskListSearch.PageSize)
                .Take(taskListSearch.PageSize)
                .ToListAsync();
-        return new PagedList<Entities.Task>(data, count, taskListSearch.PageNumber, taskListSearch.PageSize);
+        return new PagedList<Task>(data, count, taskListSearch.PageNumber, taskListSearch.PageSize);
 
     }
 
@@ -63,5 +63,29 @@ public class TaskRepository : ITaskRepository
     public async Task<Task> GetById(Guid id)
     {
         return await _context.Tasks.Include(t => t.Assignee).FirstOrDefaultAsync(t => t.Id == id);
+    }
+
+    public async Task<PagedList<Task>> GetTaskListByUserId(Guid userId, TaskListSearch taskListSearch)
+    {
+        var query = _context.Tasks
+            .Where(x => x.AssigneeId == userId)
+            .Include(x => x.Assignee).AsQueryable();
+
+        if (!string.IsNullOrEmpty(taskListSearch.Name))
+            query = query.Where(x => x.Name.Contains(taskListSearch.Name));
+
+        if (taskListSearch.AssigneeId.HasValue)
+            query = query.Where(x => x.AssigneeId == taskListSearch.AssigneeId.Value);
+
+        if (taskListSearch.Priority.HasValue)
+            query = query.Where(x => x.Priority == taskListSearch.Priority.Value);
+
+        var count = await query.CountAsync();
+
+        var data = await query.OrderByDescending(x => x.CreatedDate)
+            .Skip((taskListSearch.PageNumber - 1) * taskListSearch.PageSize)
+            .Take(taskListSearch.PageSize)
+            .ToListAsync();
+        return new PagedList<Task>(data, count, taskListSearch.PageNumber, taskListSearch.PageSize);
     }
 }

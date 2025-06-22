@@ -23,10 +23,6 @@
   </ItemGroup>
 
   <ItemGroup>
-    <Folder Include="Extensions\" />
-  </ItemGroup>
-
-  <ItemGroup>
     <ProjectReference Include="..\Tedu.TodoBlazor.Models\Tedu.TodoBlazor.Models.csproj" />
   </ItemGroup>
 

@@ -82,6 +82,10 @@ public static class HostingExtension
 
         app.UseCors("CorsPolicy");
 
+        app.UseAuthentication();
+
+        app.UseAuthorization();
+
         app.MapControllers();
 
         return app;
