@@ -101,11 +101,17 @@ public static class HostingExtensions
 
         app.UseSerilogRequestLogging();
 
+        app.UseStaticFiles();
+        app.UseAuthentication();
         app.UseRouting();
 
         app.UseCors("CorsPolicy");
+        app.UseIdentityServer();
+        app.UseAuthorization();
 
         app.MapControllers();
+
+        app.MapDefaultControllerRoute();
 
         return app;
     }

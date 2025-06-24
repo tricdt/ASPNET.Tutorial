@@ -1,0 +1,11 @@
+{
+  "name": "Tedu.Exam",
+  "homepage": "https://github.com/tricdt/ASPNET.Tutorial",
+  "description": "",
+  "main": "",
+  "license": "MIT",
+  "dependencies": {
+    "bootstrap": "^4.4.1",
+    "jquery": "^3.5.0"
+  }
+}
