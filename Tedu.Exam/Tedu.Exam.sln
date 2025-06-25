@@ -25,7 +25,7 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Examination.Application", "
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Examination.Domain", "src\Services\Examination\Examination.Domain\Examination.Domain.csproj", "{A5D053FD-8431-4701-80A8-C0D024EBC6AD}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Examination.Infrastructure", "src\Services\Examination\Examination.Infrastructure\Examination.Infrastructure.csproj", "{F12AF863-8C85-4C06-BE63-42BF467BA120}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Examination.Infrastructure.MongoDb", "src\Services\Examination\Examination.Infrastructure\Examination.Infrastructure.MongoDb.csproj", "{F12AF863-8C85-4C06-BE63-42BF467BA120}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Identity.API", "src\Services\Identity\Identity.API\Identity.API.csproj", "{AC7608DD-B742-45A4-B2B5-4E1FE3101937}"
 EndProject
