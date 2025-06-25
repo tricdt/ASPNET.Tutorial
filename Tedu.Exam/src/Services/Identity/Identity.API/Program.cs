@@ -8,7 +8,7 @@ using Serilog;
 using Serilog.Events;
 
 
-string appName = typeof(Program).Namespace;
+string appName = typeof(Program).Assembly.GetName().Name ?? "Tedu.Exam.Identity.API";
 var configuration = new ConfigurationBuilder()
     .SetBasePath(Directory.GetCurrentDirectory())
     .AddJsonFile("appsettings.json", optional: false, reloadOnChange: true)
