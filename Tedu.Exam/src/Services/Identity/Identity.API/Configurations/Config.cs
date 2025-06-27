@@ -114,8 +114,13 @@ public static class Config
                     AllowedGrantTypes = GrantTypes.Implicit,
                     AllowAccessTokensViaBrowser = true,
 
-                    RedirectUris = { $"{clientUrls["ExamApi"]}/swagger/oauth2-redirect.html" },
-                    PostLogoutRedirectUris = { $"{clientUrls["ExamApi"]}/swagger/" },
+                    // RedirectUris = { $"{clientUrls["ExamApi"]}/swagger/oauth2-redirect.html" },
+                    // PostLogoutRedirectUris = { $"{clientUrls["ExamApi"]}/swagger/" },
+
+                    
+                    RedirectUris =           { "https://localhost:5002/swagger/oauth2-redirect.html" },
+                    PostLogoutRedirectUris = { "https://localhost:5002/swagger/oauth2-redirect.html" },
+                    AllowedCorsOrigins =     { "https://localhost:5002" },
 
                     AllowedScopes =
                         {

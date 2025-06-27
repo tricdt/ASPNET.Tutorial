@@ -1,0 +1,6 @@
+@baseUrl = https://localhost:5002
+
+GET {{baseUrl}}
+Accept: application/json
+
+

@@ -22,14 +22,26 @@ try
 {
     Log.Information("Starting web host ({ApplicationContext})...", appName);
     var builder = WebApplication.CreateBuilder(args);
+    builder.WebHost.CaptureStartupErrors(true);
+    builder.WebHost.UseIISIntegration();
+    builder.Host.UseSerilog();
+
     var app = builder
         .ConfigureServices()
         .ConfigurePipeline();
+
+    //Seed the database or perform any startup tasks
+    Log.Information("Seeding database...");
+    using (var scope = app.Services.CreateScope())
+    {
+        //await scope.ServiceProvider.SeedDataAsync<AppDbContext, UserSeedData>();
+    }
+    app.MapGet("/", () => "Welcome to Tedu.Exam.Examination API!");
     app.Run();
 }
-catch(Exception ex)
+catch (Exception ex)
 {
-    Log.Fatal(ex, "Unhandled exception");
+    Log.Fatal(ex, "Application startup failed");
 }
 finally
 {

@@ -2,6 +2,7 @@ using System.Globalization;
 using System.Text;
 using Identity.API;
 using Identity.API.Database;
+using Identity.API.Extensions;
 using IdentityServer4.EntityFramework.DbContexts;
 using Microsoft.Extensions.Options;
 using Serilog;
@@ -39,6 +40,10 @@ try
     var app = builder
         .ConfigureServices()
         .ConfigurePipeline();
+    // using (var scope = app.Services.CreateScope())
+    // {
+    //     await scope.ServiceProvider.SeedDataAsync<ApplicationDbContext, UserSeedData>();
+    // }
     app.MigrateDbContext<PersistedGrantDbContext>((_, _) => { })
         .MigrateDbContext<ApplicationDbContext>((context, services) =>
         {
