@@ -4,7 +4,7 @@ import { AuthService } from '@app/shared/services';
 
 @Component({
   standalone: false,
-  selector: 'sb-auth-callback',
+  selector: 'app-auth-callback',
   templateUrl: './auth-callback.component.html',
   styleUrl: './auth-callback.component.scss'
 })

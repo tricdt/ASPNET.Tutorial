@@ -2,7 +2,7 @@ import { Component } from '@angular/core';
 
 @Component({
   standalone: false,
-  selector: 'sb-header',
+  selector: 'app-header',
   templateUrl: './header.component.html',
   styleUrl: './header.component.scss'
 })

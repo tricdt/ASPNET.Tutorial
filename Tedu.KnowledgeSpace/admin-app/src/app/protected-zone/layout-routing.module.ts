@@ -2,6 +2,7 @@ import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
 import { LayoutComponent } from './layout.component';
 import { AuthGuard } from '@app/shared/guard/auth.guard';
+import { BrowserAnimationsModule, provideAnimations } from '@angular/platform-browser/animations';
 
 const routes: Routes = [
   {
@@ -15,7 +16,7 @@ const routes: Routes = [
         data: {
           functionCode: 'DASHBOARD'
         },
-        canActivate: [AuthGuard],
+        canActivate: [],
       },
       {
         path: 'contents',
@@ -42,7 +43,9 @@ const routes: Routes = [
   }
 ];
 @NgModule({
-  imports: [RouterModule.forChild(routes)],
-  exports: [RouterModule]
+  imports: [RouterModule.forChild(routes), ],
+  exports: [RouterModule],
+  providers:[
+  ]
 })
 export class LayoutRoutingModule {}

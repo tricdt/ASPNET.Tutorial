@@ -1,6 +1,7 @@
 import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
 import { AuthGuard } from './shared/guard/auth.guard';
+import { provideAnimations } from '@angular/platform-browser/animations';
 const routes: Routes = [
   {
     path: '',
@@ -26,6 +27,8 @@ const routes: Routes = [
 
 @NgModule({
   imports: [RouterModule.forRoot(routes)],
-  exports: [RouterModule]
+  exports: [RouterModule],
+  providers:[
+  ]
 })
 export class AppRoutingModule {}

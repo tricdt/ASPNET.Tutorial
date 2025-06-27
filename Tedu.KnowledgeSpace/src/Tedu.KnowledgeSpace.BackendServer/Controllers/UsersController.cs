@@ -1,4 +1,5 @@
 using System;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
@@ -199,6 +200,7 @@ public class UsersController : BaseController
                         Url = f.Url,
                         ParentId = f.ParentId,
                         SortOrder = f.SortOrder,
+                        Icon = f.Icon
                     };
         var data = await query.Distinct()
             .OrderBy(x => x.ParentId)

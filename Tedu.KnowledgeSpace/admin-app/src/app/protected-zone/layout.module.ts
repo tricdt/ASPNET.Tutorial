@@ -17,6 +17,9 @@ import { SidebarComponent } from "./components/sidebar/sidebar.component";
     CommonModule,
     LayoutRoutingModule,
     NgbDropdownModule,
+  ],
+  providers:[
   ]
+
 })
 export class ProtectedZoneModule { }

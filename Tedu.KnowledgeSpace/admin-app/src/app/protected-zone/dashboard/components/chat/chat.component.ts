@@ -2,8 +2,7 @@ import { Component } from '@angular/core';
 
 @Component({
   selector: 'app-chat',
-  standalone: true,
-  imports: [],
+  standalone: false,
   templateUrl: './chat.component.html',
   styleUrl: './chat.component.scss'
 })

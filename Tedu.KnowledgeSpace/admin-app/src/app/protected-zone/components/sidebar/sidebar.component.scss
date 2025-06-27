@@ -131,6 +131,9 @@ $topnav-background-color: #222;
     ul.submenu {
         display: none;
         height: 0;
+        a{
+            text-decoration: none;
+        }
     }
 
     & .expand {

@@ -88,6 +88,17 @@ public static class HostingExtensions
                 });
             });
 
+        builder.Services.AddCors(options =>
+            {
+                options.AddPolicy("CorsPolicy", builder =>
+                {
+                    builder.AllowAnyOrigin()
+                        .AllowAnyMethod()
+                        .AllowAnyHeader()
+                        .WithExposedHeaders("X-Pagination");
+                });
+            });
+
         builder.Services.AddSwaggerGen(c =>
             {
                 c.SwaggerDoc("v1", new OpenApiInfo { Title = "Knowledge Space API", Version = "v1" });
@@ -134,6 +145,8 @@ public static class HostingExtensions
                 c.SwaggerEndpoint("/swagger/v1/swagger.json", "Knowledge Space API v1");
             });
         }
+
+        app.UseCors("CorsPolicy");
 
         app.UseStaticFiles();
 

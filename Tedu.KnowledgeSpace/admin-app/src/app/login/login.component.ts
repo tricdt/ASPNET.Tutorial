@@ -5,7 +5,7 @@ import { NgxSpinnerService } from 'ngx-spinner';
 
 @Component({
   standalone: false,
-  selector: 'sb-login',
+  selector: 'app-login',
   templateUrl: './login.component.html',
   styleUrl: './login.component.scss',
   animations: [routerTransition()],
