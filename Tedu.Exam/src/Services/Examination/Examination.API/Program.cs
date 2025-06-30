@@ -6,7 +6,7 @@ string appName = typeof(Program).Assembly.GetName().Name ?? "Tedu.Exam.Examinati
 var configuration = new ConfigurationBuilder()
     .SetBasePath(Directory.GetCurrentDirectory())
     .AddJsonFile("appsettings.json", optional: false, reloadOnChange: true)
-    .AddJsonFile($"appsettings.{CultureInfo.CurrentCulture.Name}.json", optional: true, reloadOnChange: true)
+    .AddJsonFile($"appsettings.{Environment.GetEnvironmentVariable("ASPNETCORE_ENVIRONMENT")}.json", optional: true, reloadOnChange: true)
     .AddEnvironmentVariables()
     .Build();
 Log.Logger = new LoggerConfiguration()
@@ -18,6 +18,8 @@ Log.Logger = new LoggerConfiguration()
                     outputTemplate: "[{Timestamp:HH:mm:ss} {Level}] {SourceContext}{NewLine}{Message:lj}{NewLine}{Exception}{NewLine}")
                 .ReadFrom.Configuration(configuration)
                 .CreateLogger();
+
+Log.Information("Starting up");
 try
 {
     Log.Information("Starting web host ({ApplicationContext})...", appName);

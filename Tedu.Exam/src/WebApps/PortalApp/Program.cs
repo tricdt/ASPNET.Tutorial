@@ -1,26 +1,52 @@
-var builder = WebApplication.CreateBuilder(args);
+using PortalApp.Extensions;
+using Serilog;
 
-// Add services to the container.
-builder.Services.AddRazorPages();
+string appName = typeof(Program).Assembly.GetName().Name ?? "Tedu.Exam.WebApps.PortalApp";
+var configuration = new ConfigurationBuilder()
+    .SetBasePath(Directory.GetCurrentDirectory())
+    .AddJsonFile("appsettings.json", optional: false, reloadOnChange: true)
+    .AddJsonFile($"appsettings.{Environment.GetEnvironmentVariable("ASPNETCORE_ENVIRONMENT")}.json", optional: true, reloadOnChange: true)
+    .AddEnvironmentVariables()
+    .Build();
+Log.Logger = new LoggerConfiguration()
+                .MinimumLevel.Verbose()
+                .Enrich.WithProperty("ApplicationContext", appName)
+                .Enrich.FromLogContext()
+                .WriteTo.Console()
+                .WriteTo.File("logs/Tedu.Exam.log", rollingInterval: RollingInterval.Day,
+                    outputTemplate: "[{Timestamp:HH:mm:ss} {Level}] {SourceContext}{NewLine}{Message:lj}{NewLine}{Exception}{NewLine}")
+                .ReadFrom.Configuration(configuration)
+                .CreateLogger();
 
-var app = builder.Build();
+Log.Information("Starting up");
 
-// Configure the HTTP request pipeline.
-if (!app.Environment.IsDevelopment())
+try
 {
-    app.UseExceptionHandler("/Error");
-    // The default HSTS value is 30 days. You may want to change this for production scenarios, see https://aka.ms/aspnetcore-hsts.
-    app.UseHsts();
+    Log.Information("Starting web host ({ApplicationContext})...", appName);
+    var builder = WebApplication.CreateBuilder(args);
+    builder.WebHost.CaptureStartupErrors(true);
+    builder.WebHost.UseIISIntegration();
+    builder.Host.UseSerilog();
+
+    var app = builder
+        .ConfigureServices()
+        .ConfigurePipeline();
+
+    //Seed the database or perform any startup tasks
+    Log.Information("Seeding database...");
+    using (var scope = app.Services.CreateScope())
+    {
+        //await scope.ServiceProvider.SeedDataAsync<AppDbContext, UserSeedData>();
+    }
+    app.MapGet("/", () => "Welcome to Tedu.Exam.WebApp.PortalApp Razor page!").RequireAuthorization();
+    app.Run();
 }
-
-app.UseHttpsRedirection();
-
-app.UseRouting();
-
-app.UseAuthorization();
-
-app.MapStaticAssets();
-app.MapRazorPages()
-   .WithStaticAssets();
-
-app.Run();
+catch (Exception ex)
+{
+    Log.Fatal(ex, "Application startup failed");
+}
+finally
+{
+    Log.Information("Shut down complete");
+    Log.CloseAndFlush();
+}

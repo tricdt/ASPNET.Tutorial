@@ -55,33 +55,10 @@ public static class HostingExtension
                     }
                 }
             });
-            //c.OperationFilter<AuthorizeCheckOperationFilter>();
+            c.OperationFilter<AuthorizeCheckOperationFilter>();
 
         });
         var identityUrl = builder.Configuration.GetValue<string>("IdentityUrl");
-        // builder.Services.AddAuthentication(options =>
-        // {
-        //     options.DefaultAuthenticateScheme = Microsoft.AspNetCore.Authentication.JwtBearer.JwtBearerDefaults
-        //         .AuthenticationScheme;
-        //     options.DefaultChallengeScheme = Microsoft.AspNetCore.Authentication.JwtBearer.JwtBearerDefaults
-        //         .AuthenticationScheme;
-        // }).AddJwtBearer(options =>
-        // {
-        //     options.Authority = identityUrl;
-        //     options.RequireHttpsMetadata = false;
-        //     options.Audience = "exam_api";
-        //     options.TokenValidationParameters = new Microsoft.IdentityModel.Tokens.TokenValidationParameters()
-        //     {
-        //         ValidateIssuerSigningKey = true,
-        //         ValidateIssuer = false,
-        //         ValidateAudience = false
-        //     };
-        //     //Fix SSL
-        //     options.BackchannelHttpHandler = new HttpClientHandler
-        //     {
-        //         ServerCertificateCustomValidationCallback = delegate { return true; }
-        //     };
-        // });
         return builder.Build();
     }
 
