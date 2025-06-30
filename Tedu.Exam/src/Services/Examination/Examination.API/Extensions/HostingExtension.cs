@@ -49,7 +49,6 @@ public static class HostingExtension
                         TokenUrl = new Uri($"{builder.Configuration.GetValue<string>("IdentityUrl")}/connect/token"),
                         Scopes = new Dictionary<string, string>()
                         {
-                            {"exam_api", "exam_api"},
                             {"full_access", "full_access" }
                         },
 
