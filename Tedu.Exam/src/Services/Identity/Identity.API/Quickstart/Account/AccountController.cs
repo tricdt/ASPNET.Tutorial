@@ -3,6 +3,7 @@
 
 
 using Duende.IdentityModel;
+using Identity.API.Models;
 using IdentityServer4;
 using IdentityServer4.Events;
 using IdentityServer4.Extensions;
@@ -13,6 +14,7 @@ using IdentityServer4.Test;
 using Microsoft.AspNetCore.Authentication;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http;
+using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using System;
 using System.Linq;
@@ -29,23 +31,26 @@ namespace IdentityServerHost.Quickstart.UI
     [AllowAnonymous]
     public class AccountController : Controller
     {
-        private readonly TestUserStore _users;
         private readonly IIdentityServerInteractionService _interaction;
         private readonly IClientStore _clientStore;
         private readonly IAuthenticationSchemeProvider _schemeProvider;
         private readonly IEventService _events;
+        private readonly SignInManager<ApplicationUser> _signInManager;
+        private readonly UserManager<ApplicationUser> _userManager;
 
         public AccountController(
             IIdentityServerInteractionService interaction,
             IClientStore clientStore,
             IAuthenticationSchemeProvider schemeProvider,
             IEventService events,
-            TestUserStore users = null)
+            SignInManager<ApplicationUser> signInManager,
+            UserManager<ApplicationUser> userManager
+            )
         {
             // if the TestUserStore is not in DI, then we'll just use the global users collection
             // this is where you would plug in your own custom identity management library (e.g. ASP.NET Identity)
-            _users = users ?? new TestUserStore(TestUsers.Users);
-
+            _signInManager = signInManager;
+            _userManager = userManager;
             _interaction = interaction;
             _clientStore = clientStore;
             _schemeProvider = schemeProvider;
@@ -109,11 +114,11 @@ namespace IdentityServerHost.Quickstart.UI
 
             if (ModelState.IsValid)
             {
+                var user = await _userManager.FindByNameAsync(model.Username);
                 // validate username/password against in-memory store
-                if (_users.ValidateCredentials(model.Username, model.Password))
+                if (await _signInManager.PasswordSignInAsync(user, model.Password, model.RememberLogin, true) == Microsoft.AspNetCore.Identity.SignInResult.Success)
                 {
-                    var user = _users.FindByUsername(model.Username);
-                    await _events.RaiseAsync(new UserLoginSuccessEvent(user.Username, user.SubjectId, user.Username, clientId: context?.Client.ClientId));
+                   await _events.RaiseAsync(new UserLoginSuccessEvent(user.UserName, user.Id, user.FirstName, clientId: context?.Client.ClientId));
 
                     // only set explicit expiration here if user chooses "remember me". 
                     // otherwise we rely upon expiration configured in cookie middleware.
@@ -129,9 +134,9 @@ namespace IdentityServerHost.Quickstart.UI
                     ;
 
                     // issue authentication cookie with subject ID and username
-                    var isuser = new IdentityServerUser(user.SubjectId)
+                    var isuser = new IdentityServerUser(user.Id)
                     {
-                        DisplayName = user.Username
+                        DisplayName = user.UserName
                     };
 
                     await HttpContext.SignInAsync(isuser, props);

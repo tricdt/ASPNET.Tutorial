@@ -82,6 +82,8 @@ public static class HostingExtensions
                         .AllowAnyHeader()
                         .AllowCredentials());
             });
+        // builder.Services.AddSingleton<UserManager<ApplicationUser>>();
+        // builder.Services.AddSingleton<SignInManager<ApplicationUser>>();
         return builder.Build();
     }
 

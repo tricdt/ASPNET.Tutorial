@@ -7,13 +7,19 @@ using IdentityServer4.EntityFramework.DbContexts;
 using Microsoft.Extensions.Options;
 using Serilog;
 using Serilog.Events;
-
+// var environment = Environment.GetEnvironmentVariable("ASPNETCORE_ENVIRONMENT") ?? "Production";
+// var configuration = new ConfigurationBuilder()
+//     .SetBasePath(Directory.GetCurrentDirectory())
+//     .AddJsonFile("appsettings.json", optional: false, reloadOnChange: true)
+//     .AddJsonFile($"appsettings.{environment}.json", optional: true, reloadOnChange: true)
+//     .AddEnvironmentVariables()
+//     .Build();
 
 string appName = typeof(Program).Assembly.GetName().Name ?? "Tedu.Exam.Identity.API";
 var configuration = new ConfigurationBuilder()
     .SetBasePath(Directory.GetCurrentDirectory())
     .AddJsonFile("appsettings.json", optional: false, reloadOnChange: true)
-    .AddJsonFile($"appsettings.{CultureInfo.CurrentCulture.Name}.json", optional: true, reloadOnChange: true)
+    .AddJsonFile($"appsettings.{Environment.GetEnvironmentVariable("ASPNETCORE_ENVIRONMENT")}.json", optional: true, reloadOnChange: true)
     .AddEnvironmentVariables()
     .Build();
 Log.Logger = new LoggerConfiguration()
