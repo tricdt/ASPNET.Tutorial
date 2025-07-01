@@ -26,7 +26,7 @@
     "strictNullChecks": false,
     "noImplicitAny": false,
     "strictPropertyInitialization": false,
-    "noImplicitOverride": true,
+    "noImplicitOverride": false,
     "noPropertyAccessFromIndexSignature": true,
     "noImplicitReturns": true,
     "noFallthroughCasesInSwitch": true,

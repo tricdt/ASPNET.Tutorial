@@ -26,29 +26,20 @@
             "outputPath": "dist/sb-admin",
             "index": "src/index.html",
             "browser": "src/main.ts",
-            "polyfills": [
-              "zone.js",
-              "@angular/localize/init"
-            ],
+            "polyfills": ["zone.js", "@angular/localize/init"],
             "tsConfig": "tsconfig.app.json",
             "inlineStyleLanguage": "scss",
-            "assets": [
-              "src/assets",
-              "src/favicon.ico"
-            ],
+            "assets": ["src/assets", "src/favicon.ico"],
             "styles": [
               "node_modules/font-awesome/css/font-awesome.min.css",
+
               "node_modules/ngx-spinner/animations/ball-scale-multiple.css",
               "node_modules/alertifyjs/build/css/alertify.min.css",
               "node_modules/alertifyjs/build/css/themes/default.min.css",
               "src/styles/app.scss"
             ],
-            "scripts": [
-              "node_modules/chart.js/dist/chart.umd.js"
-            ],
-            "allowedCommonJsDependencies": [
-              "chart.js"
-            ],
+            "scripts": ["node_modules/chart.js/dist/chart.umd.js"],
+            "allowedCommonJsDependencies": ["chart.js"],
             "aot": false,
             "extractLicenses": false,
             "sourceMap": true,
@@ -109,11 +100,7 @@
         "test": {
           "builder": "@angular-devkit/build-angular:karma",
           "options": {
-            "polyfills": [
-              "zone.js",
-              "zone.js/testing",
-              "@angular/localize/init"
-            ],
+            "polyfills": ["zone.js", "zone.js/testing", "@angular/localize/init"],
             "tsConfig": "tsconfig.spec.json",
             "inlineStyleLanguage": "scss",
             "assets": [
@@ -122,9 +109,7 @@
                 "input": "public"
               }
             ],
-            "styles": [
-              "src/styles.scss"
-            ],
+            "styles": ["src/styles.scss"],
             "scripts": []
           }
         }

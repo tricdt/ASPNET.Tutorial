@@ -72,7 +72,7 @@ public class DbInitializer
         {
             _context.Functions.AddRange(new List<Function>
                 {
-                    new Function {Id = "DASHBOARD", Name = "Thống kê", ParentId = null, SortOrder = 1,Url = "/dashboard",Icon="fa-dashboard" },
+                    new Function {Id = "DASHBOARD", Name = "Bảng điều khiển", ParentId = null, SortOrder = 1,Url = "/dashboard",Icon="fa-dashboard" },
 
                     new Function {Id = "CONTENT",Name = "Nội dung",ParentId = null,Url = "/contents",Icon="fa-table" },
 

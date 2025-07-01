@@ -1,11 +1,31 @@
-import { Component } from '@angular/core';
+import { Component, Inject, OnInit } from '@angular/core';
 
 @Component({
-  selector: 'sb-base',
-  imports: [],
+  selector: 'app-base',
   templateUrl: './base.component.html',
   styleUrl: './base.component.scss'
 })
-export class BaseComponent {
+export class BaseComponent implements OnInit {
+protected screenTitle = '';
+  private functionCode: string;
+  constructor(@Inject(String) functionCode: string) {
+    this.functionCode = functionCode;
+  }
 
+  ngOnInit(): void {
+    const data = localStorage.getItem('functions');
+    if (data) {
+      const functions = JSON.parse(data) as any[];
+      functions.forEach(element => {
+        if (element.children) {
+          element.children.forEach(childrenFunction => {
+            if (childrenFunction.id === this.functionCode) {
+              this.screenTitle = childrenFunction.name;
+            }
+          });
+
+        }
+      });
+    }
+  }
 }
