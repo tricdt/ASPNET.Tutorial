@@ -55,7 +55,7 @@ public static class HostingExtension
                     }
                 }
             });
-            c.OperationFilter<AuthorizeCheckOperationFilter>();
+            //c.OperationFilter<AuthorizeCheckOperationFilter>();
 
         });
         var identityUrl = builder.Configuration.GetValue<string>("IdentityUrl");
@@ -73,7 +73,7 @@ public static class HostingExtension
                 c.OAuthClientId("exam_api_swaggerui");
                 c.SwaggerEndpoint("/swagger/v1/swagger.json", "Examination.API V1");
                 c.SwaggerEndpoint("/swagger/v2/swagger.json", "Examination.API V2");
-                c.OAuth2RedirectUrl("https://localhost:5001/swagger/oauth2-redirect.html");
+                c.OAuth2RedirectUrl("https://localhost:5002/swagger/oauth2-redirect.html");
             });
         }
         else
