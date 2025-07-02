@@ -1,6 +1,13 @@
-﻿@using MudBlazor
+﻿@using AdminApp.Core
+@using AdminApp.Core.Extensions
+@using Microsoft.AspNetCore.Components.Authorization
+@using MudBlazor
 @using MudBlazor.ThemeManager
+
 @inherits LayoutComponentBase
+
+@inject AuthenticationStateProvider AuthenticationStateProvider
+@inject NavigationManager NavigationManager;
 <MudThemeProvider Theme="_themeManager.Theme" />
 <MudDialogProvider FullWidth="true" MaxWidth="MaxWidth.ExtraSmall" CloseButton="true" DisableBackdropClick="true"
     NoHeader="true" Position="DialogPosition.Center" />
@@ -8,4 +15,16 @@
 @Body
 @code {
     private ThemeManagerTheme _themeManager = new ThemeManagerTheme();
+    public string fullName = string.Empty;
+    protected override async Task OnInitializedAsync()
+    {
+        var authState = await AuthenticationStateProvider.GetAuthenticationStateAsync();
+        var user = authState.User;
+        fullName = user.GetFullName();
+
+        if (!user.Identity.IsAuthenticated)
+        {
+            NavigationManager.NavigateTo($"{UrlConstants.Login}?returnUrl={Uri.EscapeDataString(NavigationManager.Uri)}");
+        }
+    }
 }
