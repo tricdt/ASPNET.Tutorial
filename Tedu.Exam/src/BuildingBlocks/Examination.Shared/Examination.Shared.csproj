@@ -6,4 +6,9 @@
     <Nullable>disable</Nullable>
   </PropertyGroup>
 
+  <ItemGroup>
+    <Folder Include="Exams\" />
+    <Folder Include="Questions\" />
+  </ItemGroup>
+
 </Project>

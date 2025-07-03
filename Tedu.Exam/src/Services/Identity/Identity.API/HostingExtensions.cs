@@ -34,7 +34,7 @@ public static class HostingExtensions
 
         builder.Services.AddIdentityServer(x =>
             {
-                x.IssuerUri = "https://tedu.com.vn";
+                x.IssuerUri = "https://localhost:5001";
                 x.Authentication.CookieLifetime = TimeSpan.FromHours(2);
             })
             .AddDeveloperSigningCredential()

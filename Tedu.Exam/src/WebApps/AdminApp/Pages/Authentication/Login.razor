@@ -1,8 +1,11 @@
 ﻿@page "/auth/login"
+@using AdminApp.Core
 @using AdminApp.Models
+@using AdminApp.Services.Interfaces
 @using MudBlazor
 @layout LoginLayout
 @inject NavigationManager NavigationManager;
+@inject IAuthService AuthService;
 <PageTitle>Login</PageTitle>
 
 <EditForm Model="@model" OnValidSubmit="HandleLogin">
@@ -13,7 +16,7 @@
     {
         <MudText Color="@Color.Error">@errorMsg</MudText>
     }
-    <MudTextField T="string" @bind-Value="model.UserName" Label="E-mail" Variant="Variant.Outlined" Class="my-6">
+    <MudTextField T="string" @bind-Value="@model.UserName" Label="E-mail" Variant="Variant.Outlined" Class="my-6">
     </MudTextField>
     <MudTextField @bind-Value="@model.Password" Label="Password" Variant="Variant.Outlined" InputType="@PasswordInput"
         Adornment="Adornment.End" AdornmentIcon="@PasswordInputIcon" OnAdornmentClick="TogglePasswordVisibility" />
@@ -41,7 +44,17 @@
     string PasswordInputIcon = Icons.Material.Filled.VisibilityOff;
     async Task HandleLogin()
     {
-
+        loading = true;
+        var result = await AuthService.LoginAsync(model);
+        if (result.IsError == false)
+        {
+            NavigationManager.NavigateTo(UrlConstants.Dashboard);
+        }
+        else
+        {
+            errorMsg = "Incorrect username or password";
+        }
+        loading = false;
     }
     void TogglePasswordVisibility()
     {

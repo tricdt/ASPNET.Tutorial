@@ -82,7 +82,7 @@ public static class Config
                         },
                     ClientUri = $"{clientUrls["ExamWebAdmin"]}", // public uri of the client
                     AllowedCorsOrigins = { clientUrls["ExamWebAdmin"] },
-                    AllowedGrantTypes = GrantTypes.Code,
+                    AllowedGrantTypes = GrantTypes.ResourceOwnerPassword,
                     AllowAccessTokensViaBrowser = false,
                     RequireConsent = false,
                     AllowOfflineAccess = true,
