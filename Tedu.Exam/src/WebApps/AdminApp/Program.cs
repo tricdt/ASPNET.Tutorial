@@ -30,6 +30,7 @@ builder.Services.AddScoped(sp => new HttpClient
 });
 builder.Services.AddMudServices(config =>
 {
+    
     config.SnackbarConfiguration.PositionClass = Defaults.Classes.Position.TopCenter;
 
     config.SnackbarConfiguration.PreventDuplicates = false;

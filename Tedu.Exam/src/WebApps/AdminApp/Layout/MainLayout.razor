@@ -1,5 +1,6 @@
 ﻿@using AdminApp.Core
 @using AdminApp.Core.Extensions
+@using AdminApp.Services.Interfaces
 @using Microsoft.AspNetCore.Components.Authorization
 @using MudBlazor
 @using MudBlazor.ThemeManager
@@ -8,13 +9,84 @@
 
 @inject AuthenticationStateProvider AuthenticationStateProvider
 @inject NavigationManager NavigationManager;
-<MudThemeProvider Theme="_themeManager.Theme" />
+@inject IAuthService AuthService
+<MudThemeProvider Theme="_themeManager.Theme" IsDarkMode />
 <MudDialogProvider FullWidth="true" MaxWidth="MaxWidth.ExtraSmall" CloseButton="true" DisableBackdropClick="true"
     NoHeader="true" Position="DialogPosition.Center" />
 <MudSnackbarProvider />
-@Body
+<MudPopoverProvider />
+<MudLayout>
+    <MudAppBar Elevation="_themeManager.AppBarElevation">
+        <MudHidden Breakpoint="Breakpoint.SmAndDown">
+            <MudIcon Icon="@Icons.Custom.Brands.MudBlazor" Size="Size.Large" />
+        </MudHidden>
+        <MudHidden Breakpoint="Breakpoint.MdAndUp">
+            <MudIconButton Icon="@Icons.Material.Outlined.Menu" Color="Color.Inherit" Edge="Edge.Start"
+                OnClick="@((e) => DrawerToggle())" />
+        </MudHidden>
+        <MudHidden Breakpoint="Breakpoint.Xs">
+            <MudText Typo="Typo.h6" Class="ml-4">Admin Dashboard</MudText>
+        </MudHidden>
+        <MudHidden Breakpoint="Breakpoint.Xs" Invert="true">
+            <MudText Typo="Typo.subtitle2">Admin Dashboard</MudText>
+        </MudHidden>
+        <MudSpacer />
+        <MudMenu Icon="@Icons.Material.Outlined.Translate" Color="Color.Inherit" Direction="Direction.Bottom"
+            OffsetY="true" Dense="true">
+            <MudMenuItem Label="English">English</MudMenuItem>
+            <MudMenuItem Label="Swedish">Swedish</MudMenuItem>
+            <MudMenuItem Label="Old Norse">Old Norse</MudMenuItem>
+        </MudMenu>
+        <MudMenu Icon="@Icons.Material.Outlined.Widgets" Color="Color.Inherit" Direction="Direction.Bottom"
+            OffsetY="true" Dense="true">
+            <MudMenuItem Link="https://mudblazor.com/">MudBlazor</MudMenuItem>
+            <MudMenuItem Link="https://github.com/Garderoben/MudBlazor.Templates">Source Code</MudMenuItem>
+        </MudMenu>
+        <MudMenu Direction="Direction.Left" OffsetX="true" Dense="true" Class="mt-1 ml-4">
+            <ActivatorContent>
+                <MudAvatar Image="images/avatar_jonny.jpg" />
+            </ActivatorContent>
+            <ChildContent>
+                <PersonCard FullName="@fullName" Class="mt-n2" />
+                <MudDivider Class="mb-2" />
+                <MudListItem T="object" Text="Account" Icon="@Icons.Material.Outlined.Person"
+                    Href="/personal/account" />
+                <MudListItem T="object" Text="Logout" Icon="@Icons.Material.Outlined.Login" OnClick="HandleLogout" />
+            </ChildContent>
+        </MudMenu>
+    </MudAppBar>
+    <MudDrawer @bind-Open="_drawerOpen" Elevation="_themeManager.DrawerElevation"
+        ClipMode="_themeManager.DrawerClipMode">
+        <NavMenu />
+    </MudDrawer>
+    <MudMainContent>
+        <MudHidden Breakpoint="Breakpoint.SmAndDown">
+            <MudToolBar DisableGutters="true">
+                <MudIconButton Icon="@Icons.Material.Outlined.Menu" Color="Color.Inherit"
+                    OnClick="@((e) => DrawerToggle())" Class="ml-3" />
+                <MudBreadcrumbs Items="_items"></MudBreadcrumbs>
+                <MudSpacer />
+                <MudButton Variant="Variant.Text" Link="https://mudblazor.com/" Style="color:#594AE2;">
+                    MudBlazor
+                </MudButton>
+                <MudButton Variant="Variant.Text" Link="https://github.com/Garderoben/MudBlazor.Templates"
+                    Style="color:#424242;" Class="mr-3">Source Code</MudButton>
+            </MudToolBar>
+        </MudHidden>
+        <MudContainer MaxWidth="MaxWidth.False" Class="mt-4">
+            @Body
+        </MudContainer>
+    </MudMainContent>
+    <MudThemeManagerButton OnClick="@((e) => OpenThemeManager(true))" />
+    <MudThemeManager Open="_themeManagerOpen" OpenChanged="OpenThemeManager" Theme="_themeManager"
+        ThemeChanged="UpdateTheme" />
+</MudLayout>
+
+
 @code {
     private ThemeManagerTheme _themeManager = new ThemeManagerTheme();
+    public bool _drawerOpen = true;
+    public bool _themeManagerOpen = false;
     public string fullName = string.Empty;
     protected override async Task OnInitializedAsync()
     {
@@ -27,4 +99,29 @@
             NavigationManager.NavigateTo($"{UrlConstants.Login}?returnUrl={Uri.EscapeDataString(NavigationManager.Uri)}");
         }
     }
+    void DrawerToggle()
+    {
+        _drawerOpen = !_drawerOpen;
+    }
+    void OpenThemeManager(bool value)
+    {
+        _themeManagerOpen = value;
+    }
+
+    void UpdateTheme(ThemeManagerTheme value)
+    {
+        _themeManager = value;
+        StateHasChanged();
+    }
+
+    private async Task HandleLogout()
+    {
+        await AuthService.LogoutAsync();
+        NavigationManager.NavigateTo(UrlConstants.Login);
+    }
+
+    private List<BreadcrumbItem> _items = new List<BreadcrumbItem>{
+new BreadcrumbItem("Personal", href: "#"),
+new BreadcrumbItem("Dashboard", href: "#"),
+};
 }

@@ -100,6 +100,8 @@ public static class Config
                             IdentityServerConstants.StandardScopes.OpenId,
                             IdentityServerConstants.StandardScopes.Profile,
                             IdentityServerConstants.StandardScopes.OfflineAccess,
+                            IdentityServerConstants.StandardScopes.Email,
+                            "roles",
                             "full_access",
                         },
                     AccessTokenLifetime = 60 * 60 * 2, // 2 hours
