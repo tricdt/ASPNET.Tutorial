@@ -1,22 +1,28 @@
 import { Injectable } from '@angular/core';
 import { BaseService } from './base.service';
 import { BehaviorSubject } from 'rxjs';
-import { Profile, User, UserManager, UserManagerSettings } from 'oidc-client';
+import {
+  UserManager,
+  UserManagerSettings,
+  User,
+  UserProfile,
+} from 'oidc-client-ts';
 import { environment } from '@environments/environment';
-
 @Injectable({
-  providedIn: 'root'
+  providedIn: 'root',
 })
 export class AuthService extends BaseService {
   // Observable navItem source
   private _authNavStatusSource = new BehaviorSubject<boolean>(false);
   // Observable navItem stream
   authNavStatus$ = this._authNavStatusSource.asObservable();
+
   private manager = new UserManager(getClientSettings());
   private user: User | null;
   constructor() {
     super();
-    this.manager.getUser().then(user => {
+
+    this.manager.getUser().then((user) => {
       this.user = user;
       this._authNavStatusSource.next(this.isAuthenticated());
     });
@@ -26,28 +32,37 @@ export class AuthService extends BaseService {
     return this.manager.signinRedirect();
   }
 
-  isAuthenticated(): boolean {
-    return this.user != null && !this.user.expired;
-  }
-
   async completeAuthentication() {
     this.user = await this.manager.signinRedirectCallback();
     this._authNavStatusSource.next(this.isAuthenticated());
   }
 
+  isAuthenticated(): boolean {
+    return this.user != null && !this.user.expired;
+  }
+
+  getUser(): Promise<User | null> {
+    return this.manager.getUser();
+  }
+  getPermissions(): string {
+    if (this.user && this.user.profile) {
+      const userProfile = this.user.profile as UserProfile;
+      const permissions = userProfile['Permissions'];
+      return permissions as string;
+    }
+    return '';
+  }
+  get Profile(): UserProfile {
+    return this.user.profile as UserProfile;
+  }
   get authorizationHeaderValue(): string {
     if (this.user) {
       return `${this.user.token_type} ${this.user.access_token}`;
     }
     return null;
   }
-
-  get name(): string {
-    return this.user != null ? this.user.profile.name : '';
-  }
-
-  get profile(): Profile {
-    return this.user != null ? this.user.profile : null;
+  async signout() {
+    await this.manager.signoutRedirect();
   }
 }
 
@@ -62,6 +77,6 @@ export function getClientSettings(): UserManagerSettings {
     filterProtocolClaims: true,
     loadUserInfo: true,
     automaticSilentRenew: true,
-    silent_redirect_uri: environment.adminUrl + '/silent-refresh.html'
+    silent_redirect_uri: environment.adminUrl + '/silent-refresh.html',
   };
 }

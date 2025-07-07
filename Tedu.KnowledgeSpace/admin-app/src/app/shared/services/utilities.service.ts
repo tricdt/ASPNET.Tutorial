@@ -1,15 +1,12 @@
-import { Injectable } from '@angular/core';
-import { BaseService } from './base.service';
-import { HttpClient } from '@angular/common/http';
+import { Injectable } from "@angular/core";
+import { BaseService } from "./base.service";
+import { HttpClient } from "@angular/common/http";
 
-@Injectable({
-  providedIn: 'root'
-})
+@Injectable({ providedIn: 'root' })
 export class UtilitiesService extends BaseService {
   constructor(private http: HttpClient) {
     super();
   }
-
   UnflatteringForLeftMenu = (arr: any[]): any[] => {
     const map = {};
     const roots: any[] = [];
@@ -25,7 +22,7 @@ export class UtilitiesService extends BaseService {
       }
     }
     return roots;
-  };
+  }
 
   UnflatteringForTree = (arr: any[]): any[] => {
     const map = {};
@@ -52,7 +49,7 @@ export class UtilitiesService extends BaseService {
       }
     }
     return roots;
-  };
+  }
 
   MakeSeoTitle(input: string) {
     if (input == undefined || input == '') {

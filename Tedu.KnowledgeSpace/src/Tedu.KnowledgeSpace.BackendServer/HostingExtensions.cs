@@ -109,7 +109,7 @@ public static class HostingExtensions
                     {
                         Implicit = new OpenApiOAuthFlow
                         {
-                            AuthorizationUrl = new Uri("https://localhost:5000/connect/authorize"),
+                            AuthorizationUrl = new Uri("https://localhost:5001/connect/authorize"),
                             Scopes = new Dictionary<string, string> { { "api.knowledgespace", "KnowledgeSpace API" } }
                         },
                     },

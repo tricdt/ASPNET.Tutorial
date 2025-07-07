@@ -1,13 +1,12 @@
 import { throwError } from 'rxjs';
 
-
 export abstract class BaseService {
 
-  constructor() { }
+    constructor() { }
 
     protected handleError(errorResponse: any) {
         if (errorResponse.error.message) {
-            return throwError(() => errorResponse.error.message || 'Server error');
+            return throwError(() => new Error(errorResponse.error.message || 'Server error'));
         }
 
         if (errorResponse.error.errors) {
@@ -17,8 +16,8 @@ export abstract class BaseService {
             for (const errorMsg of errorResponse.error.errors) {
                 modelStateErrors += errorMsg + '<br/>';
             }
-            return throwError(() => modelStateErrors || 'Server error');
+            return throwError(() => new Error(modelStateErrors || 'Server error'));
         }
-        return throwError(() => 'Server error');
+        return throwError(() => new Error('Server error'));
     }
 }

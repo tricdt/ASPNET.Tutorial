@@ -1,2 +1,2 @@
-export * from './messages.constant';
-export * from './systems.constant';
+export * from './messages';
+export * from './systems';

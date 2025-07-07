@@ -17,6 +17,7 @@ export function fadeInAnimation() {
     ]);
 }
 
+
 export function slideToRight() {
     return trigger('routerTransition', [
         state('void', style({})),

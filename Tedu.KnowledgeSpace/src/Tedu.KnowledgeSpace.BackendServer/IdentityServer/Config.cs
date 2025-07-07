@@ -60,8 +60,8 @@ public class Config
                     AllowAccessTokensViaBrowser = true,
                     RequireConsent = false,
 
-                    RedirectUris =           { "https://localhost:5000/swagger/oauth2-redirect.html" },
-                    PostLogoutRedirectUris = { "https://localhost:5000/swagger/oauth2-redirect.html" },
+                    RedirectUris =           { "https://localhost:5001/swagger/oauth2-redirect.html" },
+                    PostLogoutRedirectUris = { "https://localhost:5001/swagger/oauth2-redirect.html" },
                     AllowedCorsOrigins =     { "https://localhost:5000" },
 
                     AllowedScopes = new List<string>

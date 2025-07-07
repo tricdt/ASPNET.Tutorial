@@ -3,17 +3,24 @@
   "version": 1,
   "newProjectRoot": "projects",
   "projects": {
-    "SB-Admin": {
+    "admin-app": {
       "projectType": "application",
       "schematics": {
         "@schematics/angular:component": {
           "style": "scss",
-          "skipTests": true,
-          "prefix": "sb"
+          "skipTests": true
+        },
+        "@schematics/angular:class": {
+          "skipTests": true
+        },
+        "@schematics/angular:directive": {
+          "skipTests": true
+        },
+        "@schematics/angular:pipe": {
+          "skipTests": true
         },
         "@schematics/angular:service": {
-          "skipTests": true,
-          "flat": true
+          "skipTests": true
         }
       },
       "root": "",
@@ -21,45 +28,21 @@
       "prefix": "app",
       "architect": {
         "build": {
-          "builder": "@angular-devkit/build-angular:application",
+          "builder": "@angular/build:application",
           "options": {
-            "outputPath": "dist/sb-admin",
-            "index": "src/index.html",
             "browser": "src/main.ts",
-            "polyfills": ["zone.js", "@angular/localize/init"],
             "tsConfig": "tsconfig.app.json",
             "inlineStyleLanguage": "scss",
             "assets": ["src/assets", "src/favicon.ico"],
             "styles": [
-              "node_modules/font-awesome/css/font-awesome.min.css",
-
+              "node_modules/font-awesome/css/font-awesome.css",
               "node_modules/ngx-spinner/animations/ball-scale-multiple.css",
-              "node_modules/alertifyjs/build/css/alertify.min.css",
-              "node_modules/alertifyjs/build/css/themes/default.min.css",
-              "src/styles/app.scss"
+              "src/styles.scss"
             ],
-            "scripts": ["node_modules/chart.js/dist/chart.umd.js"],
-            "allowedCommonJsDependencies": ["chart.js"],
-            "aot": false,
-            "extractLicenses": false,
-            "sourceMap": true,
-            "optimization": false,
-            "namedChunks": true
+            "polyfills": ["@angular/localize/init", "zone.js"]
           },
           "configurations": {
             "production": {
-              "fileReplacements": [
-                {
-                  "replace": "src/environments/environment.ts",
-                  "with": "src/environments/environment.prod.ts"
-                }
-              ],
-              "optimization": true,
-              "outputHashing": "all",
-              "sourceMap": false,
-              "namedChunks": false,
-              "aot": true,
-              "extractLicenses": true,
               "budgets": [
                 {
                   "type": "initial",
@@ -71,36 +54,35 @@
                   "maximumWarning": "4kB",
                   "maximumError": "8kB"
                 }
-              ]
+              ],
+              "outputHashing": "all"
             },
             "development": {
               "optimization": false,
               "extractLicenses": false,
-              "sourceMap": true,
-              "namedChunks": true
+              "sourceMap": true
             }
           },
           "defaultConfiguration": "production"
         },
         "serve": {
-          "builder": "@angular-devkit/build-angular:dev-server",
+          "builder": "@angular/build:dev-server",
           "configurations": {
             "production": {
-              "buildTarget": "SB-Admin:build:production"
+              "buildTarget": "admin-app:build:production"
             },
             "development": {
-              "buildTarget": "SB-Admin:build:development"
+              "buildTarget": "admin-app:build:development"
             }
           },
           "defaultConfiguration": "development"
         },
         "extract-i18n": {
-          "builder": "@angular-devkit/build-angular:extract-i18n"
+          "builder": "@angular/build:extract-i18n"
         },
         "test": {
-          "builder": "@angular-devkit/build-angular:karma",
+          "builder": "@angular/build:karma",
           "options": {
-            "polyfills": ["zone.js", "zone.js/testing", "@angular/localize/init"],
             "tsConfig": "tsconfig.spec.json",
             "inlineStyleLanguage": "scss",
             "assets": [
@@ -110,7 +92,7 @@
               }
             ],
             "styles": ["src/styles.scss"],
-            "scripts": []
+            "polyfills": ["@angular/localize/init"]
           }
         }
       }
