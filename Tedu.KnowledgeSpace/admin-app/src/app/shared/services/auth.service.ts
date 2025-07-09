@@ -44,15 +44,7 @@ export class AuthService extends BaseService {
   getUser(): Promise<User | null> {
     return this.manager.getUser();
   }
-  getPermissions(): string {
-    if (this.user && this.user.profile) {
-      const userProfile = this.user.profile as UserProfile;
-      const permissions = userProfile['Permissions'];
-      return permissions as string;
-    }
-    return '';
-  }
-  get Profile(): UserProfile {
+  get profile(): UserProfile {
     return this.user.profile as UserProfile;
   }
   get authorizationHeaderValue(): string {

@@ -1,4 +1,4 @@
-import { Injectable } from '@angular/core';
+import { inject, Injectable } from '@angular/core';
 import { BaseService } from './base.service';
 import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { environment } from '@environments/environment';
@@ -8,7 +8,6 @@ import { UtilitiesService } from './utilities.service';
 @Injectable({ providedIn: 'root' })
 export class UsersService extends BaseService {
   private _sharedHeaders = new HttpHeaders();
-
   constructor(
     private http: HttpClient,
     private utilitiesService: UtilitiesService

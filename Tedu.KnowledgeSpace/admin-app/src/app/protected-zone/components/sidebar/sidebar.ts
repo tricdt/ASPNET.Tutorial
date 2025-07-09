@@ -45,7 +45,7 @@ export class Sidebar implements OnInit {
   }
 
   loadMenu() {
-    const profile = this.authService.Profile;
+    const profile = this.authService.profile;
     this.userService
       .getMenuByUser(profile.sub)
       .subscribe((response: AppFunction[]) => {

@@ -1,7 +1,6 @@
 import { Component } from '@angular/core';
 import { Header, Sidebar } from './components';
 import { RouterOutlet } from '@angular/router';
-import { CommonModule } from '@angular/common';
 import { TranslateModule } from '@ngx-translate/core';
 
 @Component({

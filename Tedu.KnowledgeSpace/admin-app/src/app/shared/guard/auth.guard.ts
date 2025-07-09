@@ -11,7 +11,7 @@ export class AuthGuard implements CanActivate {
   canActivate(route: ActivatedRouteSnapshot, state: RouterStateSnapshot): boolean {
    if (this.authService.isAuthenticated()) {
       const functionCode = route.data['functionCode'] as string;
-      const profile = this.authService.Profile;
+      const profile = this.authService.profile;
       const permissions = JSON.parse(String(profile['Permissions']));
       if (permissions && permissions.filter(x => x === functionCode + '_' + SystemConstants.VIEW_ACTION).length > 0) {
         return true;
