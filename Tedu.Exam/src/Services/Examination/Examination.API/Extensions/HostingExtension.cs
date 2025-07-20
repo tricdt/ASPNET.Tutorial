@@ -1,15 +1,25 @@
 using System;
 using Examination.API.Filters;
+using Examination.Application.Commands.V1.ExamResults.StartExam;
+using Examination.Application.Mapping;
+using Examination.Infrastructure.MongoDb.SeedWork;
 using Microsoft.Extensions.Configuration;
 using Microsoft.OpenApi.Models;
+using MongoDB.Driver;
 using Serilog;
 
 namespace Examination.API.Extensions;
 
 public static class HostingExtension
 {
-    public static WebApplication ConfigureServices(this WebApplicationBuilder builder)
+    public static WebApplication ConfigureServices(this WebApplicationBuilder builder, IConfiguration configuration)
     {
+        var user = configuration.GetValue<string>("DatabaseSettings:User");
+        var password = configuration.GetValue<string>("DatabaseSettings:Password");
+        var server = configuration.GetValue<string>("DatabaseSettings:Server");
+        var databaseName = configuration.GetValue<string>("DatabaseSettings:DatabaseName");
+        //var mongodbConnectionString = "mongodb://" + user + ":" + password + "@" + server + "/" + databaseName + "?authSource=admin";
+        var mongodbConnectionString = "mongodb://localhost:27017";
         builder.Services.AddControllers();
 
         builder.Services.AddApiVersioning(options =>
@@ -24,6 +34,14 @@ public static class HostingExtension
             options.SubstituteApiVersionInUrl = true;
         });
 
+        builder.Services.AddSingleton<IMongoClient>(c =>
+        {
+            return new MongoClient(mongodbConnectionString);
+        });
+        builder.Services.AddScoped(c => c.GetService<IMongoClient>()?.StartSession());
+        builder.Services.RegisterCustomServices();
+        builder.Services.AddAutoMapper(cfg => { cfg.AddProfile(new MappingProfile()); });
+        builder.Services.AddMediatR(cfg => cfg.RegisterServicesFromAssembly(typeof(StartExamCommandHandler).Assembly));
         builder.Services.AddCors(options =>
         {
             options.AddPolicy("CorsPolicy", policy =>
@@ -31,6 +49,7 @@ public static class HostingExtension
                 policy.AllowAnyOrigin()
                       .AllowAnyMethod()
                       .AllowAnyHeader();
+                      
             });
         });
         builder.Services.AddSwaggerGen(c =>
@@ -58,6 +77,7 @@ public static class HostingExtension
             //c.OperationFilter<AuthorizeCheckOperationFilter>();
 
         });
+        builder.Services.Configure<ExamSettings>(configuration);
         var identityUrl = builder.Configuration.GetValue<string>("IdentityUrl");
         return builder.Build();
     }

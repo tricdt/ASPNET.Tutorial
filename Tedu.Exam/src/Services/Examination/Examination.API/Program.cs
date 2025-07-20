@@ -1,5 +1,9 @@
 using System.Globalization;
 using Examination.API.Extensions;
+using Examination.Infrastructure.MongoDb;
+using Examination.Infrastructure.MongoDb.SeedWork;
+using Microsoft.Extensions.Options;
+using MongoDB.Driver;
 using Serilog;
 
 string appName = typeof(Program).Assembly.GetName().Name ?? "Tedu.Exam.Examination.API";
@@ -29,13 +33,19 @@ try
     builder.Host.UseSerilog();
 
     var app = builder
-        .ConfigureServices()
+        .ConfigureServices(builder.Configuration)
         .ConfigurePipeline();
 
     //Seed the database or perform any startup tasks
     Log.Information("Seeding database...");
     using (var scope = app.Services.CreateScope())
     {
+        var logger = app.Services.GetRequiredService<ILogger<ExamMongoDbSeeding>>();
+        var settings = app.Services.GetRequiredService<IOptions<ExamSettings>>();
+        var mongoClient = app.Services.GetRequiredService<IMongoClient>();
+        new ExamMongoDbSeeding()
+            .SeedAsync(mongoClient, settings, logger)
+            .Wait();
         //await scope.ServiceProvider.SeedDataAsync<AppDbContext, UserSeedData>();
     }
     app.MapGet("/", () => "Welcome to Tedu.Exam.Examination API!");
