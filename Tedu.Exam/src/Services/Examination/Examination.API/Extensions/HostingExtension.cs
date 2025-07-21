@@ -18,6 +18,8 @@ public static class HostingExtension
         var password = configuration.GetValue<string>("DatabaseSettings:Password");
         var server = configuration.GetValue<string>("DatabaseSettings:Server");
         var databaseName = configuration.GetValue<string>("DatabaseSettings:DatabaseName");
+        builder.Services.Configure<ExamSettings>(configuration);
+
         //var mongodbConnectionString = "mongodb://" + user + ":" + password + "@" + server + "/" + databaseName + "?authSource=admin";
         var mongodbConnectionString = "mongodb://localhost:27017";
         builder.Services.AddControllers();
@@ -49,7 +51,7 @@ public static class HostingExtension
                 policy.AllowAnyOrigin()
                       .AllowAnyMethod()
                       .AllowAnyHeader();
-                      
+
             });
         });
         builder.Services.AddSwaggerGen(c =>
@@ -57,7 +59,7 @@ public static class HostingExtension
             c.SwaggerDoc("v1", new OpenApiInfo { Title = "Examination.API V1", Version = "v1" });
             c.SwaggerDoc("v2", new OpenApiInfo { Title = "Examination.API V2", Version = "v2" });
 
-            c.AddSecurityDefinition("oauth2", new OpenApiSecurityScheme
+            c.AddSecurityDefinition("Bearer", new OpenApiSecurityScheme
             {
                 Type = SecuritySchemeType.OAuth2,
                 Flows = new OpenApiOAuthFlows()
@@ -68,17 +70,51 @@ public static class HostingExtension
                         TokenUrl = new Uri($"{builder.Configuration.GetValue<string>("IdentityUrl")}/connect/token"),
                         Scopes = new Dictionary<string, string>()
                         {
-                            {"full_access", "full_access" }
+                            {"full_access", "full_access" },
+                            {"exam_api", "exam_api"},
                         },
 
                     }
                 }
             });
+            c.AddSecurityRequirement(new OpenApiSecurityRequirement
+            {
+                {
+                    new OpenApiSecurityScheme
+                    {
+                        Reference = new OpenApiReference { Type = ReferenceType.SecurityScheme, Id = "Bearer" }
+                    },
+                    new List<string>{ "exam_api" }
+                }
+            });
             //c.OperationFilter<AuthorizeCheckOperationFilter>();
 
         });
-        builder.Services.Configure<ExamSettings>(configuration);
+
         var identityUrl = builder.Configuration.GetValue<string>("IdentityUrl");
+        builder.Services.AddAuthentication(options =>
+        {
+            options.DefaultAuthenticateScheme = Microsoft.AspNetCore.Authentication.JwtBearer.JwtBearerDefaults
+                .AuthenticationScheme;
+            options.DefaultChallengeScheme = Microsoft.AspNetCore.Authentication.JwtBearer.JwtBearerDefaults
+                .AuthenticationScheme;
+        }).AddJwtBearer(options =>
+        {
+            options.Authority = identityUrl;
+            options.RequireHttpsMetadata = false;
+            options.Audience = "exam_api";
+            options.TokenValidationParameters = new Microsoft.IdentityModel.Tokens.TokenValidationParameters()
+            {
+                ValidateIssuerSigningKey = true,
+                ValidateIssuer = false,
+                ValidateAudience = false
+            };
+            //Fix SSL
+            options.BackchannelHttpHandler = new HttpClientHandler
+            {
+                ServerCertificateCustomValidationCallback = delegate { return true; }
+            };
+        });
         return builder.Build();
     }
 
@@ -103,9 +139,9 @@ public static class HostingExtension
         }
         app.UseSerilogRequestLogging();
         app.UseAuthentication();
+        app.UseRouting();
         app.UseCors("CorsPolicy");
         app.UseAuthorization();
-        app.UseRouting();
         app.MapControllers();
         return app;
     }

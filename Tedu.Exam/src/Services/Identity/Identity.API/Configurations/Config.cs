@@ -18,18 +18,20 @@ public static class Config
     public static IEnumerable<ApiResource> GetApis()
     {
         return new[]{
-                new ApiResource{
-                    Name = "exam_api",
-                    DisplayName= "Exam API"
-                }
-            };
+            new ApiResource{
+                Name = "exam_api",
+                DisplayName= "Exam API",
+                Scopes = {"full_access"}
+            }
+        };
     }
 
     public static IEnumerable<ApiScope> GetApiScopes()
     {
         return new List<ApiScope>{
-                new ApiScope("full_access")
-                };
+            new ApiScope("full_access"),
+            new ApiScope("exam_api")
+        };
     }
 
     public static IEnumerable<Client> GetClients(Dictionary<string, string> clientUrls)
@@ -124,9 +126,10 @@ public static class Config
                     PostLogoutRedirectUris = { "https://localhost:5002/swagger/oauth2-redirect.html" },
                     AllowedCorsOrigins =     { "https://localhost:5002" },
 
-                    AllowedScopes =
+                    AllowedScopes = new List<string>
                         {
                             "full_access",
+                            "exam_api"
                         },
                 }
         };
