@@ -1,14 +1,43 @@
 using System;
+using AutoMapper;
+using Examination.Domain.AggregateModels.CategoryAggregate;
 using Examination.Shared.Categories;
 using Examination.Shared.SeedWork;
 using MediatR;
+using Microsoft.Extensions.Logging;
+using MongoDB.Driver;
 
 namespace Examination.Application.Queries.V1.GetCategoryById;
 
 public class GetCategoryByIdQueryHandler : IRequestHandler<GetCategoryByIdQuery, ApiResult<CategoryDto>>
 {
-    public Task<ApiResult<CategoryDto>> Handle(GetCategoryByIdQuery request, CancellationToken cancellationToken)
+    private readonly ICategoryRepository _categoryRepository;
+    private readonly IClientSessionHandle _clientSessionHandle;
+    private readonly IMapper _mapper;
+    private readonly ILogger<GetCategoryByIdQueryHandler> _logger;
+
+    public GetCategoryByIdQueryHandler(
+            ICategoryRepository categoryRepository,
+            IMapper mapper,
+            ILogger<GetCategoryByIdQueryHandler> logger,
+            IClientSessionHandle clientSessionHandle
+        )
     {
-        throw new NotImplementedException();
+        _categoryRepository = categoryRepository ?? throw new ArgumentNullException(nameof(categoryRepository));
+        _clientSessionHandle = clientSessionHandle ?? throw new ArgumentNullException(nameof(_clientSessionHandle));
+        _mapper = mapper;
+        _logger = logger;
+
+    }
+    public async Task<ApiResult<CategoryDto>> Handle(GetCategoryByIdQuery request, CancellationToken cancellationToken)
+    {
+        _logger.LogInformation("BEGIN: GetCategoryByIdQueryHandler");
+
+        var result = await _categoryRepository.GetCategoriesByIdAsync(request.Id);
+        var item = _mapper.Map<CategoryDto>(result);
+
+        _logger.LogInformation("END: GetCategoryByIdQueryHandler");
+
+        return new ApiSuccessResult<CategoryDto>(200, item);
     }
 }
