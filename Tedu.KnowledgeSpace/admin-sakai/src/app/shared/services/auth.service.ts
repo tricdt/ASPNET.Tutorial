@@ -1,5 +1,5 @@
 import { Injectable } from '@angular/core';
-import { BaseService } from './base';
+import { BaseService } from './base.service';
 import { BehaviorSubject } from 'rxjs';
 import { UserManager, UserManagerSettings, User, UserProfile } from 'oidc-client-ts';
 
@@ -38,6 +38,17 @@ export class AuthService extends BaseService {
 
   isAuthenticated(): boolean {
     return this.user != null && !this.user.expired;
+  }
+
+  get profile(): UserProfile {
+    return this.user.profile as UserProfile;
+  }
+
+  get authorizationHeaderValue(): string {
+    if (this.user) {
+      return `${this.user.token_type} ${this.user.access_token}`;
+    }
+    return null;
   }
 }
 export function getClientSettings(): UserManagerSettings {

@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { AppFloatingConfigurator } from '@app/layout/components/app.floatingconfigurator';
-import { AuthService } from '@app/shared/services/auth';
+import { AuthService } from '@app/shared/services/auth.service';
 import { ButtonModule } from 'primeng/button';
 import { NgxSpinnerModule, NgxSpinnerService } from 'ngx-spinner';
 @Component({

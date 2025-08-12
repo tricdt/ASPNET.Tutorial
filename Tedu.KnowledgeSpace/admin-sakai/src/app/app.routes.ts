@@ -1,12 +1,12 @@
 import { Routes } from '@angular/router';
 import { AppLayout } from './layout/components/app.layout';
-import { Dashboard } from './pages/dashboard/dashboard';
 import { Documentation } from './pages/documentation/documentation';
 import { Login } from './pages/auth/login';
 import { AuthCallback } from './pages/auth/auth-callback';
 import { ServerError } from './pages/server-error/server-error';
 import { AccessDenied } from './pages/access-denied/access-denied';
 import { NotFound } from './pages/notfound/notfound';
+import { AuthGuard } from './shared/guard/auth.guard';
 
 export const routes: Routes = [
   {
@@ -14,7 +14,8 @@ export const routes: Routes = [
     loadChildren: () => import('./protected-zone/protected-zone.routes'),
     data: {
       functionCode: 'DASHBOARD'
-    }
+    },
+    canActivate: [AuthGuard]
   },
   {
     path: 'login',

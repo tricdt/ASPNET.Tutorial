@@ -7,5 +7,5 @@ export class AppFunction {
   icon: string;
   separator?: boolean;
   visible?: boolean;
-  children?: AppFunction[];
+  children?: AppFunction[] | null;
 }

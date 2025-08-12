@@ -9,12 +9,12 @@ import { AppFunction } from '@app/shared/models/function.model';
   imports: [CommonModule, RouterModule],
   template: `
     <ng-container>
-      <a *ngIf="root && item.children != null" class="layout-menuitem-root-text" (click)="itemClick($event)">
+      <a *ngIf="root && item.children.length > 0" class="layout-menuitem-root-text" (click)="itemClick($event)">
         <i [ngClass]="item.icon" class="layout-menuitem-icon"></i>
         <span>{{ item.name }}</span>
         <i class="pi pi-fw pi-angle-down layout-submenu-toggler"></i>
       </a>
-      <a *ngIf="root && item.children == null" class="layout-menuitem-root-text" [routerLink]="item.url" routerLinkActive="active-route" [routerLinkActiveOptions]="{ exact: true }">
+      <a *ngIf="root && item.children.length == 0" class="layout-menuitem-root-text" [routerLink]="item.url" routerLinkActive="active-route" [routerLinkActiveOptions]="{ exact: true }">
         <i [ngClass]="item.icon" class="layout-menuitem-icon"></i>
         <span>{{ item.name }}</span>
       </a>
