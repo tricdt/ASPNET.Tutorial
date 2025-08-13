@@ -1,6 +1,6 @@
 import { inject } from '@angular/core';
 import { CanActivateFn } from '@angular/router';
-import { Auth } from '../services/auth';
+import { AuthService } from '../services/auth';
 import { of } from 'rxjs';
 
 /**
@@ -12,7 +12,7 @@ import { of } from 'rxjs';
  * @returns An Observable emitting true if the user is authenticated, false otherwise.
  */
 export const authGuard: CanActivateFn = (route, state) => {
-  const authService = inject(Auth);
+  const authService = inject(AuthService);
 
   if (authService.isAuthenticated()) {
     return of(true);

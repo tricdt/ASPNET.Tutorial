@@ -1,7 +1,7 @@
 import { CommonModule } from '@angular/common';
 import { Component, computed, inject, signal } from '@angular/core';
 import { Router } from '@angular/router';
-import { Layout } from '@app/shared/services/layout';
+import { LayoutService } from '@app/shared/services/layout';
 import { SelectButtonModule } from 'primeng/selectbutton';
 import { FormsModule } from '@angular/forms';
 import Aura from '@primeng/themes/aura';
@@ -111,7 +111,7 @@ declare type SurfacesType = {
 export class Configurator {
   router = inject(Router);
   presets = Object.keys(presets);
-  layoutService: Layout = inject(Layout);
+  layoutService: LayoutService = inject(LayoutService);
   showMenuModeButton = signal(!this.router.url.includes('auth'));
   menuModeOptions = [
     { label: 'Static', value: 'static' },

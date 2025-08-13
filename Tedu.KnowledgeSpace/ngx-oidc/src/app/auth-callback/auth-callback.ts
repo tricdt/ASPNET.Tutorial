@@ -1,6 +1,6 @@
 import { Component, inject } from '@angular/core';
 import { Router } from '@angular/router';
-import { Auth } from '@app/shared/services/auth';
+import { AuthService } from '@app/shared/services/auth';
 
 @Component({
   selector: 'app-auth-callback',
@@ -9,7 +9,7 @@ import { Auth } from '@app/shared/services/auth';
   styles: ``,
 })
 export class AuthCallback {
-  private authService = inject(Auth);
+  private authService = inject(AuthService);
   private router = inject(Router);
 
   async ngOnInit() {

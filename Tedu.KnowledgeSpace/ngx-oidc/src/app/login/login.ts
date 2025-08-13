@@ -1,7 +1,7 @@
 import { Component } from '@angular/core';
 import { Floatingconfigurator } from '@app/protected-zone/components/floatingconfigurator/floatingconfigurator';
-import { Auth } from '@app/shared/services/auth';
-import { Layout } from '@app/shared/services/layout';
+import { AuthService } from '@app/shared/services/auth';
+import { LayoutService } from '@app/shared/services/layout';
 import { ButtonModule } from 'primeng/button';
 import { NgxSpinnerModule, NgxSpinnerService } from 'ngx-spinner';
 @Component({
@@ -82,8 +82,8 @@ import { NgxSpinnerModule, NgxSpinnerService } from 'ngx-spinner';
 })
 export class Login {
   constructor(
-    private layoutService: Layout,
-    private authService: Auth,
+    private layoutService: LayoutService,
+    private authService: AuthService,
     private spinner: NgxSpinnerService
   ) {}
   login() {

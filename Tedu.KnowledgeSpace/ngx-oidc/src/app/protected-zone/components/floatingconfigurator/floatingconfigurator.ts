@@ -3,7 +3,7 @@ import { Component, computed, inject, input } from '@angular/core';
 import { ButtonModule } from 'primeng/button';
 import { StyleClassModule } from 'primeng/styleclass';
 import { Configurator } from '../configurator/configurator';
-import { Layout } from '@app/shared/services/layout';
+import { LayoutService } from '@app/shared/services/layout';
 @Component({
   selector: 'app-floatingconfigurator',
   imports: [CommonModule, ButtonModule, StyleClassModule, Configurator],
@@ -35,7 +35,7 @@ import { Layout } from '@app/shared/services/layout';
   styles: ``,
 })
 export class Floatingconfigurator {
-  private layoutService = inject(Layout);
+  private layoutService = inject(LayoutService);
   float = input<boolean>(true);
   isDarkTheme = computed(() => true);
   toggleDarkMode() {

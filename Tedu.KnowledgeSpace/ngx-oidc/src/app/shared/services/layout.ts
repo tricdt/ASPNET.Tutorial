@@ -32,7 +32,7 @@ interface MenuChangeEvent {
 @Injectable({
   providedIn: 'root',
 })
-export class Layout {
+export class LayoutService {
   _config: layoutConfig = {
     preset: 'Aura',
     primary: 'emerald',

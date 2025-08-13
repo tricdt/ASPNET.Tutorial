@@ -15,6 +15,12 @@ import { UserManagerSettings } from 'oidc-client-ts';
 import { environment } from 'environtments/environment';
 import { provideAnimationsAsync } from '@angular/platform-browser/animations/async';
 import { providePrimeNG } from 'primeng/config';
+import {
+  provideHttpClient,
+  withFetch,
+  withInterceptors,
+} from '@angular/common/http';
+import { authzTokenInterceptor } from './shared/interceptors/auth.interceptor';
 
 const oidcConfig: UserManagerSettings = {
   authority: environment.authorityUrl,
@@ -50,5 +56,6 @@ export const appConfig: ApplicationConfig = {
       provide: OIDC_CONFIG_TOKEN,
       useValue: oidcConfig,
     },
+    provideHttpClient(withFetch(), withInterceptors([authzTokenInterceptor])),
   ],
 };

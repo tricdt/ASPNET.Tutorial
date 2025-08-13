@@ -24,7 +24,7 @@ import { Router } from '@angular/router';
 @Injectable({
   providedIn: 'root',
 })
-export class Auth {
+export class AuthService {
   /**
    * The underlying UserManager instance handling OpenID Connect operations.
    */
