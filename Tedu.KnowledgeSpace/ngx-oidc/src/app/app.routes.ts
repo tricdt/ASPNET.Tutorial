@@ -10,6 +10,13 @@ export const routes: Routes = [
     path: '',
     loadChildren: () => import('./protected-zone/protected-zone.routes'),
     canActivate: [authGuard],
+    data: {
+      functionCode: 'DASHBOARD',
+    },
+  },
+  {
+    path: 'pages',
+    loadChildren: () => import('./pages/pages.routes'),
   },
   {
     path: 'login',
@@ -31,6 +38,7 @@ export const routes: Routes = [
     path: 'not-found',
     component: NotFound,
   },
+
   {
     path: '**',
     redirectTo: 'not-found',
