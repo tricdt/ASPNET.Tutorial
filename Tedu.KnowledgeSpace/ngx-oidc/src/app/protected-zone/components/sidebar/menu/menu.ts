@@ -29,7 +29,6 @@ export class Menu {
       .getMenuByUser(profile.sub)
       .subscribe((response: AppFunction[]) => {
         this.functions = response;
-        console.log('Menu functions loaded:', this.functions);
         localStorage.setItem('functions', JSON.stringify(response));
       });
   }

@@ -61,11 +61,15 @@ export class LayoutService {
 
   transitionComplete = signal<boolean>(false);
 
+  private configUpdate = new Subject<layoutConfig>();
+
   private overlayOpen = new Subject<any>();
 
   private menuSource = new Subject<MenuChangeEvent>();
 
   overlayOpen$ = this.overlayOpen.asObservable();
+
+  configUpdate$ = this.configUpdate.asObservable();
 
   menuSource$ = this.menuSource.asObservable();
 
@@ -77,6 +81,13 @@ export class LayoutService {
 
   constructor() {
     this.layoutConfig.set({ ...this.loadLayoutConfig() });
+
+    effect(() => {
+      const config = this.layoutConfig();
+      if (config) {
+        this.onConfigUpdate();
+      }
+    });
     effect(() => {
       const config = this.layoutConfig();
 
@@ -115,6 +126,11 @@ export class LayoutService {
     setTimeout(() => {
       this.transitionComplete.set(false);
     });
+  }
+
+  onConfigUpdate() {
+    this._config = { ...this.layoutConfig() };
+    this.configUpdate.next(this.layoutConfig());
   }
 
   toggleDarkMode(config?: layoutConfig): void {
