@@ -122,12 +122,14 @@ export class AuthService {
       tap((user) => {
         this.user$.next(user);
         // enable silentRefresh if the user is already logged in
-        this.userManager.startSilentRenew();
-        // check if silent refresh working by explicitly calling
-        // signinSilent() once to renew the user's session
-        this.signinSilent().then((user) => {
-          console.log('Silent signin success', user);
-        });
+        if (user && !user.expired) {
+          this.userManager.startSilentRenew();
+          // check if silent refresh working by explicitly calling
+          // signinSilent() once to renew the user's session
+          // this.signinSilent().then((user) => {
+          //   console.log('Silent signin success', user);
+          // });
+        }
       }),
       catchError((error: Error) => {
         console.error('Error getting user:', error);

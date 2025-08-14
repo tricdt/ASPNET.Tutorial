@@ -1,15 +1,14 @@
 import { Component } from '@angular/core';
+import { Menu } from './menu/menu';
 
 @Component({
   selector: 'app-sidebar',
-  imports: [],
+  imports: [Menu],
   template: `
-    <p>
-      sidebar works!
-    </p>
+    <div class="layout-sidebar">
+      <app-menu />
+    </div>
   `,
-  styles: ``
+  styles: ``,
 })
-export class Sidebar {
-
-}
+export class Sidebar {}
