@@ -37,6 +37,11 @@
               {
                 "glob": "**/*",
                 "input": "public"
+              },
+              {
+                "glob": "oidc-client-ts.js",
+                "input": "node_modules/oidc-client-ts/dist/browser",
+                "output": "/"
               }
             ],
             "styles": ["src/assets/styles.scss"]

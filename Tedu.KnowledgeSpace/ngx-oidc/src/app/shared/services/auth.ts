@@ -126,9 +126,9 @@ export class AuthService {
           this.userManager.startSilentRenew();
           // check if silent refresh working by explicitly calling
           // signinSilent() once to renew the user's session
-          // this.signinSilent().then((user) => {
-          //   console.log('Silent signin success', user);
-          // });
+          this.signinSilent().then((user) => {
+            console.log('Silent signin success', user);
+          });
         }
       }),
       catchError((error: Error) => {
