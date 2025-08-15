@@ -3,13 +3,16 @@ import { Component } from '@angular/core';
 @Component({
   selector: 'app-footer',
   imports: [],
-  template: `
-    <p>
-      footer works!
-    </p>
-  `,
-  styles: ``
+  template: `<div class="layout-footer">
+    SAKAI by
+    <a
+      href="https://primeng.org"
+      target="_blank"
+      rel="noopener noreferrer"
+      class="text-primary font-bold hover:underline"
+      >PrimeNG</a
+    >
+  </div>`,
+  styles: ``,
 })
-export class Footer {
-
-}
+export class Footer {}

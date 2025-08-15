@@ -67,11 +67,15 @@ export class LayoutService {
 
   private menuSource = new Subject<MenuChangeEvent>();
 
+  private resetSource = new Subject();
+
   overlayOpen$ = this.overlayOpen.asObservable();
 
   configUpdate$ = this.configUpdate.asObservable();
 
   menuSource$ = this.menuSource.asObservable();
+
+  resetSource$ = this.resetSource.asObservable();
 
   isDarkTheme = computed(() => this.layoutConfig().darkTheme);
 

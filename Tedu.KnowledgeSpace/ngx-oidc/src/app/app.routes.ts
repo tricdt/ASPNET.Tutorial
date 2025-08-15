@@ -5,6 +5,8 @@ import { ServerError } from './server-error/server-error';
 import { AccessDenied } from './access-denied/access-denied';
 import { NotFound } from './not-found/not-found';
 import { authGuard } from './shared/guards/auth-guard';
+import { Landing } from './pages/landing/landing';
+import { PagesLayout } from './pages/page-layout/page.layout';
 export const routes: Routes = [
   {
     path: '',
@@ -18,6 +20,7 @@ export const routes: Routes = [
     path: 'pages',
     loadChildren: () => import('./pages/pages.routes'),
   },
+  { path: 'landing', component: Landing },
   {
     path: 'login',
     component: Login,

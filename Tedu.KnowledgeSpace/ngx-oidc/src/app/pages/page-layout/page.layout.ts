@@ -4,28 +4,29 @@ import { AuthService } from '@app/shared/services/auth';
 import { UsersService } from '@app/shared/services/user';
 import { ButtonModule } from 'primeng/button';
 import { filter, map, Subscription } from 'rxjs';
-import { Topbar } from './components/topbar/topbar';
 import { CommonModule } from '@angular/common';
-import { Sidebar } from './components/sidebar/sidebar';
 import { NavigationEnd, Router, RouterModule } from '@angular/router';
-import { Footer } from './components/footer/footer';
 import { LayoutService } from '@app/shared/services/layout';
+import { Topbar } from '@app/protected-zone/components/topbar/topbar';
+import { Footer } from '@app/protected-zone/components/footer/footer';
+import { Sidebar } from './sidebar/sidebar';
 @Component({
-  selector: 'app-layout',
+  selector: 'app-pages-layout',
   imports: [ButtonModule, Topbar, CommonModule, Sidebar, RouterModule, Footer],
   template: ` <div class="layout-wrapper" [ngClass]="containerClass">
-    <app-topbar />
-    <app-sidebar />
-    <div class="layout-main-container">
-      <div class="layout-main">
-        <router-outlet></router-outlet>
+      <app-topbar />
+      <app-sidebar />
+      <div class="layout-main-container">
+        <div class="layout-main">
+          <router-outlet></router-outlet>
+        </div>
       </div>
+      <app-footer />
     </div>
-    <app-footer />
-  </div>`,
+    <div class="layout-mask animate-fadein"></div>`,
   styles: ``,
 })
-export class Layout {
+export class PagesLayout {
   private userService: UsersService = inject(UsersService);
   private authService: AuthService = inject(AuthService);
   private layoutService: LayoutService = inject(LayoutService);
@@ -62,7 +63,7 @@ export class Layout {
   }
 
   isOutsideClicked(event: MouseEvent) {
-    const sidebarEl = document.querySelector('.layout-sidebar');
+    const sidebarEl = document.querySelector('.layout-pages-sidebar');
     const topbarEl = document.querySelector('.layout-menu-button');
     const eventTarget = event.target as Node;
 
